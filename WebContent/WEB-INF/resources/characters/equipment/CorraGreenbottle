@@ -1,11 +1,11 @@
-playerID=5
-characterName:Joylusion
+playerID=2
+characterName:Corra Greenbottle
 background:Folk Hero
 alignment:Lawful Good
-adjective:Noble
+adjective:Halfling
 gender:Female
-class:Warrior
-race:Human
+class:Rogue
+race:Halfling
 exp:460
 level:2
 maxHp:23

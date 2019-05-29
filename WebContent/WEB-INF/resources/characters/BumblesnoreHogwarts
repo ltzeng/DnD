@@ -1,11 +1,11 @@
-playerID=5
-characterName:Joylusion
+playerID=1
+characterName:Bumblesnore Hogwarts
 background:Folk Hero
 alignment:Lawful Good
-adjective:Noble
-gender:Female
-class:Warrior
-race:Human
+adjective:Elf
+gender:Male
+class:Wizard
+race:Elf
 exp:460
 level:2
 maxHp:23

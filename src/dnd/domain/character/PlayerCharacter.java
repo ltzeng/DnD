@@ -1,8 +1,10 @@
 package dnd.domain.character;
 
+import java.util.List;
+
 import dnd.domain.character.AbilityScores;
 
-public class PlayerCharacter {
+public abstract class PlayerCharacter {
 
 	private String characterFileName;
 	private String characterName;
@@ -16,6 +18,8 @@ public class PlayerCharacter {
 	private String adjective;
 	private String gender;
 	private String characterClass;
+	
+	private List<CharacterSkill> Skills;
 	
 	
 	public String getCharacterFileName() {
@@ -89,6 +93,12 @@ public class PlayerCharacter {
 	}
 	public void setCharacterClass(String characterClass) {
 		this.characterClass = characterClass;
+	}
+	public List<CharacterSkill> getSkills() {
+		return Skills;
+	}
+	public void setSkills(List<CharacterSkill> skills) {
+		Skills = skills;
 	}
 	
 	

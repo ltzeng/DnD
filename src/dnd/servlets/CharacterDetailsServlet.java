@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import dnd.domain.character.PlayerCharacter;
 import dnd.utils.PlayerCharacterUtils;
 
-@WebServlet("/CharacterSheet")
-public class CharacterSheetServlet extends HttpServlet {
+@WebServlet("/CharacterDetails")
+public class CharacterDetailsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private PlayerCharacterUtils pcu;
@@ -22,7 +22,7 @@ public class CharacterSheetServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CharacterSheetServlet() {
+    public CharacterDetailsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -7,6 +7,7 @@ import javax.servlet.ServletContext;
 
 import dnd.domain.character.AbilityScores;
 import dnd.domain.character.PlayerCharacter;
+import dnd.domain.character.race.Human;
 
 public class PlayerCharacterParser {
 
@@ -22,14 +23,42 @@ public class PlayerCharacterParser {
 	
 	protected PlayerCharacter translateCharDetails(List<String> charDetails) {
 		
-		PlayerCharacter playerCharacter = new PlayerCharacter();
-		System.out.println(charDetails);
-		if(charDetails!=null) {
+		PlayerCharacter playerCharacter;
+		playerCharacter = getCharacterType(charDetails);
+		if(playerCharacter!=null) {
+			System.out.println(charDetails);
 			for(String line : charDetails) {
 				addPlayerAttribute(line, playerCharacter);
 			}
 		}
+		
 		return playerCharacter;
+	}
+	
+	private PlayerCharacter getCharacterType(List<String> charDetails) {
+		PlayerCharacter pc = null;
+		for(String line : charDetails) {
+			String[] nodes = line.split(":");
+			if(nodes[0].equals("race")) {
+				switch(nodes[1]) {
+				case "Human":
+					pc=new Human();
+					break;
+				case "Dwarf":
+					pc=new Human();
+					break;
+				case "Elf":
+					pc=new Human();
+					break;
+				case "Halfling":
+					pc=new Human();
+					break;
+				}
+				
+				break;
+			}
+		}
+		return pc;
 	}
 
 	private void addPlayerAttribute(String line, PlayerCharacter playerCharacter) {
