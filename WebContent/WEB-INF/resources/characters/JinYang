@@ -5,4 +5,7 @@ exp:460
 level:2
 maxHp:23
 hp:20
-abilityScores:32,16,15,11,13,9
+abilityScores:32,16,15,11,13,5
+adjective:Asian
+gender:Male
+class:Warrior

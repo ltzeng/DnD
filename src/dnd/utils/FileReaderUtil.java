@@ -31,9 +31,8 @@ public class FileReaderUtil {
 	}
 	
 	public List<String> servletReadFile(String fileName, ServletContext context) throws IOException{
-        String filename2 = "/WEB-INF/"+fileName;
         List<String> fileList = new ArrayList<String>();
-        InputStream is = context.getResourceAsStream(filename2);
+        InputStream is = context.getResourceAsStream(fileName);
         if (is != null) {
             InputStreamReader isr = new InputStreamReader(is);
             BufferedReader reader = new BufferedReader(isr);

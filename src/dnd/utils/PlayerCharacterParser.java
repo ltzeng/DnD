@@ -57,6 +57,15 @@ public class PlayerCharacterParser {
 		case "hp":
 			playerCharacter.setHp(Integer.parseInt(nodes[1]));
 			break;
+		case "gender":
+			playerCharacter.setGender(nodes[1]);
+			break;
+		case "adjective":
+			playerCharacter.setAdjective(nodes[1]);
+			break;
+		case "class":
+			playerCharacter.setCharacterClass(nodes[1]);
+			break;
 		case "abilityScores":
 			String[] characterScores = nodes[1].split(",");
 			int[] asArr = new int[characterScores.length];
@@ -73,7 +82,7 @@ public class PlayerCharacterParser {
 		FileReaderUtil fru = new FileReaderUtil();
 		List<String> characterDetails = null;
 		try {
-			 characterDetails = fru.servletReadFile("characters/"+name, servlet);
+			 characterDetails = fru.servletReadFile(UtilConstants.FILE_PATH_PREFIX+name, servlet);
 		} catch (IOException e) {
 			System.out.println("cannot find character");
 			return null;

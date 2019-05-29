@@ -18,6 +18,43 @@ public class AbilityScores {
 		this.cha=abilityScoresArr[5];
 	}
 
+	public String getStrMod() {
+		return str +getModifier(str);
+	}
+	public String getDexMod() {
+		return dex +getModifier(dex);
+	}
+	public String getConMod() {
+		return con +getModifier(con);
+	}
+	public String getIntelMod() {
+		return intel +getModifier(intel);
+	}
+	public String getWisMod() {
+		return wis +getModifier(wis);
+	}
+	public String getChaMod() {
+		return cha +getModifier(cha);
+	}
+	
+	private String getModifier(int score) {
+		
+		if(score<=1) {
+			return "(-5)"; 
+		}else if(score<=3) {
+			return "(-4)";
+		}else if(score<=5) {
+			return "(-3)";
+		}else if(score<=7) {
+			return "(-2)";
+		}else if(score<=9) {
+			return "(-1)";
+		}else {
+			int newScore = (score-10)/2;
+			return "(+"+newScore+")";
+		}
+	}
+
 	public int getStr() {
 		return str;
 	}

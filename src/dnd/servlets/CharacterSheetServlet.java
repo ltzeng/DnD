@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import dnd.domain.character.PlayerCharacter;
 import dnd.utils.PlayerCharacterUtils;
 
-/**
- * Servlet implementation class CharacterSheet
- */
 @WebServlet("/CharacterSheet")
 public class CharacterSheetServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,6 +33,16 @@ public class CharacterSheetServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		String name = request.getParameter("charName");
+		
+		pcu = new PlayerCharacterUtils();
+        try {
+        	pc = pcu.getCharacter(name, getServletContext());
+        } catch (Exception e) {
+            getServletContext().log("An exception occurred in CharacterSheet", e);
+            throw new ServletException("An exception occurred in CharacterSheet " + e.getMessage());
+        }
+        
 		request.setAttribute("characterName", pc.getCharacterName());
 		request.setAttribute("level", pc.getLevel());
 		response.getWriter().append(pc.getCharacterName());
@@ -54,31 +61,7 @@ public class CharacterSheetServlet extends HttpServlet {
 	
 	@Override
     public void init() throws ServletException {
-		System.out.println("##########################");
-		System.out.println("##########################");
-		System.out.println("##########################");
-//		ServletContext context = this.getServletContext();
-//		System.out.println(getServletContext().getResourceAsStream("WEB-INF/characters/JinYang"));
-//		Properties prop=new Properties();
-//		try {
-//			prop.load(getServletContext().getResourceAsStream("WEB-INF/characters/JinYang"));
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		for(Object key : prop.keySet()) {
-//			System.out.println(key);
-//		}
 		
-		
-		pcu = new PlayerCharacterUtils();
-        try {
-        	pc = pcu.getCharacter("JinYang", getServletContext());
-        } catch (Exception e) {
-            getServletContext().log("An exception occurred in CharacterSheet", e);
-            throw new ServletException("An exception occurred in CharacterSheet "
-                    + e.getMessage());
-        }
     }
 
     public void destroy() {

@@ -13,6 +13,9 @@ public class PlayerCharacter {
 	private Integer maxHp;
 	private Integer hp;
 	private AbilityScores abilityScores;
+	private String adjective;
+	private String gender;
+	private String characterClass;
 	
 	
 	public String getCharacterFileName() {
@@ -68,6 +71,24 @@ public class PlayerCharacter {
 	}
 	public void setAbilityScores(AbilityScores abilityScores) {
 		this.abilityScores = abilityScores;
+	}
+	public String getAdjective() {
+		return adjective;
+	}
+	public void setAdjective(String adjective) {
+		this.adjective = adjective;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public String getCharacterClass() {
+		return characterClass;
+	}
+	public void setCharacterClass(String characterClass) {
+		this.characterClass = characterClass;
 	}
 	
 	
