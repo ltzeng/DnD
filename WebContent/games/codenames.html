@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html>
+<title>Cod-eh-nah-mes</title>
+<meta charset="UTF-8">
+<meta name="google" content="notranslate" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style>
+	.cell { text-align: center;float:left;position: relative;width: 12%; margin:1.66%;background : #EDE2CC; color : black;overflow:hidden;cursor: pointer; }
+	.row { clear: both; overflow: hidden; }
+	.word {display: inline-block; font-size: 40px; font-weight: bold; font-family: arvo; margin-top: 19%; margin-bottom: 19%}
+	.redLight{background : #fbc1c1 !important;}
+	.blueLight{background : #D7DCFC !important;}
+	.redText {color : red}
+	.blueText {color : blue}
+	.red {background : red; color : white}
+	.blue {background : blue; color : white}
+	.black {background : black; color : white}
+	.hidden {background-color:#E8E8E8 !important; color : black}
+	.red-remaining {color:red;}
+	.blue-remaining {color:blue;}
+	
+	.container {display: flex;}
+	.container > div {width : 15%;}
+	.word-answer {font-size: 25px; font-weight: bold; font-family: arvo;}
+	.red-2 {color : #db0f0f}
+	.blue-2 {color : #034f84}
+	.grey-2 {color : #686256}
+	.black-2 {font-size: 30px !important;
+</style>
+<body>
+
+
+
+<div class="main-game">
+	<table id="header" width="100%">
+		<tr>
+			<td>
+				<div>
+					<button id="start-game-btn" style="display: none;" onclick="startGame()">Start Game</button>
+					<button id="change-words-btn" onclick="toggleChangeWords()">Change Words</button>
+					<button id="end-turn-btn" style="display: none;" onclick="endTurn()">End Turn</button>
+					<button id="new-game-btn" style="display: none;" onclick="newGame()">New Game</button>
+					<div id="remaining"><span class="red-remaining"></span><span id="middle-remaining"></span><span class="blue-remaining"></span></div>
+				</div>
+			</td>
+			<td width="25%" align="center">
+				<div class="redText"><span id="redEmoji"></span></div>
+				<div><span id="notice-banner">Welcome To CO-DEY-NAM-AYS</span></div>
+				<div class="blueText"><span id="blueEmoji"></span></div>
+			</td>
+			<td align="right">
+				<div>
+					<button id="adult-mode-btn" onclick="change()">Change Theme</button>
+				</div>
+			</td>
+			<td align="right">
+				<div id="admin-page">
+					<button id="populate-email" onclick="showAdminPage()">Admin Page</button>
+					
+				</div>
+			</td>
+		</tr>
+	</table>
+    <div class="row">
+        <div id="0" class="cell hidden"><span class="word"></div>
+		<div id="1" class="cell hidden"><span class="word"></div>
+        <div id="2" class="cell hidden"><span class="word"></div>
+        <div id="3" class="cell hidden"><span class="word"></div>
+        <div id="4" class="cell hidden"><span class="word"></div>
+        
+    </div>
+    <div class="row">
+		<div id="5" class="cell hidden"><span class="word"></div>
+        <div id="6" class="cell hidden"><span class="word"></div>
+        <div id="7" class="cell hidden"><span class="word"></div>
+        <div id="8" class="cell hidden"><span class="word"></div>
+        <div id="9" class="cell hidden"><span class="word"></div>
+    </div>
+    <div class="row">
+		<div id="10" class="cell hidden"><span class="word"></div>
+        <div id="11" class="cell hidden"><span class="word"></div>
+        <div id="12" class="cell hidden"><span class="word"></div>
+        <div id="13" class="cell hidden"><span class="word"></div>
+        <div id="14" class="cell hidden"><span class="word"></div>
+    </div>
+    <div class="row">
+		<div id="15" class="cell hidden"><span class="word"></div>
+        <div id="16" class="cell hidden"><span class="word"></div>
+        <div id="17" class="cell hidden"><span class="word"></div>
+        <div id="18" class="cell hidden"><span class="word"></div>
+        <div id="19" class="cell hidden"><span class="word"></div>
+    </div>
+    <div class="row">
+		<div id="20" class="cell hidden"><span class="word"></div>
+        <div id="21" class="cell hidden"><span class="word"></div>
+        <div id="22" class="cell hidden"><span class="word"></div>
+        <div id="23" class="cell hidden"><span class="word"></div>
+        <div id="24" class="cell hidden"><span class="word"></div>
+    </div>
+</div>
+
+<script>
+
+$(".hidden").on("click", function() {
+	if(!gameOver){
+		if(!gameStarted){
+			$(this).children().text(wordBank[0]);
+			usedWords.push(wordBank[0]);
+			wordBank.splice(0,1);
+		}else{
+			$(this).removeClass("hidden");
+			$("#end-turn-btn").show();
+			$("#new-game-btn").show();
+			checkScore($(this).attr("class"));
+			$("#change-words-btn").hide();
+		}
+	}
+});
+
+var gameStarted = true;
+var gameOver = false;
+var redTurn = true;
+var usedWords = [];
+var availableNumbers = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+var boardWordBank =[];
+var redList=[];
+var blueList=[];
+var blackIndex;
+var blackWord;
+var wordBank=[];
+init();
+function init(){
+	wordBank = generateWordBank();
+
+	shuffle(availableNumbers);
+	shuffle(wordBank);
+
+	setScores();
+	generateBoard();
+}
+
+change = changeToAdult;
+
+function changeToAdult(){
+	var wordBank = generateWordBankDark();
+	shuffle(wordBank);
+	
+	setScores();
+	generateBoard();
+	document.body.style.backgroundColor = "#3e4444";
+  change = changeToVanilla;
+}
+
+function changeToVanilla(){
+	var wordBank = generateWordBank();
+	shuffle(wordBank);
+	
+	setScores();
+	generateBoard();
+	document.body.style.backgroundColor = "#ffffff";
+  change = changeToAdult;
+}
+
+function updateMail(){
+	var mailString = "mailto:" + $("#blueLeader").val() + "," + $("#redLeader").val() + "?subject=CodeNames Keys&body=%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A " + 
+		"%0A%0A%0A%0A%0A%0A%0A" +
+		"Blue %0A" + blueList +
+		"%0A%0A%0A%0A%0A%0A%0A" +
+		"Red %0A" + redList + 
+		"%0A%0A Black  " + blackWord +
+		"%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A%0A";
+
+	$("#mail-link").attr("href", mailString);
+	//$("#populate-email").hide();
+	$("#mail-link").show();
+}
+
+function resetMail(){
+	console.log("this is called")
+	$("#mail-link").attr("href", "");
+	$("#populate-email").show();
+	$("#mail-link").hide();
+}
+
+function getBoardWordBank(){
+	var counter = 0;
+	for(var x=0; x<availableNumbers.length; x++){
+		boardWordBank.push(wordBank[0]);
+		usedWords.push(wordBank[x]);
+		wordBank.splice(0,1);
+	}
+}
+
+function createTeamList(){
+	var redCount = 9;
+	var blueCount = 8;
+	if(!redTurn){
+		redCount = 8;
+		blueCount = 9;
+	}
+	for(var x=0; x<redCount; x++){
+		redList.push(boardWordBank[x]);
+	}
+	for(var y=redCount; y<redCount+blueCount; y++){
+		blueList.push(boardWordBank[y]);
+	}
+	blackIndex = boardWordBank[18];
+	blackWord = blackIndex;
+}
+
+function generateBoard(){
+	shuffle(availableNumbers);
+	boardWordBank = [];
+	redList = [];
+	blueList = [];
+
+	getBoardWordBank();
+	createTeamList();
+	shuffle(boardWordBank);
+
+	for(var x=0; x<availableNumbers.length; x++){
+		var value = boardWordBank[x];
+		$("#" + x).children().text(value);
+		
+		if(redList.includes(value)){
+			$("#" + x).addClass("red");
+		}else if(blueList.includes(value)){
+			$("#" + x).addClass("blue");
+		}else if(blackIndex===value){
+			$("#" + x).addClass("black");
+		}else{
+			$("#" + x).addClass("neutral");
+		}
+	}
+}
+
+function startGame(){
+	gameStarted=true;
+	$("#start-game-btn").hide();
+	$("#notice-banner").text("");
+	$("#end-turn-btn").show();
+	$("#new-game-btn").show();
+	setTurn();
+	setScores();
+}
+
+function newGame(){
+	for(var x=0; x<25; x++){
+		$("#" + x).removeClass();
+		$("#" + x).addClass("cell hidden");
+	}
+	gameOver=false;
+	$("#notice-banner").removeClass();
+	$("#notice-banner").text("");
+	generateBoard();
+	setScores();
+	setTurn();
+
+	$("#change-words-btn").show();
+}
+
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function setScores(){
+	var redScore = 8;
+	var blueScore = 9;
+	if(redTurn){
+		redScore = 9;
+		blueScore = 8;
+	}
+	$(".red-remaining").text(redScore);
+	$("#middle-remaining").text(" - ");
+	$(".blue-remaining").text(blueScore);
+	
+}
+
+function setTurn(){
+	if(redTurn){
+		$("#notice-banner").text("Red Turn");
+		$("#notice-banner").removeClass("blueText");
+		$("#notice-banner").addClass("redText");
+	}else{
+		$("#notice-banner").text("Blue Turn");
+		$("#notice-banner").removeClass("redText");
+		$("#notice-banner").addClass("blueText");
+	}
+}
+
+function checkScore(cellClass){
+	if(cellClass === "cell neutral"){
+		endTurn();
+	}else if(cellClass === "cell red"){
+		var count = parseInt($(".red-remaining").text());
+		count = count-1;
+		$(".red-remaining").text(count)
+		if(count===0){
+			setWinner("red");
+		}else{
+			if(!redTurn){
+				endTurn();
+			}
+		}
+	}else if(cellClass === "cell blue"){
+		var count = parseInt($(".blue-remaining").text());
+		count = count-1;
+		$(".blue-remaining").text(count)
+		if(count===0){
+			setWinner("blue");
+		}else{
+			if(redTurn){
+				endTurn();
+			}
+		}
+	}else if(cellClass === "cell black"){
+		if(redTurn){
+			setWinner("blue")
+		}else{
+			setWinner("red")
+		}
+	}
+}
+
+function setWinner(color){
+	$("#notice-banner").text(color + " wins!");
+	$("#notice-banner").addClass(color + "-remaining");
+	gameOver = true;
+	showHiddenAnswersAfter();
+	$("#end-turn-btn").hide();
+}
+
+function showHiddenAnswersAfter(){
+	for(var x=0; x<25; x++){
+		var className = $("#"+x).attr("class");
+		if(className==="cell hidden red"){
+			$("#"+x).addClass("redLight");
+			$("#"+x).removeClass("hidden red");
+		}else if(className==="cell hidden blue"){
+			$("#"+x).addClass("blueLight");
+			$("#"+x).removeClass("hidden blue");
+		}else if(className==="cell hidden black"){
+			$("#"+x).removeClass("hidden");
+		}
+	}
+}
+
+function endTurn(){
+	if(redTurn){
+		redTurn = false;
+		setTurn();
+	}else{
+		redTurn = true;
+		setTurn();
+	}
+}
+
+function toggleChangeWords(){
+	gameStarted=false;
+	$("#notice-banner").text("Click Box To Change Word");
+	$("#change-words-btn").hide();
+	$("#start-game-btn").show();
+}
+
+function generateWordBankDark(){
+	wordBank=[
+	"Horse",
+	"Alcohol",
+	"Bitch",
+	"Hole",
+	"Balloon",
+	"Knob",
+	"Bender",
+	"Mushroom",
+	"Fatty",
+	"Mole",
+	"Brown",
+	"Ice",
+	"Hamster",
+	"Pillows",
+	"Carpet",
+	"Fish",
+	"Grass",
+	"Drunk",
+	"Cheek",
+	"Keg",
+	"Rectum",
+	"Cocktail",
+	"Cucumber",
+	"Noodle",
+	"Motel",
+	"Kinky",
+	"Joint",
+	"Poop",
+	"Line",
+	"Briefs",
+	"Sauna",
+	"Sausage",
+	"Score",
+	"Secretary",
+	"Semen",
+	"Sex",
+	"Shaft",
+	"Shame",
+	"Share",
+	"Shave",
+	"Shower",
+	"Skank",
+	"Skirt",
+	"Smell",
+	"Smoke",
+	"Snatch",
+	"Sniff",
+	"Softballs",
+	"Solo",
+	"Spank",
+	"Speed",
+	"Sperm",
+	"Spoon",
+	"Spread",
+	"Squirt",
+	"Stalker",
+	"Steamy",
+	"Stiff",
+	"Stiletto",
+	"Stones",
+	"Hooker",
+	"Pecker",
+	"Sheep",
+	"Roll",
+	"Regret",
+	"Gang",
+	"Peaches",
+	"Couple",
+	"Slut",
+	"Orgasm",
+	"Oyster",
+	"Melons",
+	"Gigolo",
+	"Latex",
+	"Cuffs",
+	"Rookie",
+	"Prick",
+	"Kitty",
+	"Lizard",
+	"Boxers",
+	"Missionary",
+	"Emission",
+	"Seed",
+	"Doggy",
+	"Lotion",
+	"Bust",
+	"Mesh",
+	"Nurse",
+	"Turd",
+	"Naked",
+	"Stool",
+	"Straight",
+	"Strap",
+	"Strip",
+	"Stripper",
+	"Stud",
+	"Swallow",
+	"Sweat",
+	"Swimmers",
+	"Taboo",
+	"Taco",
+	"Tail",
+	"Tap",
+	"Tavern",
+	"Teabag",
+	"Tease",
+	"Tent",
+	"Tequila",
+	"Threesome",
+	"Throat",
+	"Tickle",
+	"tie",
+	"Tip",
+	"Tit",
+	"Tongue",
+	"Tool",
+	"Top",
+	"Torture",
+	"Touch",
+	"Orgy",
+	"Touchdown",
+	"Toy",
+	"Train",
+	"Tramp",
+	"Trim",
+	"Trousers",
+	"Trunk",
+	"Tubesteak",
+	"Tuna",
+	"Twig",
+	"Udders",
+	"Uranus",
+	"Vasectomy",
+	"Vegas",
+	"Vein",
+	"Vibrator",
+	"Video",
+	"Vinyl",
+	"Virgin",
+	"Vodka",
+	"Vomit",
+	"Wad",
+	"Wang",
+	"Waste",
+	"Watch",
+	"Wax",
+	"Weed",
+	"Wench",
+	"Wet",
+	"Whip",
+	"Mouth",
+	"Sore",
+	"Mattress",
+	"Freak",
+	"Homerun",
+	"Screw",
+	"Flower",
+	"Strobe",
+	"Pound",
+	"Roof",
+	"Salad",
+	"Rack",
+	"Pie",
+	"Smegma",
+	"Shot",
+	"Snort",
+	"Baked",
+	"Bottom",
+	"Breast",
+	"Pinch",
+	"Sin",
+	"Diarrhea",
+	"Intern",
+	"Beer",
+	"Flesh",
+	"Skid",
+	"Facial",
+	"Bong",
+	"Daddy",
+	"Chest",
+	"Snake",
+	"Black",
+	"Bondage",
+	"Foreskin",
+	"Bar",
+	"Safe",
+	"Sack",
+	"Rug",
+	"Roach",
+	"Red",
+	"Rave",
+	"Queer",
+	"Queen",
+	"Queef",
+	"Purple",
+	"Pucker",
+	"Pub",
+	"Prostate",
+	"Prison",
+	"Pot",
+	"Porn",
+	"Pork",
+	"Pole",
+	"Poker",
+	"Player",
+	"Pitcher",
+	"Pipe",
+	"Pink",
+	"Pimp",
+	"Pig",
+	"Whiskey",
+	"White",
+	"Wiener",
+	"Wine",
+	"Wood",
+	"Girl",
+	"Job",
+	"Butt",
+	"Brownie",
+	"Lube",
+	"Inch",
+	"Lingerie",
+	"Group",
+	"Hot",
+	"Gash",
+	"Film",
+	"G-Spot",
+	"Chains",
+	"Donkey",
+	"Lips",
+	"Cuddle",
+	"Bottle",
+	"Champagne",
+	"Gerbil",
+	"Balls",
+	"Knees",
+	"Cherry",
+	"Gangbang",
+	"Hell",
+	"Jugs",
+	"Pickle",
+	"Period",
+	"Penis",
+	"Pee",
+	"Paddle",
+	"Package",
+	"Onion",
+	"Nylon",
+	"Nuts",
+	"Nude",
+	"Nipple",
+	"Needle",
+	"Necklace",
+	"Navel",
+	"Nail",
+	"Mug",
+	"Movie",
+	"Motorboat",
+	"Monkey",
+	"Mom",
+	"Moist",
+	"Mixer",
+	"Milk",
+	"Member",
+	"Meat",
+	"Martini",
+	"Lust",
+	"Love",
+	"Liquor",
+	"Lighter",
+	"Hose",
+	"Couch",
+	"Furry",
+	"Experiment",
+	"Cowgirl",
+	"Grope",
+	"Bowl",
+	"Lick",
+	"Blonde",
+	"Eat",
+	"Gay",
+	"Escort",
+	"Commando",
+	"Gag",
+	"Hand",
+	"Bang",
+	"Jazz",
+	"Crabs",
+	"Douche",
+	"Finger",
+	"Manboobs",
+	"Crack",
+	"Loose",
+	"Bartender",
+	"Cream",
+	"Lobster",
+	"Knockers",
+	"Coyote",
+	"Burn",
+	"Cannons"
+	]
+	return wordBank;
+}
+
+function generateWordBank(){
+	wordBank = [
+	"Acne",
+	"Acre",
+	"Addendum",
+	"Advertise",
+	"Aircraft",
+	"Aisle",
+	"Alligator",
+	"Alphabetize",
+	"America",
+	"Ankle",
+	"Apathy",
+	"Applause",
+	"Applesauc",
+	"Application",
+	"Archaeologist",
+	"Aristocrat",
+	"Arm",
+	"Armada",
+	"Asleep",
+	"Astronaut",
+	"Athlete",
+	"Atlantis",
+	"Aunt",
+	"Avocado",
+	"Baby-Sitter",
+	"Backbone",
+	"Bag",
+	"Baguette",
+	"Bald",
+	"Balloon",
+	"Banana",
+	"Banister",
+	"Baseball",
+	"Baseboards",
+	"Basketball",
+	"Bat",
+	"Battery",
+	"Beach",
+	"Beanstalk",
+	"Bedbug",
+	"Beer",
+	"Beethoven",
+	"Belt",
+	"Bib",
+	"Bicycle",
+	"Big",
+	"Bike",
+	"Billboard",
+	"Bird",
+	"Birthday",
+	"Bite",
+	"Blacksmith",
+	"Blanket",
+	"Bleach",
+	"Blimp",
+	"Blossom",
+	"Blueprint",
+	"Blunt",
+	"Blur",
+	"Boa",
+	"Boat",
+	"Bob",
+	"Bobsled",
+	"Body",
+	"Bomb",
+	"Bonnet",
+	"Book",
+	"Booth",
+	"Bowtie",
+	"Box",
+	"Boy",
+	"Brainstorm",
+	"Brand",
+	"Brave",
+	"Bride",
+	"Bridge",
+	"Broccoli",
+	"Broken",
+	"Broom",
+	"Bruise",
+	"Brunette",
+	"Bubble",
+	"Buddy",
+	"Buffalo",
+	"Bulb",
+	"Bunny",
+	"Bus",
+	"Buy",
+	"Cabin",
+	"Cafeteria",
+	"Cake",
+	"Calculator",
+	"Campsite",
+	"Can",
+	"Canada",
+	"Candle",
+	"Candy",
+	"Cape",
+	"Capitalism",
+	"Car",
+	"Cardboard",
+	"Cartography",
+	"Cat",
+	"Cd",
+	"Ceiling",
+	"Cell",
+	"Century",
+	"Chair",
+	"Chalk",
+	"Champion",
+	"Charger",
+	"Cheerleader",
+	"Chef",
+	"Chess",
+	"Chew",
+	"Chicken",
+	"Chime",
+	"China",
+	"Chocolate",
+	"Church",
+	"Circus",
+	"Clay",
+	"Cliff",
+	"Cloak",
+	"Clockwork",
+	"Clown",
+	"Clue",
+	"Coach",
+	"Coal",
+	"Coaster",
+	"Cog",
+	"Cold",
+	"College",
+	"Comfort",
+	"Computer",
+	"Cone",
+	"Constrictor",
+	"Continuum",
+	"Conversation",
+	"Cook",
+	"Coop",
+	"Cord",
+	"Corduroy",
+	"Cot",
+	"Cough",
+	"Cow",
+	"Cowboy",
+	"Crayon",
+	"Cream",
+	"Crisp",
+	"Criticize",
+	"Crow",
+	"Cruise",
+	"Crumb",
+	"Crust",
+	"Cuff",
+	"Curtain",
+	"Cuticle",
+	"Czar",
+	"Dad",
+	"Dart",
+	"Dawn",
+	"Day",
+	"Deep",
+	"Defect",
+	"Dent",
+	"Dentist",
+	"Desk",
+	"Dictionary",
+	"Dimple",
+	"Dirty",
+	"Dismantle",
+	"Ditch",
+	"Diver",
+	"Doctor",
+	"Dog",
+	"Doghouse",
+	"Doll",
+	"Dominoes",
+	"Door",
+	"Dot",
+	"Drain",
+	"Draw",
+	"Dream",
+	"Dress",
+	"Drink",
+	"Drip",
+	"Drums",
+	"Dryer",
+	"Duck",
+	"Dump",
+	"Dunk",
+	"Dust",
+	"Ear",
+	"Eat",
+	"Ebony",
+	"Elbow",
+	"Electricity",
+	"Elephant",
+	"Elevator",
+	"Elf",
+	"Elm",
+	"Engine",
+	"England",
+	"Ergonomic",
+	"Escalator",
+	"Eureka",
+	"Europe",
+	"Evolution",
+	"Extension",
+	"Eyebrow",
+	"Fan",
+	"Fancy",
+	"Fast",
+	"Feast",
+	"Fence",
+	"Feudalism",
+	"Fiddle",
+	"Figment",
+	"Finger",
+	"Fire",
+	"First",
+	"Fishing",
+	"Fix",
+	"Fizz",
+	"Flagpole",
+	"Flannel",
+	"Flashlight",
+	"Flock",
+	"Flotsam",
+	"Flower",
+	"Flu",
+	"Flush",
+	"Flutter",
+	"Fog",
+	"Foil",
+	"Football",
+	"Forehead",
+	"Forever",
+	"Fortnight",
+	"France",
+	"Freckle",
+	"Freight",
+	"Fringe",
+	"Frog",
+	"Frown",
+	"Gallop",
+	"Game",
+	"Garbage",
+	"Garden",
+	"Gasoline",
+	"Gem",
+	"Ginger",
+	"Gingerbread",
+	"Girl",
+	"Glasses",
+	"Goblin",
+	"Gold",
+	"Goodbye",
+	"Grandpa",
+	"Grape",
+	"Grass",
+	"Gratitude",
+	"Gray",
+	"Green",
+	"Guitar",
+	"Gum",
+	"Gumball",
+	"Hair",
+	"Half",
+	"Handle",
+	"Handwriting",
+	"Hang",
+	"Happy",
+	"Hat",
+	"Hatch",
+	"Headache",
+	"Heart",
+	"Hedge",
+	"Helicopter",
+	"Hem",
+	"Hide",
+	"Hill",
+	"Hockey",
+	"Homework",
+	"Honk",
+	"Hopscotch",
+	"Horse",
+	"Hose",
+	"Hot",
+	"House",
+	"Houseboat",
+	"Hug",
+	"Humidifier",
+	"Hungry",
+	"Hurdle",
+	"Hurt",
+	"Hut",
+	"Ice",
+	"Implode",
+	"Inn",
+	"Inquisition",
+	"Intern",
+	"Internet",
+	"Invitation",
+	"Ironic",
+	"Ivory",
+	"Ivy",
+	"Jade",
+	"Japan",
+	"Jeans",
+	"Jelly",
+	"Jet",
+	"Jig",
+	"Jog",
+	"Journal",
+	"Jump",
+	"Key",
+	"Killer",
+	"Kilogram",
+	"King",
+	"Kitchen",
+	"Kite",
+	"Knee",
+	"Kneel",
+	"Knife",
+	"Knight",
+	"Koala",
+	"Lace",
+	"Ladder",
+	"Ladybug",
+	"Lag",
+	"Landfill",
+	"Lap",
+	"Laugh",
+	"Laundry",
+	"Law",
+	"Lawn",
+	"Lawnmower",
+	"Leak",
+	"Leg",
+	"Letter",
+	"Level",
+	"Lifestyle",
+	"Ligament",
+	"Light",
+	"Lightsaber",
+	"Lime",
+	"Lion",
+	"Lizard",
+	"Log",
+	"Loiterer",
+	"Lollipop",
+	"Loveseat",
+	"Loyalty",
+	"Lunch",
+	"Lunchbox",
+	"Lyrics",
+	"Machine",
+	"Macho",
+	"Mailbox",
+	"Mammoth",
+	"Mark",
+	"Mars",
+	"Mascot",
+	"Mast",
+	"Matchstick",
+	"Mate",
+	"Mattress",
+	"Mess",
+	"Mexico",
+	"Midsummer",
+	"Mine",
+	"Mistake",
+	"Modern",
+	"Mold",
+	"Mom",
+	"Monday",
+	"Money",
+	"Monitor",
+	"Monster",
+	"Mooch",
+	"Moon",
+	"Mop",
+	"Moth",
+	"Motorcycle",
+	"Mountain",
+	"Mouse",
+	"Mower",
+	"Mud",
+	"Music",
+	"Mute",
+	"Nature",
+	"Negotiate",
+	"Neighbor",
+	"Nest",
+	"Neutron",
+	"Niece",
+	"Night",
+	"Nightmare",
+	"Nose",
+	"Oar",
+	"Observatory",
+	"Office",
+	"Oil",
+	"Old",
+	"Olympian",
+	"Opaque",
+	"Opener",
+	"Orbit",
+	"Organ",
+	"Organize",
+	"Outer",
+	"Outside",
+	"Ovation",
+	"Overture",
+	"Pail",
+	"Paint",
+	"Pajamas",
+	"Palace",
+	"Pants",
+	"Paper",
+	"Paper",
+	"Park",
+	"Parody",
+	"Party",
+	"Password",
+	"Pastry",
+	"Pawn",
+	"Pear",
+	"Pen",
+	"Pencil",
+	"Pendulum",
+	"Penis",
+	"Penny",
+	"Pepper",
+	"Personal",
+	"Philosopher",
+	"Phone",
+	"Photograph",
+	"Piano",
+	"Picnic",
+	"Pigpen",
+	"Pillow",
+	"Pilot",
+	"Pinch",
+	"Ping",
+	"Pinwheel",
+	"Pirate",
+	"Plaid",
+	"Plan",
+	"Plank",
+	"Plate",
+	"Platypus",
+	"Playground",
+	"Plow",
+	"Plumber",
+	"Pocket",
+	"Poem",
+	"Point",
+	"Pole",
+	"Pomp",
+	"Pong",
+	"Pool",
+	"Popsicle",
+	"Population",
+	"Portfolio",
+	"Positive",
+	"Post",
+	"Princess",
+	"Procrastinate",
+	"Protestant",
+	"Psychologist",
+	"Publisher",
+	"Punk",
+	"Puppet",
+	"Puppy",
+	"Push",
+	"Puzzle",
+	"Quarantine",
+	"Queen",
+	"Quicksand",
+	"Quiet",
+	"Race",
+	"Radio",
+	"Raft",
+	"Rag",
+	"Rainbow",
+	"Rainwater",
+	"Random",
+	"Ray",
+	"Recycle",
+	"Red",
+	"Regret",
+	"Reimbursement",
+	"Retaliate",
+	"Rib",
+	"Riddle",
+	"Rim",
+	"Rink",
+	"Roller",
+	"Room",
+	"Rose",
+	"Round",
+	"Roundabout",
+	"Rung",
+	"Runt",
+	"Rut",
+	"Sad",
+	"Safe",
+	"Salmon",
+	"Salt",
+	"Sandbox",
+	"Sandcastle",
+	"Sandwich",
+	"Sash",
+	"Satellite",
+	"Scar",
+	"Scared",
+	"School",
+	"Scoundrel",
+	"Scramble",
+	"Scuff",
+	"Seashell",
+	"Season",
+	"Sentence",
+	"Sequins",
+	"Set",
+	"Shaft",
+	"Shallow",
+	"Shampoo",
+	"Shark",
+	"Sheep",
+	"Sheets",
+	"Sheriff",
+	"Shipwreck",
+	"Shirt",
+	"Shoelace",
+	"Short",
+	"Shower",
+	"Shrink",
+	"Sick",
+	"Siesta",
+	"Silhouette",
+	"Singer",
+	"Sip",
+	"Skate",
+	"Skating",
+	"Ski",
+	"Slam",
+	"Sleep",
+	"Sling",
+	"Slow",
+	"Slump",
+	"Smith",
+	"Sneeze",
+	"Snow",
+	"Snuggle",
+	"Song",
+	"Space",
+	"Spare",
+	"Speakers",
+	"Spider",
+	"Spit",
+	"Sponge",
+	"Spool",
+	"Spoon",
+	"Spring",
+	"Sprinkler",
+	"Spy",
+	"Square",
+	"Squint",
+	"Stairs",
+	"Standing",
+	"Star",
+	"State",
+	"Stick",
+	"Stockholder",
+	"Stoplight",
+	"Stout",
+	"Stove",
+	"Stowaway",
+	"Straw",
+	"Stream",
+	"Streamline",
+	"Stripe",
+	"Student",
+	"Sun",
+	"Sunburn",
+	"Sushi",
+	"Swamp",
+	"Swarm",
+	"Sweater",
+	"Swimming",
+	"Swing",
+	"Tachometer",
+	"Talk",
+	"Taxi",
+	"Teacher",
+	"Teapot",
+	"Teenager",
+	"Telephone",
+	"Ten",
+	"Tennis",
+	"Thief",
+	"Think",
+	"Throne",
+	"Through",
+	"Thunder",
+	"Tide",
+	"Tiger",
+	"Time",
+	"Tinting",
+	"Tiptoe",
+	"Tiptop",
+	"Tired",
+	"Tissue",
+	"Toast",
+	"Toilet",
+	"Tool",
+	"Toothbrush",
+	"Tornado",
+	"Tournament",
+	"Tractor",
+	"Train",
+	"Trash",
+	"Treasure",
+	"Tree",
+	"Triangle",
+	"Trip",
+	"Truck",
+	"Tub",
+	"Tuba",
+	"Tutor",
+	"Television",
+	"Twang",
+	"Twig",
+	"Twitterpated",
+	"Type",
+	"Unemployed",
+	"Upgrade",
+	"Vest",
+	"Vision",
+	"Wag",
+	"Water",
+	"Watermelon",
+	"Wax",
+	"Wedding",
+	"Weed",
+	"Welder",
+	"Whatever",
+	"Wheelchair",
+	"Whiplash",
+	"Whisk",
+	"Whistle",
+	"White",
+	"Wig",
+	"Will",
+	"Windmill",
+	"Winter",
+	"Wish",
+	"Wolf",
+	"Wool",
+	"World",
+	"Worm",
+	"Wristwatch",
+	"Yardstick",
+	"Zamboni",
+	"Zen",
+	"Zero",
+	"Zipper",
+	"Zone",
+	"Zoo"
+	]
+	return wordBank;
+}
+</script>
+
+<div id='admin-table' style="display: none;">
+	<div class="container">
+		<div id="red-container">
+			<ul id="red-list" class="word-answer red-2" style="list-style-type:none">
+				<li>RED</li><br>
+			</ul>
+		</div>
+		<div id="blue-container">
+			<ul id="blue-list" class="word-answer blue-2" style="list-style-type:none">
+				<li>BLUE</li><br>
+			</ul>
+		</div>  
+		<div id="grey-container">
+			<ul id="grey-list" class="word-answer grey-2" style="list-style-type:none">
+				<li>NEUTRAL</li><br>
+			</ul>
+		</div>
+		<div id="black-container">
+			<ul id="black-list" class="word-answer black-2" style="list-style-type:none" >
+				<li>DEATH</li><br>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script>
+runAdminPage();
+
+function runAdminPage() {
+	if(findGetParameter('admin')==='true'){
+		$(".main-game").hide();
+		
+		var redTemp=findGetParameter('nintendo');
+		var blueTemp=findGetParameter('bethesda');
+		var greyTemp=findGetParameter('activision');
+		var blackTemp=findGetParameter('ea');
+		
+		$("#admin-table").show();
+		
+		createAnswerColumn(redTemp, "red");
+		createAnswerColumn(blueTemp, "blue");
+		createAnswerColumn(greyTemp, "grey");
+		createAnswerColumn(blackTemp, "black");
+		
+		document.body.style.backgroundColor = "#e6e6fa";
+	}
+}
+function createAnswerColumn(answers, color){
+	var answersNodes = answers.split("-");
+	var colorList = color + "-list";
+	for(i=0; i<answersNodes.length; i++){
+		$("#"+colorList).append("<li>"+answersNodes[i]+'</li>');
+	}
+}
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    var items = location.search.substr(1).split("&");
+    for (var index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
+function showAdminPage() {
+	alert("Look Away If You're Not a Captain");
+	var url = window.location.href;
+	url = url + '?admin=true';
+	url=createAdminURL(url);
+	window.open(url, '_blank');
+}
+function createAdminURL(url){
+	var counter=0;
+	var blue='&bethesda=';
+	$('.blue').each(function(i, obj){
+		if(counter!=0){blue=blue+"-"}
+		counter=1;
+		blue=blue+$(this).find("span").text();
+	});
+	$('.blueLight').each(function(i, obj){
+		if(counter!=0){blue=blue+"-"}
+		counter=1;
+		blue=blue+$(this).find("span").text();
+	});
+	
+	counter=0;
+	var red='&nintendo=';
+	$('.red').each(function(i, obj){
+		if(counter!=0){red=red+"-"}
+		counter=1;
+		red=red+$(this).find("span").text();
+	});
+	$('.redLight').each(function(i, obj){
+		if(counter!=0){red=red+"-"}
+		counter=1;
+		red=red+$(this).find("span").text();
+	});
+	
+	counter=0;
+	var neutral='&activision=';
+	$('.neutral').each(function(i, obj){
+		if(counter!=0){neutral=neutral+"-"}
+		counter=1;
+		neutral=neutral+$(this).find("span").text();
+	});
+	
+	counter=0;
+	var black='&ea=';
+	$('.black').each(function(i, obj){
+		if(counter!=0){black=black+"-"}
+		counter=1;
+		black=black+$(this).find("span").text();
+	});
+	var gibberish='&answer=hot-damn-tamales-janet-is-quite-pretty-and-so-are-you-Captain-Toad-Treasure-Tracker-Blossom-Tales-Fillipino-Food-Roast-Pig-Bestt-Est-Ever-Fwenssday-Yoshi-Wooly-World-Soos-Gravity-Dipper-Wendy-Mcdonalds-Horse-Jockey';
+	url=url+gibberish+blue+red+neutral+black;
+	return url;
+}
+</script>
+
+</body>
+</html>
