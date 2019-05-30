@@ -2,9 +2,9 @@ currency:cp:3
 currency:sp:42
 currency:gp:10
 gear:Leather Armor:1
-gear:Longbow:1
-gear:Arrows:18
-gear:Greatsword:1
+weapon:36:Longbow:1
+weapon:19:Greatsword:1
+item:Arrows:18
 item:Backpack:1
 item:Bedroll:1
 item:Mess Kit:1

@@ -1,6 +1,6 @@
-package dnd.domain.character;
+package dnd.domain.character.stuff;
 
-public class Gear {
+public class Item {
 
 	private Integer weight;
 

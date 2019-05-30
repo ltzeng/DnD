@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dnd.domain.character.PlayerCharacter;
+import dnd.utils.EquipmentUtils;
 import dnd.utils.PlayerCharacterUtils;
 
 @WebServlet("/CharacterDetails")
 public class CharacterDetailsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private PlayerCharacterUtils pcu;
+	private PlayerCharacterUtils pcu = new PlayerCharacterUtils();
+	private EquipmentUtils eu = new EquipmentUtils();
 	private PlayerCharacter pc;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -35,16 +38,17 @@ public class CharacterDetailsServlet extends HttpServlet {
 		
 		String name = request.getParameter("charName");
 		
-		pcu = new PlayerCharacterUtils();
         try {
-        	pc = pcu.getCharacter(name, getServletContext());
+            pc = pcu.getCharacter(name, getServletContext());
+            
+            eu.getCharacterEquipmentList(request.getSession(), getServletContext(), pc);
+        	
         } catch (Exception e) {
             getServletContext().log("An exception occurred in CharacterSheet", e);
             throw new ServletException("An exception occurred in CharacterSheet " + e.getMessage());
         }
         
-		request.setAttribute("characterName", pc.getCharacterName());
-		request.setAttribute("level", pc.getLevel());
+		request.setAttribute("character", pc);
 		response.getWriter().append(pc.getCharacterName());
 		response.getWriter().append("\n");
 		response.getWriter().append(pc.getAbilityScores().toString());

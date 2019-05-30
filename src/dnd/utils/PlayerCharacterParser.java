@@ -111,7 +111,7 @@ public class PlayerCharacterParser {
 		FileReaderUtil fru = new FileReaderUtil();
 		List<String> characterDetails = null;
 		try {
-			 characterDetails = fru.servletReadFile(UtilConstants.FILE_PATH_PREFIX+name, servlet);
+			 characterDetails = fru.servletReadFile(UtilConstants.CHARACTER_FILE_PATH_PREFIX+name, servlet);
 		} catch (IOException e) {
 			System.out.println("cannot find character");
 			return null;

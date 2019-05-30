@@ -1,8 +1,11 @@
 package dnd.domain.character;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dnd.domain.character.AbilityScores;
+import dnd.domain.character.stuff.Armor;
+import dnd.domain.character.stuff.Weapon;
 
 public abstract class PlayerCharacter {
 
@@ -18,6 +21,8 @@ public abstract class PlayerCharacter {
 	private String adjective;
 	private String gender;
 	private String characterClass;
+	private List<Weapon> weapons = new ArrayList<Weapon>();
+	private List<Armor> armors = new ArrayList<Armor>();
 	
 	private List<CharacterSkill> Skills;
 	
@@ -100,6 +105,18 @@ public abstract class PlayerCharacter {
 	public void setSkills(List<CharacterSkill> skills) {
 		Skills = skills;
 	}
+    public List<Weapon> getWeapons() {
+        return weapons;
+    }
+    public void setWeapons(List<Weapon> weapons) {
+        this.weapons = weapons;
+    }
+    public List<Armor> getArmors() {
+        return armors;
+    }
+    public void setArmors(List<Armor> armors) {
+        this.armors = armors;
+    }
 	
 	
 	
