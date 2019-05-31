@@ -1,13 +1,16 @@
 playerID=5
-characterName:Joylusion
-background:Folk Hero
-alignment:Lawful Good
+characterName:Illusion
+background:Noble
+alignment:Lawful Neutral
 adjective:Noble
 gender:Female
-class:Warrior
+class:Fighter
 race:Human
-exp:460
+exp:910
 level:2
-maxHp:23
-hp:20
-abilityScores:32,16,15,11,13,9
+maxHp:24
+hp:9
+abilityScores:16,9,15,11,13,14
+armorClass:17
+initiative:-1
+speed:30 ft.

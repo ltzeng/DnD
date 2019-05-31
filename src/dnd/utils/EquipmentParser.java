@@ -35,7 +35,7 @@ public class EquipmentParser {
             weapon.setName(nodes[1]);
 //          weapon.setCost(cost); implement this later
             weapon.setDamage(nodes[3]);
-            weapon.setWeight(Integer.parseInt(nodes[4]));
+            weapon.setWeight(Double.parseDouble(nodes[4]));
             weapon.setProperties(nodes[5]);
             
             weaponsMap.put(weapon.getWeaponID(), weapon);
@@ -69,7 +69,7 @@ public class EquipmentParser {
 //            armor.setCost(Integer.par);
             armor.setArmorClass(nodes[3]);
             armor.setStealth(nodes[4]);
-            armor.setWeight(Integer.parseInt(nodes[5]));
+            armor.setStealth(nodes[5]);
             armor.setWeight(Integer.parseInt(nodes[6]));
             armor.setType(nodes[7]);
             

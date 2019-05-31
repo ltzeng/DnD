@@ -4,7 +4,7 @@ public class Weapon {
 
     private int weaponID;
     private String name;
-    private Integer weight;
+    private Double weight;
     private Integer cost;
     private String damage;
     private String properties;
@@ -28,12 +28,6 @@ public class Weapon {
     public void setWeaponID(int weaponID) {
         this.weaponID = weaponID;
     }
-    public Integer getWeight() {
-        return weight;
-    }
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
     public Integer getCost() {
         return cost;
     }
@@ -46,6 +40,12 @@ public class Weapon {
     public void setName(String name) {
         this.name = name;
     }
+	public Double getWeight() {
+		return weight;
+	}
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
     
     
 }

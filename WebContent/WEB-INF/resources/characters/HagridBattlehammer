@@ -1,13 +1,16 @@
 playerID=3
 characterName:Hagrid Battlehammer
-background:Folk Hero
+background:Soldier
 alignment:Lawful Good
 adjective:Dwarf
 gender:Male
 class:Cleric
-race:Dwarf
-exp:460
+race:Hill Dwarf
+exp:570
 level:2
-maxHp:23
-hp:20
-abilityScores:32,16,15,11,13,9
+maxHp:19
+hp:0
+abilityScores:14,8,15,10,16,12
+armorClass:18
+initiative:-1
+speed:25 ft.

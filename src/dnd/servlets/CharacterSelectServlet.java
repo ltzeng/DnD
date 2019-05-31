@@ -2,6 +2,7 @@ package dnd.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -37,6 +38,7 @@ public class CharacterSelectServlet extends HttpServlet {
 		PlayerCharacterUtils pcu = new PlayerCharacterUtils();
 		List<String> characterNames = pcu.getCharacterNames(getServletContext());
 		List<PlayerCharacter> charactersList = new ArrayList<PlayerCharacter>();
+		System.out.println(characterNames.size());
 		for(String name : characterNames) {
 			PlayerCharacter pc = pcu.getCharacter(name, getServletContext());
 			if(pc.getCharacterName()!=null) {

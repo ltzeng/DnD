@@ -21,10 +21,16 @@ public abstract class PlayerCharacter {
 	private String adjective;
 	private String gender;
 	private String characterClass;
+	private String race;
+	private String speed;
+	private String initiative;
+	private String armorClass;
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<Armor> armors = new ArrayList<Armor>();
-	
 	private List<CharacterSkill> Skills;
+	
+	private List<String> proficiencies;
+	private String hitDice;
 	
 	
 	public String getCharacterFileName() {
@@ -117,7 +123,41 @@ public abstract class PlayerCharacter {
     public void setArmors(List<Armor> armors) {
         this.armors = armors;
     }
-	
-	
+	public String getRace() {
+		return race;
+	}
+	public void setRace(String race) {
+		this.race = race;
+	}
+	public String getSpeed() {
+		return speed;
+	}
+	public void setSpeed(String speed) {
+		this.speed = speed;
+	}
+	public String getInitiative() {
+		return initiative;
+	}
+	public void setInitiative(String initiative) {
+		this.initiative = initiative;
+	}
+	public String getArmorClass() {
+		return armorClass;
+	}
+	public void setArmorClass(String armorClass) {
+		this.armorClass = armorClass;
+	}
+	public List<String> getProficiencies() {
+		return proficiencies;
+	}
+	public void setProficiencies(List<String> proficiencies) {
+		this.proficiencies = proficiencies;
+	}
+	public String getHitDice() {
+		return hitDice;
+	}
+	public void setHitDice(String hitDice) {
+		this.hitDice = hitDice;
+	}
 	
 }

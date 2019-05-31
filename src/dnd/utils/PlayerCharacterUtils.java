@@ -32,7 +32,7 @@ public class PlayerCharacterUtils {
 	public List<String> getCharacterNames(ServletContext context){
 		
 		FileReaderUtil frs = new FileReaderUtil();
-		String fileName = UtilConstants.FILE_PATH_PREFIX + "AllCharacters";
+		String fileName = UtilConstants.CHARACTER_FILE_PATH_PREFIX + "AllCharacters";
 		List<String> characterNames = null;
 		try {
 			characterNames=frs.servletReadFile(fileName, context);

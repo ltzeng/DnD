@@ -1,13 +1,16 @@
-playerID=2
+playerID:2
 characterName:Corra Greenbottle
-background:Folk Hero
-alignment:Lawful Good
+background:Criminal
+alignment:Neutral
 adjective:Halfling
 gender:Female
 class:Rogue
 race:Halfling
-exp:460
+exp:650
 level:2
-maxHp:23
-hp:20
-abilityScores:32,16,15,11,13,9
+maxHp:15
+hp:12
+abilityScores:8,16,12,13,10,16
+armorClass:14
+initiative:+3
+speed:25 ft.

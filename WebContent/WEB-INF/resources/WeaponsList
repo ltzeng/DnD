@@ -9,9 +9,9 @@
 9~Sickle~1 gp~1d4 slashing~2~Light
 10~Spear~1 gp~1d6 piercing~3~Thrown (range 20/60), versatile (1d8)
 11~Crossbow, light~25 gp~1d8 piercing~5~Ammunition (range 80/320), loading, two-handed
-12~Dart~5 cp~1d4 piercing~1/4~Finesse, thrown (range 20/60)
+12~Dart~5 cp~1d4 piercing~.25~Finesse, thrown (range 20/60)
 13~Shortbow~25 gp~1d6 piercing~2~Ammunition (range 80/320), two-handed
-14~Sling~1 sp~1d4 bludgeoning~-~Ammunition (range 30/120)
+14~Sling~1 sp~1d4 bludgeoning~0~Ammunition (range 30/120)
 15~Battleaxe~10 gp~1d8 slashing~4~Versatile (1d10)
 16~Flail~10 gp~1d8 bludgeoning~2~-
 17~Glaive~20 gp~1d10 slashing~6~Heavy, reach, two-handed

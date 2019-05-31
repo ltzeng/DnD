@@ -1,13 +1,16 @@
 playerID=1
 characterName:Bumblesnore Hogwarts
-background:Folk Hero
-alignment:Lawful Good
+background:Acolyte
+alignment:Chaotic Good
 adjective:Elf
 gender:Male
 class:Wizard
-race:Elf
-exp:460
+race:High Elf
+exp:570
 level:2
-maxHp:23
-hp:20
-abilityScores:32,16,15,11,13,9
+maxHp:14
+hp:12
+abilityScores:10,15,14,16,12,8
+armorClass:12
+initiative:+3
+speed:30 ft.

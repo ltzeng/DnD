@@ -1,13 +1,14 @@
-playerID=5
-characterName:Joylusion
-background:Folk Hero
-alignment:Lawful Good
-adjective:Noble
-gender:Female
-class:Warrior
-race:Human
-exp:460
-level:2
-maxHp:23
-hp:20
-abilityScores:32,16,15,11,13,9
+currency:cp:98
+currency:sp:41
+currency:gp:35
+armor:5:Chain Mail:1
+weapon:18:Great Axe:1
+weapon:5:Javelin:1
+item:Backpack:1
+item:Blanket:1
+item:Tinderbox:1
+item:Rations:2
+item:Waterskin:1
+item:Set of Fine Clothes:1
+item:Signet Ring:1
+item:Scroll of Pedigree:1

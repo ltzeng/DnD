@@ -1,8 +1,8 @@
 package dnd.servlets;
 
 import java.io.IOException;
-import java.util.Properties;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,18 +40,15 @@ public class CharacterDetailsServlet extends HttpServlet {
 		
         try {
             pc = pcu.getCharacter(name, getServletContext());
-            
             eu.getCharacterEquipmentList(request.getSession(), getServletContext(), pc);
-        	
         } catch (Exception e) {
             getServletContext().log("An exception occurred in CharacterSheet", e);
             throw new ServletException("An exception occurred in CharacterSheet " + e.getMessage());
         }
         
-		request.setAttribute("character", pc);
-		response.getWriter().append(pc.getCharacterName());
-		response.getWriter().append("\n");
-		response.getWriter().append(pc.getAbilityScores().toString());
+		request.setAttribute("pc", pc);
+		RequestDispatcher view = request.getRequestDispatcher("main/characterDetails.jsp");
+		view.forward(request, response);
 		
 	}
 

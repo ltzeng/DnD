@@ -7,7 +7,10 @@ import javax.servlet.ServletContext;
 
 import dnd.domain.character.AbilityScores;
 import dnd.domain.character.PlayerCharacter;
-import dnd.domain.character.race.Human;
+import dnd.domain.character.classes.Cleric;
+import dnd.domain.character.classes.Fighter;
+import dnd.domain.character.classes.Rogue;
+import dnd.domain.character.classes.Wizard;
 
 public class PlayerCharacterParser {
 
@@ -39,19 +42,19 @@ public class PlayerCharacterParser {
 		PlayerCharacter pc = null;
 		for(String line : charDetails) {
 			String[] nodes = line.split(":");
-			if(nodes[0].equals("race")) {
+			if(nodes[0].equals("class")) {
 				switch(nodes[1]) {
-				case "Human":
-					pc=new Human();
+				case "Fighter":
+					pc=new Fighter();
 					break;
-				case "Dwarf":
-					pc=new Human();
+				case "Wizard":
+					pc=new Wizard();
 					break;
-				case "Elf":
-					pc=new Human();
+				case "Rogue":
+					pc=new Rogue();
 					break;
-				case "Halfling":
-					pc=new Human();
+				case "Cleric":
+					pc=new Cleric();
 					break;
 				}
 				
@@ -94,6 +97,18 @@ public class PlayerCharacterParser {
 			break;
 		case "class":
 			playerCharacter.setCharacterClass(nodes[1]);
+			break;
+		case "race":
+			playerCharacter.setRace(nodes[1]);
+			break;
+		case "armorClass":
+			playerCharacter.setArmorClass(nodes[1]);
+			break;
+		case "initiative":
+			playerCharacter.setInitiative(nodes[1]);
+			break;
+		case "speed":
+			playerCharacter.setSpeed(nodes[1]);
 			break;
 		case "abilityScores":
 			String[] characterScores = nodes[1].split(",");

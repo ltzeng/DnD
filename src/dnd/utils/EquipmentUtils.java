@@ -2,6 +2,7 @@ package dnd.utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
@@ -14,17 +15,17 @@ public class EquipmentUtils {
 
     public void getCharacterEquipmentList(HttpSession httpSession, ServletContext servletContext, PlayerCharacter pc) {
         
-        Map<Integer,Weapon> weaponsMap=(Map<Integer, Weapon>) httpSession.getAttribute("weaponList");
-        Map<Integer,Armor> armorsMap=(Map<Integer, Armor>) httpSession.getAttribute("armorList");
+        Map<Integer,Weapon> weaponsMap=null;//(Map<Integer, Weapon>) httpSession.getAttribute("weaponList");
+        Map<Integer,Armor> armorsMap=null;//(Map<Integer, Armor>) httpSession.getAttribute("armorList");
         if(weaponsMap==null) {
             EquipmentParser ep = new EquipmentParser();
             weaponsMap=ep.getWeaponsList(servletContext);
-            httpSession.setAttribute("weaponList", weaponsMap);
+//            httpSession.setAttribute("weaponList", weaponsMap);
         }
         if(armorsMap==null) {
             EquipmentParser ep = new EquipmentParser();
             armorsMap=ep.getArmorsList(servletContext);
-            httpSession.setAttribute("armorList", weaponsMap);
+//            httpSession.setAttribute("armorList", weaponsMap);
         }
         
         List<String> equipmentString = readEquipmentList(servletContext, pc);
@@ -39,14 +40,13 @@ public class EquipmentUtils {
              }
              
         }
-        
     }
     
     public List<String> readEquipmentList(ServletContext context, PlayerCharacter pc) {
         FileReaderUtil fru = new FileReaderUtil();
         List<String> equipmentString = null;
         try {
-             equipmentString = fru.servletReadFile(UtilConstants.CHARACTER_FILE_PATH_PREFIX+"/equipment", context);
+             equipmentString = fru.servletReadFile(UtilConstants.CHARACTER_EQUIPMENT_FILE_PATH_PREFIX+pc.getCharacterFileName(), context);
             
         } catch (IOException e) {
             e.printStackTrace();
