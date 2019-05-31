@@ -31,6 +31,7 @@ public abstract class PlayerCharacter {
 	
 	private List<String> proficiencies;
 	private String hitDice;
+	private List<String> savingThrows;
 	
 	
 	public String getCharacterFileName() {
@@ -158,6 +159,12 @@ public abstract class PlayerCharacter {
 	}
 	public void setHitDice(String hitDice) {
 		this.hitDice = hitDice;
+	}
+	public List<String> getSavingThrows() {
+		return savingThrows;
+	}
+	public void setSavingThrows(List<String> savingThrows) {
+		this.savingThrows = savingThrows;
 	}
 	
 }

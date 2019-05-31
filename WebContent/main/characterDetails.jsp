@@ -155,17 +155,6 @@
 		</nav>
 	</footer>
 <script>
-$(document).ready(function() {
-
-    $('#abilityTable tr').click(function() {
-        var href = $(this).find("a").attr("www.google.com");
-        if(href) {
-            window.location = href;
-        }
-    });
-
-});
-
 function abilitiesScoreDetailsNav(charName){
 	window.location="AbilitiesScoreDetails?charName="+charName;
 }

@@ -1,11 +1,16 @@
 package dnd.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dnd.domain.character.PlayerCharacter;
+import dnd.utils.PlayerCharacterUtils;
 
 /**
  * Servlet implementation class AbilitiesScoreDetails
@@ -13,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AbilitiesScoreDetails")
 public class AbilitiesScoreDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private PlayerCharacterUtils pcu = new PlayerCharacterUtils();
+	private PlayerCharacter pc;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,8 +33,18 @@ public class AbilitiesScoreDetails extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		String name = request.getParameter("charName");
+		
+        try {
+            pc = pcu.getCharacter(name, getServletContext());
+        } catch (Exception e) {
+            getServletContext().log("An exception occurred in AbilitiesScoresDetails", e);
+            throw new ServletException("An exception occurred in AbilitiesScoresDetails " + e.getMessage());
+        }
+        request.setAttribute("pc", pc);
+		RequestDispatcher view = request.getRequestDispatcher("main/abilitiesDetails.jsp");
+		view.forward(request, response);
 	}
 
 	/**

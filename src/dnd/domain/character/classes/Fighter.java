@@ -15,5 +15,9 @@ public class Fighter extends PlayerCharacter{
 		proficiencies.add("Martial Weapons");
 		setProficiencies(proficiencies);
 		setHitDice("d10");
+		List<String> savingThrows= new ArrayList<String>();
+		savingThrows.add("Strength");
+		savingThrows.add("Constitution");
+		setSavingThrows(savingThrows);
 	}
 }
