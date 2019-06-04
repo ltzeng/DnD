@@ -1,15 +1,13 @@
 package dnd.utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import dnd.domain.character.PlayerCharacter;
-import dnd.domain.character.stuff.Armor;
-import dnd.domain.character.stuff.Weapon;
+import dnd.domain.character.equipment.Armor;
+import dnd.domain.character.equipment.Weapon;
 
 public class EquipmentUtils {
 

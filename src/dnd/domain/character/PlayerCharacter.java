@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dnd.domain.character.AbilityScores;
-import dnd.domain.character.stuff.Armor;
-import dnd.domain.character.stuff.Weapon;
+import dnd.domain.character.equipment.Armor;
+import dnd.domain.character.equipment.Weapon;
 
 public abstract class PlayerCharacter {
 

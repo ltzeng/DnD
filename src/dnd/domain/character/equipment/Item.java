@@ -1,4 +1,4 @@
-package dnd.domain.character.stuff;
+package dnd.domain.character.equipment;
 
 public class Item {
 

@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
-import dnd.domain.character.stuff.Armor;
-import dnd.domain.character.stuff.Weapon;
+
+import dnd.domain.character.equipment.Armor;
+import dnd.domain.character.equipment.Weapon;
 
 public class EquipmentParser {
 
