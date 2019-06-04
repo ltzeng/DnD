@@ -9,8 +9,10 @@ import dnd.domain.character.equipment.Weapon;
 
 public abstract class PlayerCharacter {
 
+    private Integer characterID;
 	private String characterFileName;
 	private String characterName;
+	private Integer adventureID;
 	private String background;
 	private String alignment;
 	private Integer exp;
@@ -22,13 +24,14 @@ public abstract class PlayerCharacter {
 	private String gender;
 	private String characterClass;
 	private String race;
-	private String speed;
-	private String initiative;
-	private String armorClass;
+	private Integer speed;
+	private Integer initiative;
+	private Integer armorClass;
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<Armor> armors = new ArrayList<Armor>();
 	private List<CharacterSkill> Skills;
 	
+	//not set here, set in character class
 	private List<String> proficiencies;
 	private String hitDice;
 	private List<String> savingThrows;
@@ -130,24 +133,6 @@ public abstract class PlayerCharacter {
 	public void setRace(String race) {
 		this.race = race;
 	}
-	public String getSpeed() {
-		return speed;
-	}
-	public void setSpeed(String speed) {
-		this.speed = speed;
-	}
-	public String getInitiative() {
-		return initiative;
-	}
-	public void setInitiative(String initiative) {
-		this.initiative = initiative;
-	}
-	public String getArmorClass() {
-		return armorClass;
-	}
-	public void setArmorClass(String armorClass) {
-		this.armorClass = armorClass;
-	}
 	public List<String> getProficiencies() {
 		return proficiencies;
 	}
@@ -166,5 +151,35 @@ public abstract class PlayerCharacter {
 	public void setSavingThrows(List<String> savingThrows) {
 		this.savingThrows = savingThrows;
 	}
+    public Integer getAdventureID() {
+        return adventureID;
+    }
+    public void setAdventureID(Integer adventureID) {
+        this.adventureID = adventureID;
+    }
+    public Integer getSpeed() {
+        return speed;
+    }
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
+    }
+    public Integer getInitiative() {
+        return initiative;
+    }
+    public void setInitiative(Integer initiative) {
+        this.initiative = initiative;
+    }
+    public Integer getArmorClass() {
+        return armorClass;
+    }
+    public void setArmorClass(Integer armorClass) {
+        this.armorClass = armorClass;
+    }
+    public Integer getCharacterID() {
+        return characterID;
+    }
+    public void setCharacterID(Integer characterID) {
+        this.characterID = characterID;
+    }
 	
 }
