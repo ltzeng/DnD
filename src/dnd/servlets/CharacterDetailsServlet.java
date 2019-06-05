@@ -36,10 +36,10 @@ public class CharacterDetailsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		String name = request.getParameter("charName");
+		int characterID = Integer.parseInt(request.getParameter("characterID"));
 		
         try {
-            pc = pcu.getCharacter(name, getServletContext());
+            pc = pcu.getCharacter(characterID);
             eu.getCharacterEquipmentList(request.getSession(), getServletContext(), pc);
         } catch (Exception e) {
             getServletContext().log("An exception occurred in CharacterSheet", e);
