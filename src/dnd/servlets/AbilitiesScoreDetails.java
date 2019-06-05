@@ -34,10 +34,10 @@ public class AbilitiesScoreDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String name = request.getParameter("charName");
+		int characterID = Integer.parseInt(request.getParameter("characterID"));
 		
         try {
-            pc = pcu.getCharacter(name, getServletContext());
+            pc = pcu.getCharacter(characterID);
         } catch (Exception e) {
             getServletContext().log("An exception occurred in AbilitiesScoresDetails", e);
             throw new ServletException("An exception occurred in AbilitiesScoresDetails " + e.getMessage());

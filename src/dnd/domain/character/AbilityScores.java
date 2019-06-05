@@ -2,6 +2,7 @@ package dnd.domain.character;
 
 public class AbilityScores {
 
+    private int characterID;
 	private int str;
 	private int dex;
 	private int con;
@@ -109,5 +110,13 @@ public class AbilityScores {
 	public String getEditableValues() {
 		return str+","+dex+","+con+","+intel+","+wis+","+cha;
 	}
+
+    public int getCharacterID() {
+        return characterID;
+    }
+
+    public void setCharacterID(int characterID) {
+        this.characterID = characterID;
+    }
 	
 }

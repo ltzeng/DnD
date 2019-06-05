@@ -35,15 +35,7 @@ public class CharacterSelectServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PlayerCharacterUtils pcu = new PlayerCharacterUtils();
-		List<String> characterNames = pcu.getCharacterNames(getServletContext());
-		List<PlayerCharacter> charactersList = new ArrayList<PlayerCharacter>();
-		System.out.println(characterNames.size());
-		for(String name : characterNames) {
-			PlayerCharacter pc = pcu.getCharacter(name, getServletContext());
-			if(pc.getCharacterName()!=null) {
-				charactersList.add(pc);
-			}
-		}
+		List<PlayerCharacter> charactersList = pcu.getCharacterForAdventure(Integer.parseInt(request.getParameter("adventureID")));
 		request.setAttribute("charactersList", charactersList);
 		
 		RequestDispatcher view = request.getRequestDispatcher("main/mainCharacters.jsp");

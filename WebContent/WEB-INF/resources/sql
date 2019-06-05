@@ -1,0 +1,120 @@
+CREATE TABLE Player_Character (
+  character_id    serial UNIQUE NOT NULL PRIMARY KEY,
+  adventure_id    INTEGER,
+  character_name  VARCHAR(128),
+  background      VARCHAR(128),
+  alignment       VARCHAR(128),
+  exp             INTEGER,
+  level           INTEGER,
+  maxHP           INTEGER,
+  hp              INTEGER,
+  gender          VARCHAR(128),
+  character_class VARCHAR(128),
+  race            VARCHAR(128),
+  speed           INTEGER,
+  initiative      INTEGER,
+  armorClass      INTEGER
+);
+INSERT INTO Player_Character (adventure_id, character_name,background,alignment,exp,level,maxHP, hp, gender, character_class,race,speed,initiative,armorClass)
+VALUES(1,'Joy-llusion','Noble','Lawful Neutral',910,2,24,9,'Female','Fighter','Human',30,-1,17);
+
+CREATE TABLE Ability_Scores (
+  ability_score_id    serial UNIQUE NOT NULL PRIMARY KEY,
+  character_id        INTEGER,
+  str                 INTEGER,
+  dex                 INTEGER,
+  con                 INTEGER,
+  intel               INTEGER,
+  wis                 INTEGER,
+  cha                 INTEGER
+);
+INSERT INTO Ability_Scores (character_id,str,dex,con,intel,wis,cha)
+VALUES(1,16,9,15,11,13,14);
+
+CREATE TABLE Weapons_List (
+  weapon_id           serial UNIQUE NOT NULL PRIMARY KEY,
+  weapon_name         VARCHAR(128),
+  damage              VARCHAR(128),
+  weight              REAL,
+  cost                INTEGER,
+  properties          VARCHAR(128),
+  type                VARCHAR(128)
+);
+
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,properties,type) VALUES(1,'Club',10,'1d4 bludgeoning',2,'Light','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(2,'Dagger',200,'1d4 piercing',1,'Finesse, light, thrown (range 20/60)','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(3,'Greatclub',20,'1d8 bludgeoning',10,'Two-handed','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(4,'Handaxe',500,'1d6 slashing',2,'Light, thrown (range 20/60)','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(5,'Javelin',50,'1d6 piercing',2,'Thrown (range 30/120)','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(6,'Light hammer',200,'1d4 bludgeoning',2,'Light, thrown (range 20/60)','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(7,'Mace',500,'1d6 bludgeoning',4,'-','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(8,'Quarterstaff',20,'1d6 bludgeoning',4,'Versatile (1d8)','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(9,'Sickle',100,'1d4 slashing',2,'Light','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(10,'Spear',100,'1d6 piercing',3,'Thrown (range 20/60), versatile (1d8)','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(11,'Crossbow, light',2500,'1d8 piercing',5,'Ammunition (range 80/320), loading, two-handed','Simple Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(12,'Dart',5,'1d4 piercing',0.25,'Finesse, thrown (range 20/60)','Simple Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(13,'Shortbow',2500,'1d6 piercing',2,'Ammunition (range 80/320), two-handed','Simple Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(14,'Sling',10,'1d4 bludgeoning',0,'Ammunition (range 30/120)','Simple Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(15,'Battleaxe',1000,'1d8 slashing',4,'Versatile (1d10)','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(16,'Flail',1000,'1d8 bludgeoning',2,'-','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(17,'Glaive',2000,'1d10 slashing',6,'Heavy, reach, two-handed','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(18,'Greataxe',3000,'1d12 slashing',7,'Heavy, two-handed','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(19,'Greatsword',5000,'2d6 slashing',6,'Heavy, two-handed','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(20,'Halberd',2000,'1d10 slashing',6,'Heavy, reach, two-handed','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(21,'Lance',1000,'1d12 piercing',6,'Reach, special','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(22,'Longsword',1500,'1d8 slashing',3,'Versatile (1d10)','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(23,'Maul',1000,'2d6 bludgeoning',10,'Heavy, two-handed','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(24,'Morningstar',1500,'1d8 piercing',4,'-','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(25,'Pike',500,'1d10 piercing',18,'Heavy, reach, two-handed','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(26,'Rapier',2500,'1d8 piercing',2,'Finesse','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(27,'Scimitar',2500,'1d6 slashing',3,'Finesse, light','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(28,'Shortsword',1000,'1d6 piercing',2,'Finesse, light','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(29,'Trident',500,'1d6 piercing',4,'Thrown (range 20/60), versatile (1d8)','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(30,'War pick',500,'1d8 piercing',2,'-','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(31,'Warhammer',1500,'1d8 bludgeoning',2,'Versatile (1d10)','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(32,'Whip',200,'1d4 slashing',3,'Finesse, reach','Martial Melee');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(33,'Blowgun',1000,'1 piercing',1,'Ammunition (range 25/100), loading','Martial Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(34,'Crossbow, hand',7500,'1d6 piercing',3,'Ammunition (range 30/120), light, loading','Martial Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(35,'Crossbow, heavy',5000,'1d10 piercing',18,'Ammunition (range 100/400), heavy, loading, two-handed','Martial Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(36,'Longbow',5000,'1d8 piercing',2,'Ammunition (range 150/600), heavy, two-handed','Martial Ranged');
+INSERT INTO Weapons_List (weapon_id,weapon_name,cost,damage,weight,type,properties) VALUES(37,'Net',100,'-',3,'Special, thrown (range 5/15)','Martial Ranged');
+
+
+CREATE TABLE Armor_List (
+  armor_id            serial UNIQUE NOT NULL PRIMARY KEY,
+  armor_name          VARCHAR(128),
+  armor_class         VARCHAR(128),
+  cost                INTEGER,
+  strength			  VARCHAR(128),
+  weight              REAL,
+  stealth             VARCHAR(128),
+  type				  VARCHAR(128)
+);
+
+
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(1,'Padded',500,'11 + Dex modifier','-','Disadvantage',8,'Light');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(2,'Leather',1000,'11 + Dex modifier','-','-',10,'Light');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(3,'Studded leather',4500,'12 + Dex modifier','-','-',13,'Light');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(4,'Hide',1000,'12 + Dex modifier (max 2)','-','-',12,'Medium');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(5,'Chain Shirt',5000,'13 + Dex modifier (max 2)','-','-',20,'Medium');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(6,'Scale Mail',5000,'14 + Dex modifier (max 2)','-','Disadvantage',45,'Medium');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(7,'Breastplate',40000,'14 + Dex modifier (max 2)','-','-',20,'Medium');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(8,'Half plate',75000,'15 + Dex modifier (max 2)','-','Disadvantage',40,'Medium');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(9,'Ring mail',3000,'14','-','Disadvantage',40,'Heavy');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(10,'Chain mail',7500,'16','Str 13','Disadvantage',55,'Heavy');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(11,'Splint',20000,'17','Str 15','Disadvantage',60,'Heavy');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(12,'Plate',150000,'18','Str 15','Disadvantage',65,'Heavy');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(13,'Shield',1000,'2','-','-',6,'Shield');
+INSERT INTO ARMOR_LIST (armor_id,armor_name,cost,armor_class,strength,stealth,weight,type) VALUES(15,'Padded',500,'11 + Dex modifier','-','Disadvantage',8,'Light');
+
+
+
+CREATE TABLE Character_Armor (
+  armor_id            INTEGER,
+  character_id        INTEGER
+);
+
+CREATE TABLE Character_Weapon (
+  weapon_id           INTEGER,
+  character_id        INTEGER
+);

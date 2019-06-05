@@ -102,13 +102,13 @@ public class PlayerCharacterParser {
 			playerCharacter.setRace(nodes[1]);
 			break;
 		case "armorClass":
-			playerCharacter.setArmorClass(nodes[1]);
+			playerCharacter.setArmorClass(Integer.parseInt(nodes[1]));
 			break;
 		case "initiative":
-			playerCharacter.setInitiative(nodes[1]);
+			playerCharacter.setInitiative(Integer.parseInt(nodes[1]));
 			break;
 		case "speed":
-			playerCharacter.setSpeed(nodes[1]);
+			playerCharacter.setSpeed(Integer.parseInt(nodes[1]));
 			break;
 		case "abilityScores":
 			String[] characterScores = nodes[1].split(",");
