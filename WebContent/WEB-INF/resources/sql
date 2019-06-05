@@ -118,3 +118,40 @@ CREATE TABLE Character_Weapon (
   weapon_id           INTEGER,
   character_id        INTEGER
 );
+
+CREATE TABLE Character_Spell_Slots (
+  character_id        INTEGER,
+  spell_slot_1        INTEGER,
+  spell_slot_2        INTEGER,
+  spell_slot_3        INTEGER,
+  spell_slot_4        INTEGER,
+  spell_slot_5        INTEGER,
+  spell_slot_6        INTEGER,
+  spell_slot_7        INTEGER,
+  spell_slot_8        INTEGER,
+  spell_slot_9        INTEGER
+);
+
+
+CREATE TABLE Encounter(
+  encounter_id		serial UNIQUE NOT NULL PRIMARY KEY,
+  description		VARCHAR(128),
+  turn				INTEGER
+);
+
+CREATE TABLE Encounter_Character(
+  encounter_id		INTEGER,
+  character_id		INTEGER,
+  initiative			INTEGER,
+  status				VARCHAR(128),
+  death_success		INTEGER,
+  death_failure		INTEGER
+);
+
+CREATE TABLE Encounter_Enemy(
+  encounter_id		INTEGER,
+  enemy_id			INTEGER,
+  initiative			INTEGER,
+  hp					INTEGER,
+  maxHP				INTEGER
+);

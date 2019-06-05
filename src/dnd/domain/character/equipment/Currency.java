@@ -7,36 +7,42 @@ public class Currency {
     private Integer goldPieces;
     private Integer electrumPieces;
     private Integer platinumPieces;
-    
-    
-    public String getCurrencyDisplay() {
-    	
-    	StringBuilder sb = new StringBuilder();
-    	String prepend = "";
-    	if(copperPieces!=null && copperPieces!=0) {
-    		sb.append(prepend+"CP: " + copperPieces);
-    		prepend=" ";
-    	}
-    	if(silverPieces!=null && silverPieces!=0) {
-    		sb.append(prepend+"SP: " + silverPieces);
-    		prepend=" ";
-    	}
-    	if(goldPieces!=null && goldPieces!=0) {
-    		sb.append(prepend+"GP: " + goldPieces);
-    		prepend=" ";
-    	}
-    	if(electrumPieces!=null && electrumPieces!=0) {
-    		sb.append(prepend+"EP: " + electrumPieces);
-    		prepend=" ";
-    	}
-    	if(platinumPieces!=null && platinumPieces!=0) {
-    		sb.append(prepend+"PP: " + platinumPieces);
-    		prepend=" ";
-    	}
-    	
-    	return sb.toString();
+
+    public double getWeight() {
+        
+        Double count = Double.valueOf(copperPieces + silverPieces + goldPieces + electrumPieces + platinumPieces);
+        count = count/48;
+        return count;
     }
-    
+
+    public String getCurrencyDisplay() {
+
+        StringBuilder sb = new StringBuilder();
+        String prepend = "";
+        if(copperPieces!=null && copperPieces!=0) {
+            sb.append(prepend+"CP: " + copperPieces);
+            prepend=" ";
+        }
+        if(silverPieces!=null && silverPieces!=0) {
+            sb.append(prepend+"SP: " + silverPieces);
+            prepend=" ";
+        }
+        if(goldPieces!=null && goldPieces!=0) {
+            sb.append(prepend+"GP: " + goldPieces);
+            prepend=" ";
+        }
+        if(electrumPieces!=null && electrumPieces!=0) {
+            sb.append(prepend+"EP: " + electrumPieces);
+            prepend=" ";
+        }
+        if(platinumPieces!=null && platinumPieces!=0) {
+            sb.append(prepend+"PP: " + platinumPieces);
+            prepend=" ";
+        }
+
+        return sb.toString();
+    }
+
     public Integer getCopperPieces() {
         return copperPieces;
     }
@@ -67,6 +73,6 @@ public class Currency {
     public void setPlatinumPieces(Integer platinumPieces) {
         this.platinumPieces = platinumPieces;
     }
-    
-    
+
+
 }

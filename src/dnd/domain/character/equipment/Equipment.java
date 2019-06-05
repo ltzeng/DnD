@@ -12,7 +12,6 @@ public class Equipment {
 	private Double currentWeight = new Double(0);
 	
 	public double getCurrentWeight() {
-//		currentWeight=(double) ((copperPieces+silverPieces+goldPieces+electrumPieces+platinumPieces)/3);
 		for(Weapon w : weapons) {
 			currentWeight+=w.getWeight();
 		}

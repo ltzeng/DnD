@@ -9,6 +9,7 @@ import dnd.domain.character.AbilityScores;
 import dnd.domain.character.equipment.Armor;
 import dnd.domain.character.equipment.Currency;
 import dnd.domain.character.equipment.Weapon;
+import dnd.domain.character.skills.SpellSlots;
 
 public abstract class PlayerCharacter {
 
@@ -34,7 +35,9 @@ public abstract class PlayerCharacter {
 	private List<Armor> armors = new ArrayList<Armor>();
 	private List<CharacterSkill> Skills;
 	private Currency currency;
+	private Integer proficiencyBonus;
 	private String customAvatarName;
+	private SpellSlots spellSlots;
 	
 	//not set here, set in character class
 	private List<String> proficiencies;
@@ -206,5 +209,21 @@ public abstract class PlayerCharacter {
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
+
+    public Integer getProficiencyBonus() {
+        return proficiencyBonus;
+    }
+
+    public void setProficiencyBonus(Integer proficiencyBonus) {
+        this.proficiencyBonus = proficiencyBonus;
+    }
+
+    public SpellSlots getSpellSlots() {
+        return spellSlots;
+    }
+
+    public void setSpellSlots(SpellSlots spellSlots) {
+        this.spellSlots = spellSlots;
+    }
 	
 }
