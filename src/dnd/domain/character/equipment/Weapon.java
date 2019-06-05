@@ -8,7 +8,12 @@ public class Weapon {
     private Integer cost;
     private String damage;
     private String properties;
+    private String type;
     
+    public int calculateAttackBonus() {
+    	
+    	return 0;
+    }
     
     public String getDamage() {
         return damage;
@@ -45,6 +50,12 @@ public class Weapon {
 	}
 	public void setWeight(Double weight) {
 		this.weight = weight;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
     
     

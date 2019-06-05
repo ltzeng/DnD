@@ -11,9 +11,8 @@
 	 <c:forEach var="pc" items="${charactersList}">
 		 <table style="border:1px solid black;">
 		 	<tr>
-		 		<c:set var="imgUrl" value="${pc.adjective}-${pc.gender}-${pc.characterClass}" />
-		 		<td rowspan=7><a href="CharacterDetails?charName=${pc.characterFileName}">
-		 		<img src="image/${imgUrl}.png" alt="${imgUrl}" style="width:200px;height:300px;"></a></td>
+		 		<td rowspan=7><a href="CharacterDetails?characterID=${pc.characterID}">
+		 		<img src="image/character/${pc.avatarPicture }.png" alt="${imgUrl}" style="width:200px;height:300px;"></a></td>
 		 	</tr>
 		 	<tr>
 		 		<td>${pc.characterName}</td>

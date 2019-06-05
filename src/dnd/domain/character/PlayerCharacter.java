@@ -3,6 +3,8 @@ package dnd.domain.character;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import dnd.domain.character.AbilityScores;
 import dnd.domain.character.equipment.Armor;
 import dnd.domain.character.equipment.Weapon;
@@ -10,7 +12,6 @@ import dnd.domain.character.equipment.Weapon;
 public abstract class PlayerCharacter {
 
     private Integer characterID;
-	private String characterFileName;
 	private String characterName;
 	private Integer adventureID;
 	private String background;
@@ -30,6 +31,14 @@ public abstract class PlayerCharacter {
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<Armor> armors = new ArrayList<Armor>();
 	private List<CharacterSkill> Skills;
+	private String customAvatarName; 
+	
+	public String getAvatarPicture() {
+		if(StringUtils.isEmpty(customAvatarName)){
+			return race + "-" + gender + "-" + characterClass;
+		}
+		return customAvatarName;
+	}
 	
 	//not set here, set in character class
 	private List<String> proficiencies;
@@ -37,12 +46,6 @@ public abstract class PlayerCharacter {
 	private List<String> savingThrows;
 	
 	
-	public String getCharacterFileName() {
-		return characterFileName;
-	}
-	public void setCharacterFileName(String characterFileName) {
-		this.characterFileName = characterFileName;
-	}
 	public String getCharacterName() {
 		return characterName;
 	}
@@ -181,5 +184,11 @@ public abstract class PlayerCharacter {
     public void setCharacterID(Integer characterID) {
         this.characterID = characterID;
     }
+	public String getCustomAvatarName() {
+		return customAvatarName;
+	}
+	public void setCustomAvatarName(String customAvatarName) {
+		this.customAvatarName = customAvatarName;
+	}
 	
 }

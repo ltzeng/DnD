@@ -32,7 +32,7 @@
 				<h2>${pc.characterName}</h2>
 			</header>
 			<div class="test">
-			   <button type="button" class="button" onclick="goBack('${pc.characterFileName}')">Back</button>
+			   <button type="button" class="button" onclick="goBack('${pc.characterID}')">Back</button>
 			</div>
 			<table class="paleBlueRows">
 				<tr>
@@ -139,8 +139,8 @@
 		});
 	});
 	
-	function goBack(charName){
-		window.location="CharacterDetails?charName="+charName;
+	function goBack(charID){
+		window.location="CharacterDetails?characterID="+charID;
 	}
 </script>
 </body>

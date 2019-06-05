@@ -24,7 +24,7 @@
 	<header id='mainHeader'>
 
 		<div id='responsiveLogo'>
-			<img src='image/character/${pc.characterFileName }-mobile.png' />
+			<img src='image/character/${pc.avatarPicture }-mobile.png' />
 		</div>
 
 	</header>
@@ -91,7 +91,7 @@
 						<td>${pc.abilityScores.chaMod }</td>
 					</tr>
 					<tr>
-						<td colspan="2"><button class="button" type="button" onclick="abilitiesScoreDetailsNav('${pc.characterFileName}')">Details</button></td>
+						<td colspan="2"><button class="button" type="button" onclick="abilitiesScoreDetailsNav('${pc.characterID}')">Details</button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -150,13 +150,13 @@
 			<ul>
 				<li><a href="#home">Edit</a></li>
 				<li><a href="#home">Notes</a></li>
-				<li><a href="CharacterSelect">Back</a></li>
+				<li><a href="CharacterSelect?adventureID=${pc.adventureID }">Back</a></li>
 			</ul>
 		</nav>
 	</footer>
 <script>
-function abilitiesScoreDetailsNav(charName){
-	window.location="AbilitiesScoreDetails?charName="+charName;
+function abilitiesScoreDetailsNav(characterID){
+	window.location="AbilitiesScoreDetails?characterID="+characterID;
 }
 </script>
 </body>

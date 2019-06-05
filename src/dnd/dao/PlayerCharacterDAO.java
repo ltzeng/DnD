@@ -14,6 +14,8 @@ import dnd.domain.character.classes.Cleric;
 import dnd.domain.character.classes.Fighter;
 import dnd.domain.character.classes.Rogue;
 import dnd.domain.character.classes.Wizard;
+import dnd.domain.character.equipment.Armor;
+import dnd.domain.character.equipment.Weapon;
 
 public class PlayerCharacterDAO {
 
@@ -32,6 +34,82 @@ public class PlayerCharacterDAO {
 			}
 		}
 		return connection;
+	}
+	
+	public PlayerCharacter getPCEquipment(PlayerCharacter pc) {
+		try {
+
+			List<Armor> armorList = getPlayerArmorList(pc);
+			pc.setArmors(armorList);
+			
+			List<Weapon> weaponList = getPlayerWeaponList(pc);
+			pc.setWeapons(weaponList);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return pc;
+		
+	}
+	
+	private List<Weapon> getPlayerWeaponList(PlayerCharacter pc) throws SQLException {
+		String sql = "SELECT * "
+				+ "FROM Character_Weapon cw "
+				+ "INNER JOIN Weapons_List al on cw.weapon_id=al.weapon_id "
+				+ "WHERE character_id = ?";
+		
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, pc.getCharacterID());
+
+		ResultSet rs = statement.executeQuery();
+		List<Weapon> weaponList = new ArrayList<Weapon>();
+		while (rs.next()) {
+			weaponList.add(makeWeapon(rs));
+		}
+		return weaponList;
+	}
+
+	private Weapon makeWeapon(ResultSet rs) throws SQLException {
+		Weapon weapon = new Weapon();
+		weapon.setWeaponID(rs.getInt("weapon_id"));
+		weapon.setName(rs.getString("weapon_name"));
+		weapon.setDamage(rs.getString("damage"));
+		weapon.setWeight(rs.getDouble("weight"));
+		weapon.setCost(rs.getInt("cost"));
+		weapon.setProperties(rs.getString("properties"));
+		weapon.setType(rs.getString("type"));
+		
+		return weapon;
+	}
+
+	public List<Armor> getPlayerArmorList(PlayerCharacter pc) throws SQLException{
+		
+		String sql = "SELECT * "
+				+ "FROM Character_Armor ca "
+				+ "INNER JOIN Armor_List al on ca.armor_id=al.armor_id "
+				+ "WHERE character_id = ?";
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, pc.getCharacterID());
+
+		ResultSet rs = statement.executeQuery();
+		List<Armor> armorList = new ArrayList<Armor>();
+		while (rs.next()) {
+			armorList.add(makeArmor(rs));
+		}
+		return armorList;
+	}
+
+	private Armor makeArmor(ResultSet rs) throws SQLException {
+		Armor armor = new Armor();
+		armor.setArmorID(rs.getInt("armor_id"));
+		armor.setName(rs.getString("armor_name"));
+		armor.setArmorClass(rs.getString("armor_class"));
+		armor.setCost(rs.getInt("cost"));
+		armor.setStrength(rs.getString("strength"));
+		armor.setWeight(rs.getInt("weight"));
+		armor.setStealth(rs.getString("stealth"));
+		armor.setType(rs.getString("type"));
+		return armor;
 	}
 
 	public PlayerCharacter getPlayerCharacterByID(int characterID) {
