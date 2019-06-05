@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 
 import dnd.domain.character.AbilityScores;
 import dnd.domain.character.equipment.Armor;
+import dnd.domain.character.equipment.Currency;
 import dnd.domain.character.equipment.Weapon;
 
 public abstract class PlayerCharacter {
@@ -20,6 +21,7 @@ public abstract class PlayerCharacter {
 	private Integer level;
 	private Integer maxHp;
 	private Integer hp;
+	private Integer tempHP;
 	private AbilityScores abilityScores;
 	private String adjective;
 	private String gender;
@@ -31,7 +33,13 @@ public abstract class PlayerCharacter {
 	private List<Weapon> weapons = new ArrayList<Weapon>();
 	private List<Armor> armors = new ArrayList<Armor>();
 	private List<CharacterSkill> Skills;
-	private String customAvatarName; 
+	private Currency currency;
+	private String customAvatarName;
+	
+	//not set here, set in character class
+	private List<String> proficiencies;
+	private String hitDice;
+	private List<String> savingThrows;
 	
 	public String getAvatarPicture() {
 		if(StringUtils.isEmpty(customAvatarName)){
@@ -39,12 +47,6 @@ public abstract class PlayerCharacter {
 		}
 		return customAvatarName;
 	}
-	
-	//not set here, set in character class
-	private List<String> proficiencies;
-	private String hitDice;
-	private List<String> savingThrows;
-	
 	
 	public String getCharacterName() {
 		return characterName;
@@ -189,6 +191,20 @@ public abstract class PlayerCharacter {
 	}
 	public void setCustomAvatarName(String customAvatarName) {
 		this.customAvatarName = customAvatarName;
+	}
+	public Integer getTempHP() {
+		return tempHP;
+	}
+	public void setTempHP(Integer tempHP) {
+		this.tempHP = tempHP;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 	
 }

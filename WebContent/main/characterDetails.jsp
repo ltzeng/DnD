@@ -66,9 +66,18 @@
 					<td>${pc.maxHp }</td>
 					<td class="bold">Current HP</td>
 					<td>${pc.hp }</td>
-					<td class="bold">Temp HP</td>
-					<td></td>
+					
 				</tr>
+				<tr>
+					<td class="bold">Wealth</td>
+					<td colspan="2">${pc.currency.currencyDisplay }</td>
+				</tr>
+				<c:if test="${pc.tempHP ne 0 }">
+					<tr>
+						<td class="bold">Temp HP</td>
+						<td></td>
+					</tr>
+				</c:if>
 			</table>
 			<table class="paleBlueRows">
 				<thead>

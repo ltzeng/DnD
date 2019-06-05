@@ -15,6 +15,7 @@ import dnd.domain.character.classes.Fighter;
 import dnd.domain.character.classes.Rogue;
 import dnd.domain.character.classes.Wizard;
 import dnd.domain.character.equipment.Armor;
+import dnd.domain.character.equipment.Currency;
 import dnd.domain.character.equipment.Weapon;
 
 public class PlayerCharacterDAO {
@@ -120,6 +121,7 @@ public class PlayerCharacterDAO {
 			String sql = "SELECT * "
 					+ "FROM Player_Character pc "
 					+ "INNER JOIN Ability_Scores ascore ON pc.character_id=ascore.character_id "
+					+ "INNER JOIN Currency c on c.character_id=pc.character_id "
 					+ "WHERE pc.character_id = ?";
 			
 			PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -179,9 +181,18 @@ public class PlayerCharacterDAO {
 		pc.setSpeed(rs.getInt("speed"));
 		pc.setInitiative(rs.getInt("initiative"));
 		pc.setArmorClass(rs.getInt("armorClass"));
+		pc.setTempHP(rs.getInt("tempHP"));
 
 		int[] abilityScores = {rs.getInt("str"),rs.getInt("dex"),rs.getInt("con"),rs.getInt("intel"),rs.getInt("wis"),rs.getInt("cha")};
 		pc.setAbilityScores(new AbilityScores(abilityScores));
+		
+		Currency currency = new Currency();
+		pc.setCurrency(currency);
+		pc.getCurrency().setCopperPieces(rs.getInt("copper_pieces"));
+		pc.getCurrency().setSilverPieces(rs.getInt("silver_pieces"));
+		pc.getCurrency().setGoldPieces(rs.getInt("gold_pieces"));
+		pc.getCurrency().setElectrumPieces(rs.getInt("electrum_pieces"));
+		pc.getCurrency().setPlatinumPieces(rs.getInt("platinum_pieces"));
 
 		return pc;
 	}
