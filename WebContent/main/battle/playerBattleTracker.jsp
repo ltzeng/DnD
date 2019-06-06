@@ -5,20 +5,69 @@
 	<link rel="stylesheet" href="main/css/battle-styles.css">
 </head>
 
-<body background="paper-bg.jpg">
+<style>
+table.test {
+  border: none;
+  background-color: #FFE3C6;
+  width: 100%;
+  text-align: left;
+}
+
+.test img {
+	max-height: 75%;
+	max-width: 75%;
+}
+</style>
+
+<body background="image/backgrounds/paper-bg.jpg">
 
 <div id="battleTracker">
 	<table class="cinereousTable">
 		<thead>
 			<tr>
-				<th class="ally">JinYang</th>
+				<c:forEach var="pc" items="${pcList}">
+					<th class="ally">${pc.characterName }</th>
+				</c:forEach>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<c:forEach var="pc" items="${pcList}">
+					<td>
+						<table class="test">
+							<tr>
+								<!-- td><div class="content-top" id="${pc.characterID }-death"><img id="status-img" src="image/status/skull.png"/></div></td-->
+								<td>
+								<img  src='image/character/${pc.avatarPicture }-mobile.png' />
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+							</tr>
+						</table>
+					</td>
+				</c:forEach>
+				
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<c:forEach var="pc" items="${pcList}">
+					<td>DS</td>
+				</c:forEach>
+			</tr>
+		</tfoot>
+	</table>
+	
+	<table class="cinereousTable">
+		<thead>
+			<tr>
 				<th class="enemy">Goblin</th>
 				<th class="enemy">Goblin</th>
-				<th class="ally">Joylusion</th>
-				<th>head5</th>
-				<th>head6</th>
-				<th>head7</th>
-				<th>head8</th>
+				<th class="enemy">Goblin</th>
+				<th class="enemy">Goblin</th>
+				<th class="enemy">Goblin</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,28 +76,13 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
 				<td>
 					<div id="content-top">
-					   <img src="skull.png" class="ribbon"/>
+					   <img src="image/status/skull.png" class="ribbon"/>
 					</div>
 				</td>
 			</tr>
 		</tbody>
-		<tfoot>
-			<tr>
-				<td>DS</td>
-				<td>DS</td>
-				<td>DS</td>
-				<td>DS</td>
-				<td>DS</td>
-				<td>DS</td>
-				<td>DS</td>
-				<td>DS</td>
-			</tr>
-		</tfoot>
 	</table>
 </div>
 </body>

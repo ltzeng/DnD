@@ -4,7 +4,6 @@ table.cinereousTable {
   width: 100%;
   text-align: center;
   table-layout: fixed;
-
 }
 
 td.highlight {
@@ -38,7 +37,7 @@ th.enemy {
 }
 
 th.ally {
-	color: #e0ffff;
+	color: #000000;
 }
 
 table.cinereousTable thead th:first-child {
@@ -63,11 +62,15 @@ div {
 	margin: auto;
 }
 
-#content-top{
+.content-top{
     position: relative;
     top: 0px;
 }
-#content-top img {
-    width: 20px;
+.content-top img {
+    
+}
+
+#status-img img {
+	width: 20px;
     height: 25px;
 }

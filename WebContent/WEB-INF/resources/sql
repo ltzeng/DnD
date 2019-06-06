@@ -148,9 +148,9 @@ CREATE TABLE Encounter_Character(
   death_failure		INTEGER
 );
 
-CREATE TABLE Encounter_Enemy(
+CREATE TABLE Encounter_Monster(
   encounter_id		INTEGER,
-  enemy_id			INTEGER,
+  monster_id			INTEGER,
   initiative			INTEGER,
   hp					INTEGER,
   maxHP				INTEGER

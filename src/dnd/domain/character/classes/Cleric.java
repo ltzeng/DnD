@@ -190,4 +190,5 @@ public class Cleric extends PlayerCharacter{
             getSpellSlots().setCantripsKnown(5);
             break;
         }
+	}
 }

@@ -1,39 +1,35 @@
 package dnd.servlets;
 
 import java.io.IOException;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dnd.domain.character.PlayerCharacter;
-import dnd.utils.PlayerCharacterUtils;
-
-@WebServlet("/BattleTrackerPlayer")
-public class BattleTrackerServlet extends HttpServlet {
+/**
+ * Servlet implementation class CharacterDetailsEditServlet
+ */
+@WebServlet("/CharacterDetailsEdit")
+public class CharacterDetailsEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private PlayerCharacterUtils pcu = new PlayerCharacterUtils();   
-	
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BattleTrackerServlet() {
+    public CharacterDetailsEditServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<PlayerCharacter> pcList = pcu.getCharacterForAdventure(Integer.parseInt(request.getParameter("adventureID")));
+		// TODO Auto-generated method stub
 		
-		request.setAttribute("pcList", pcList);
-		RequestDispatcher view = request.getRequestDispatcher("main/battle/playerBattleTracker.jsp");
-		view.forward(request, response);
+		int characterID = Integer.parseInt(request.getParameter("characterID"));
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

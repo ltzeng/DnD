@@ -131,6 +131,7 @@ public class PlayerCharacterDAO {
 
 			while (rs.next()) {
 				pc = setupPlayer(rs);
+				pc = addCurrency(rs, pc);
 			}
 
 		} catch (SQLException e) {
@@ -153,7 +154,8 @@ public class PlayerCharacterDAO {
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
-				characterList.add(setupPlayer(rs));
+				PlayerCharacter pc = setupPlayer(rs);
+				characterList.add(pc);
 			}
 
 		} catch (SQLException e) {
@@ -161,6 +163,17 @@ public class PlayerCharacterDAO {
 		}
 
 		return characterList;
+	}
+
+	private PlayerCharacter addCurrency(ResultSet rs, PlayerCharacter pc) throws SQLException {
+		Currency currency = new Currency();
+		pc.setCurrency(currency);
+		pc.getCurrency().setCopperPieces(rs.getInt("copper_pieces"));
+		pc.getCurrency().setSilverPieces(rs.getInt("silver_pieces"));
+		pc.getCurrency().setGoldPieces(rs.getInt("gold_pieces"));
+		pc.getCurrency().setElectrumPieces(rs.getInt("electrum_pieces"));
+		pc.getCurrency().setPlatinumPieces(rs.getInt("platinum_pieces"));
+		return pc;
 	}
 
 	private PlayerCharacter setupPlayer(ResultSet rs) throws SQLException {
@@ -186,14 +199,6 @@ public class PlayerCharacterDAO {
 		int[] abilityScores = {rs.getInt("str"),rs.getInt("dex"),rs.getInt("con"),rs.getInt("intel"),rs.getInt("wis"),rs.getInt("cha")};
 		pc.setAbilityScores(new AbilityScores(abilityScores));
 		
-		Currency currency = new Currency();
-		pc.setCurrency(currency);
-		pc.getCurrency().setCopperPieces(rs.getInt("copper_pieces"));
-		pc.getCurrency().setSilverPieces(rs.getInt("silver_pieces"));
-		pc.getCurrency().setGoldPieces(rs.getInt("gold_pieces"));
-		pc.getCurrency().setElectrumPieces(rs.getInt("electrum_pieces"));
-		pc.getCurrency().setPlatinumPieces(rs.getInt("platinum_pieces"));
-
 		return pc;
 	}
 

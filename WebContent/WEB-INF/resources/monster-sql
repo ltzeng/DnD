@@ -1,0 +1,36 @@
+create table Monster(
+monster_id 		 serial UNIQUE NOT NULL PRIMARY KEY,
+name			 VARCHAR(128),
+description 	 TEXT,
+armor_class 	 VARCHAR(128),
+hit_points		 VARCHAR(32),
+speed			 INTEGER,
+saving_throws	 VARCHAR(128),
+skills			 VARCHAR(128),
+dmg_immunities	 VARCHAR(128),
+senses			 VARCHAR(128),
+languages		 VARCHAR(128),
+challenge		 VARCHAR(128)
+);
+
+INSERT INTO Monster (monster_id,name, description, armor_class, hit_points, speed,saving_throws, skills, dmg_immunities, senses, languages, challenge)
+VALUES (1, 'Goblin','Small humanoid (goblinoid)','15 (Leather Armor, Shield)','7 (2d6)',30,'-','Stealth +6', '-','Darkvision 60 ft., Passive Perception 9','Common, Goblin','1/4 (50XP)');
+
+create table Monster_Skill(
+monster_skill_id	 serial UNIQUE NOT NULL PRIMARY KEY,
+monster_id			 INTEGER,
+skill_name			 VARCHAR(128),
+skill_desc			 VARCHAR(128)
+);
+
+INSERT INTO Monster_Skill(monster_id, skill_name, skill_desc) VALUES(1,'Nimble Escape','The goblin can take the Disengage or Hide action as a bonus action on each of its turns.');
+
+create table Monster_Action(
+monster_action_id	 serial UNIQUE NOT NULL PRIMARY KEY,
+monster_id			 INTEGER,
+action_name			 VARCHAR(128),
+action_desc			 VARCHAR(512),
+type				 VARCHAR(16)
+);
+INSERT INTO Monster_Action(monster_id, action_name, action_desc, type) VALUES (1,'Scimitar','Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.','normal');
+INSERT INTO Monster_Action(monster_id, action_name, action_desc, type) VALUES (1,'Shortbow','Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.','normal');
