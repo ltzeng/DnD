@@ -204,30 +204,37 @@ div {
 
 </style>
 <button onclick="addSkull('1')">add skull</button>
-<button onclick="addHighlight()">add highlight</button>
+
+<c:if test="${not empty encounter }">
+	<script>
+	var turn = ${encounter.turn};
+	$("#actor_"+turn).addClass("highlight");
+	</script>
+</c:if>
 
 <script>
+
  setInterval(function(){
 	 $.get( "BattleTrackerAPI",{action:'updateCheck', adventureID:1}, function( data ) {
-//		  console.log(data.birthday);
-//		  console.log(data.name);
-//		  console.log(data.married);
 		  console.log(data);
+		  if(data==true){
+			
+			//window.location.reload(1);
+		  }
 		});
-    //window.location.reload(1);
+    
  }, 5000);
+ 
+function acknowledgeUpdate(){
+	$.get( "BattleTrackerAPI",{action:'ackUpdate', adventureID:1}, function( data ) {
+		console.log(data);
+	});
+}
 
-var turn = ${encounter.turn};
-$("#actor_"+turn).addClass("highlight");
+
 function addSkull(player_id){
 	player_id = player_id + "_status";
 	$("#actor_"+player_id).prepend('<img class="status-img" src="image/status/skull.png"/>');
-}
-
-var i =0;
-function addHighlight(){
-	i=i+1;
-	$("#actor_"+i).addClass("highlight");
 }
 
 </script>

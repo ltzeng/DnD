@@ -16,15 +16,15 @@ import dnd.utils.EncounterUtils;
 /**
  * Servlet implementation class BattleTrackerAPI
  */
-@WebServlet("/BattleTrackerAPI")
-public class BattleTrackerAPI extends HttpServlet {
+@WebServlet("/BattleTrackerDmAPI")
+public class BattleTrackerDmAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EncounterUtils eu = new EncounterUtils();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BattleTrackerAPI() {
+    public BattleTrackerDmAPI() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,20 +33,23 @@ public class BattleTrackerAPI extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
+
+	    //Pass in a form and do everything in one submit rather than actions
+	    int adventureID = Integer.parseInt(request.getParameter("adventureID"));
 		String action = request.getParameter("action");
 		PrintWriter out = response.getWriter();
 		switch (action) {
-		    case "ackEncounterUpdate":
+		    case "startEncounter":
 		        updateEncounterStatus(request, out);
 		        break;
-		    case "updateCheck":
-		        refreshPageCall(adventureID, out);
+		    case "endEncounter":
+		        //
 		        break;
+		    case "updateHealth":
+		        
+		        break;
+		    case "updateStatus":
 		}
-		
-//		response.setContentType("application/json");
 		
 	}
 
@@ -58,13 +61,6 @@ public class BattleTrackerAPI extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void refreshPageCall(int adventureID, PrintWriter out) {
-		boolean updated = eu.checkEncounterUpdated(adventureID);
-		JSONObject jsonObj = new JSONObject();
-		jsonObj.append("updated", updated);
-		out.print(updated);
-		out.flush();
-	}
 	
 	private void updateEncounterStatus(HttpServletRequest request, PrintWriter out) {
 	    String updateStatus = request.getParameter("updateStatus");

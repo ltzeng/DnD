@@ -50,4 +50,14 @@ public class EncounterUtils {
 		Monster mon = new Monster();
 		
 	}
+
+    public int updateEncounterStatus(boolean updateStatus, int encounterID) {
+        int success = -1;
+        try {
+            success = btDAO.updateEncounterStatus(updateStatus, encounterID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
 }

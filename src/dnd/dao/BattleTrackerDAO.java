@@ -87,4 +87,18 @@ public class BattleTrackerDAO {
 		}
 		return encounter.getUpdated();
 	}
+
+    public int updateEncounterStatus(boolean updateStatus, int encounterID) throws SQLException {
+
+        String sql = "UPDATE Encounter " +
+                "SET updated = ? " + 
+                "WHERE encounter_id = ? ";
+        
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setBoolean(1, updateStatus);
+        statement.setInt(2, encounterID);
+        
+        int success = statement.executeUpdate();
+        return success;
+    }
 }
