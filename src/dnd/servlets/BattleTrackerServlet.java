@@ -21,6 +21,7 @@ import dnd.utils.PlayerCharacterUtils;
 public class BattleTrackerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private PlayerCharacterUtils pcu = new PlayerCharacterUtils();
+    EncounterUtils eu = new EncounterUtils();
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -34,17 +35,27 @@ public class BattleTrackerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
-		List<PlayerCharacter> pcList = pcu.getCharacterForAdventure(adventureID);
-		Map<Integer, PlayerCharacter> pcMap = new HashMap<Integer,PlayerCharacter>();
-		for(PlayerCharacter pc : pcList) {
-			pcMap.put(pc.getCharacterID(), pc);
-		}
-		EncounterUtils eu = new EncounterUtils();
-		pcMap=eu.getEncounterPlayers(adventureID, pcMap);
-		Encounter encounter = eu.getEncounter(adventureID);
 		
+		
+		
+		List<PlayerCharacter> pcList = pcu.getCharacterForAdventure(adventureID);
+		
+		Encounter encounter = eu.getEncounter(adventureID);
+		boolean encounterLive = false;
+		if(encounter!=null) {
+			Map<Integer, PlayerCharacter> pcMap = new HashMap<Integer,PlayerCharacter>();
+			for(PlayerCharacter pc : pcList) {
+				pcMap.put(pc.getCharacterID(), pc);
+			}
+			pcMap=eu.getEncounterPlayers(adventureID, pcMap);
+			request.setAttribute("encounter", encounter);
+			encounterLive = true;
+			
+			eu.getEncounterEnemies();
+		}
+		
+		request.setAttribute("encounterLive",encounterLive);
 		request.setAttribute("pcList", pcList);
-		request.setAttribute("encounter", encounter);
 		RequestDispatcher view = request.getRequestDispatcher("main/battle/playerBattleTracker.jsp");
 		view.forward(request, response);
 	}

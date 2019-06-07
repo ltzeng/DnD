@@ -1,11 +1,14 @@
 package dnd.utils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import dnd.dao.BattleTrackerDAO;
 import dnd.domain.character.PlayerCharacter;
 import dnd.encounter.Encounter;
+import dnd.monster.Monster;
 
 public class EncounterUtils {
 
@@ -38,6 +41,13 @@ public class EncounterUtils {
 			e.printStackTrace();
 		}
 		return updated;
+		
+	}
+
+	public void getEncounterEnemies() {
+		
+		List<Monster> monsterList = new ArrayList<Monster>();
+		Monster mon = new Monster();
 		
 	}
 }

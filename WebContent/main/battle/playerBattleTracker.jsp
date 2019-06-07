@@ -48,7 +48,8 @@
 		</tfoot>
 	</table>
 	
-	<table class="cinereousTable">
+	<c:if test="${encounterLive eq true }">
+		<table class="cinereousTable">
 		<thead>
 			<tr>
 				<th class="enemy">Goblin</th>
@@ -93,7 +94,9 @@
 			</tr>
 		</tfoot>
 
-	</table>
+		</table>
+	</c:if>
+	
 </div>
 </body>
 <style>
@@ -204,7 +207,7 @@ div {
 <button onclick="addHighlight()">add highlight</button>
 
 <script>
-// setInterval(function(){
+ setInterval(function(){
 	 $.get( "BattleTrackerAPI",{action:'updateCheck', adventureID:1}, function( data ) {
 //		  console.log(data.birthday);
 //		  console.log(data.name);
@@ -212,7 +215,7 @@ div {
 		  console.log(data);
 		});
     //window.location.reload(1);
-// }, 5000);
+ }, 5000);
 
 var turn = ${encounter.turn};
 $("#actor_"+turn).addClass("highlight");

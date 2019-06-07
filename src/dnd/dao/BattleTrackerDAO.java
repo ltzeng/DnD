@@ -82,6 +82,9 @@ public class BattleTrackerDAO {
 
 	public boolean checkEncounterUpdated(int adventureID) throws SQLException {
 		Encounter encounter = getEncounter(adventureID);
+		if(encounter==null) {
+			return false;
+		}
 		return encounter.getUpdated();
 	}
 }

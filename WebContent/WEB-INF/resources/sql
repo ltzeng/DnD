@@ -153,10 +153,11 @@ CREATE TABLE Encounter_Character(
 );
 
 CREATE TABLE Encounter_Monster(
-  encounter_id		INTEGER,
-  monster_id		INTEGER,
-  initiative		INTEGER,
-  status			VARCHAR(128),
-  hp				INTEGER,
-  maxHP				INTEGER
+  encounter_id		 INTEGER,
+  monster_id		 INTEGER,
+  initiative		 INTEGER,
+  status			 VARCHAR(128),
+  hp				 INTEGER,
+  maxHP				 INTEGER,
+  type_color		 VARCHAR(32)
 );
