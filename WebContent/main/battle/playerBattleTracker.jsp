@@ -1,30 +1,33 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<!-- <link rel="stylesheet" href="main/css/battle-styles.css"> -->
 </head>
 
 
 
-<!-- <body background="image/backgrounds/paper-bg.jpg"> -->
-<body background="paper-bg.jpg">
+<body background="image/backgrounds/paper-bg.jpg">
+<!-- body background="paper-bg.jpg"-->
 
 <div id="battleTracker">
 	<table class="cinereousTable">
 		<thead>
 			<tr>
-				<th class="ally">Test Name</th>
-				<th class="ally">Test Name 2</th>
+				<c:forEach var="pc" items="${pcList}">
+					<th class="ally">${pc.characterName }</th>
+				</c:forEach>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td id="actor_1">
+				<c:forEach var="pc" items="${pcList}">
+					<td id="actor_${pc.encounterDetails.initiative }">
 					<table class="player">
 						<tbody>
 						<tr>
 							<td><div id="actor_1_status"></div>
-							<img src='test-character.png' />
+							<img src='image/character/${pc.avatarPicture}-mobile.png' />
 							</td>
 						</tr>
 						<tr>
@@ -32,41 +35,15 @@
 						</tr>
 						</tbody>
 					</table>
-				</td>
-
-
-
-				<td id="actor_2">
-					<table class="player"><tr>
-							<td ><img src='test-character.png' /></td></tr>
-						<tr><td></td></tr>
-					</table>
-				</td>
-				<td id="actor_6">
-					<table class="player"><tr>
-							<td ><img src='test-character.png' /></td></tr>
-						<tr><td></td></tr>
-					</table>
-				</td>
-				<td id="actor_4">
-					<table class="player"><tr>
-							<td ><img src='test-character.png' /></td></tr>
-						<tr><td></td></tr>
-					</table>
-				</td>
-				<td id="actor_7">
-					<table class="player"><tr>
-							<td ><img src='test-character.png' /></td></tr>
-						<tr><td></td></tr>
-					</table>
-				</td>
+					</td>
+				</c:forEach>
 			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td>DS</td>
-				<td>DS</td>
-				
+				<c:forEach var="pc" items="${pcList}">
+					<td>DS</td>
+				</c:forEach>
 			</tr>
 		</tfoot>
 	</table>
@@ -88,16 +65,16 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td id="actor_3"><img class="enemy_img" src="goblin.png"></td>
-				<td id="actor_4"><img class="enemy_img" src="goblin.png"></td>
-				<td id="actor_5"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_4"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_5"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_6"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_7"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_8"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_9"><img class="enemy_img" src="goblin.png"></td>
-				<td id="enemy_10"><img class="enemy_img" src="goblin.png"></td>
+				<td id="actor_3"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="actor_4"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="actor_5"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_4"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_5"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_6"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_7"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_8"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_9"><img class="enemy_img" src="image/enemies/goblin.png"></td>
+				<td id="enemy_10"><img class="enemy_img" src="image/enemies/goblin.png"></td>
 			</tr>
 		</tbody>
 		<tfoot>
@@ -227,12 +204,21 @@ div {
 <button onclick="addHighlight()">add highlight</button>
 
 <script>
-// setTimeout(function(){
-//    window.location.reload(1);
-// }, 30000);
+// setInterval(function(){
+	 $.get( "BattleTrackerAPI",{action:'updateCheck', adventureID:1}, function( data ) {
+//		  console.log(data.birthday);
+//		  console.log(data.name);
+//		  console.log(data.married);
+		  console.log(data);
+		});
+    //window.location.reload(1);
+// }, 5000);
+
+var turn = ${encounter.turn};
+$("#actor_"+turn).addClass("highlight");
 function addSkull(player_id){
 	player_id = player_id + "_status";
-	$("#actor_"+player_id).prepend('<img class="status-img" src="skull.png"/>');
+	$("#actor_"+player_id).prepend('<img class="status-img" src="image/status/skull.png"/>');
 }
 
 var i =0;

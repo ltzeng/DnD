@@ -10,6 +10,7 @@ import dnd.domain.character.equipment.Armor;
 import dnd.domain.character.equipment.Currency;
 import dnd.domain.character.equipment.Weapon;
 import dnd.domain.character.skills.SpellSlots;
+import dnd.encounter.ActorEncounterDetails;
 
 public abstract class PlayerCharacter {
 
@@ -38,6 +39,7 @@ public abstract class PlayerCharacter {
 	private Integer proficiencyBonus;
 	private String customAvatarName;
 	private SpellSlots spellSlots;
+	private ActorEncounterDetails encounterDetails;
 	
 	//not set here, set in character class
 	private List<String> proficiencies;
@@ -225,5 +227,13 @@ public abstract class PlayerCharacter {
     public void setSpellSlots(SpellSlots spellSlots) {
         this.spellSlots = spellSlots;
     }
+
+	public ActorEncounterDetails getEncounterDetails() {
+		return encounterDetails;
+	}
+
+	public void setEncounterDetails(ActorEncounterDetails encounterDetails) {
+		this.encounterDetails = encounterDetails;
+	}
 	
 }

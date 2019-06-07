@@ -134,24 +134,29 @@ CREATE TABLE Character_Spell_Slots (
 
 
 CREATE TABLE Encounter(
-  encounter_id		serial UNIQUE NOT NULL PRIMARY KEY,
-  description		VARCHAR(128),
-  turn				INTEGER
+  encounter_id		 serial UNIQUE NOT NULL PRIMARY KEY,
+  adventure_id		 INTEGER,
+  description		 VARCHAR(128),
+  turn				 INTEGER,
+  overall_turn		 INTEGER,
+  active			 boolean,
+  updated			 boolean
 );
 
 CREATE TABLE Encounter_Character(
-  encounter_id		INTEGER,
-  character_id		INTEGER,
-  initiative			INTEGER,
-  status				VARCHAR(128),
-  death_success		INTEGER,
-  death_failure		INTEGER
+  encounter_id		 INTEGER,
+  character_id		 INTEGER,
+  initiative		 INTEGER,
+  status			 VARCHAR(128),
+  death_success		 INTEGER,
+  death_failure		 INTEGER
 );
 
 CREATE TABLE Encounter_Monster(
   encounter_id		INTEGER,
-  monster_id			INTEGER,
-  initiative			INTEGER,
-  hp					INTEGER,
+  monster_id		INTEGER,
+  initiative		INTEGER,
+  status			VARCHAR(128),
+  hp				INTEGER,
   maxHP				INTEGER
 );
