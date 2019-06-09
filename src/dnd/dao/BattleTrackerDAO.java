@@ -5,11 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import dnd.domain.character.PlayerCharacter;
 import dnd.encounter.ActorEncounterDetails;
 import dnd.encounter.Encounter;
+import dnd.encounter.EncounterMonster;
+import dnd.encounter.Initiative;
+import dnd.monster.Monster;
 
 public class BattleTrackerDAO {
 
@@ -60,7 +65,6 @@ public class BattleTrackerDAO {
 		statement.setInt(1, adventureID);
 
 		ResultSet rs = statement.executeQuery();
-		
 		while (rs.next()) {
 			int characterID = rs.getInt("character_id");
 			pcMap.get(characterID).setEncounterDetails(createPlayerEncounterDetails(rs));
@@ -73,9 +77,13 @@ public class BattleTrackerDAO {
 		ActorEncounterDetails ped = new ActorEncounterDetails();
 		ped.setEncounterID(rs.getInt("encounter_id"));
 		ped.setStatus(rs.getString("status"));
-		ped.setInitiative(rs.getInt("initiative"));
+		
 		ped.setDeathFailure(rs.getInt("death_failure"));
 		ped.setDeathSuccess(rs.getInt("death_success"));
+		
+		Initiative i = new Initiative();
+		i.setInitiative(rs.getInt("initiative"));
+		ped.setInitiative(i);
 		return ped;
 		
 	}
@@ -101,4 +109,43 @@ public class BattleTrackerDAO {
         int success = statement.executeUpdate();
         return success;
     }
+    
+    public List<EncounterMonster> getEncounterEnemies(int encounterID) throws SQLException {
+    	
+    	List<EncounterMonster> monsterList = new ArrayList<EncounterMonster>();
+		String sql = "SELECT * FROM Encounter_Monster em " + 
+				"INNER JOIN Monster m on em.monster_id=m.monster_id " +
+				"WHERE encounter_id = ? ";
+		
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, encounterID);
+
+		ResultSet rs = statement.executeQuery();
+		
+		while (rs.next()) {
+			EncounterMonster m = new EncounterMonster();
+			m.setName(rs.getString("name"));
+			m.setDescription(rs.getString("description"));
+			m.setArmorClass(rs.getString("armor_class"));
+			m.setHitPoints(rs.getString("hit_points"));
+			m.setSpeed(rs.getInt("speed"));
+			m.setSavingThrows(rs.getString("saving_throws"));
+			m.setSkills(rs.getString("skills"));
+			m.setDamageImmunities(rs.getString("dmg_immunities"));
+			m.setSenses(rs.getString("senses"));
+			m.setLanguages(rs.getString("languages"));
+			m.setChallenge(rs.getString("challenge"));
+			
+			m.setHp(rs.getInt("hp"));
+			m.setMaxHP(rs.getInt("maxHP"));
+			m.setTypeColor(rs.getString("type_color"));
+			
+			Initiative i = new Initiative();
+			i.setInitiative(rs.getInt("initiative"));
+			m.setInitiative(i);
+			monsterList.add(m);
+		}
+		
+		return monsterList;
+	}
 }

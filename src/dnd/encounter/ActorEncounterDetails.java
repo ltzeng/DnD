@@ -7,7 +7,7 @@ public class ActorEncounterDetails {
 	private String status;
 	private int deathSuccess;
 	private int deathFailure;
-	private int initiative;
+	private Initiative initiative;
 	
 	
 	public int getEncounterID() {
@@ -40,10 +40,10 @@ public class ActorEncounterDetails {
 	public void setDeathFailure(int deathFailure) {
 		this.deathFailure = deathFailure;
 	}
-	public int getInitiative() {
+	public Initiative getInitiative() {
 		return initiative;
 	}
-	public void setInitiative(int initiative) {
+	public void setInitiative(Initiative initiative) {
 		this.initiative = initiative;
 	}
 	

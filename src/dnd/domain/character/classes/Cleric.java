@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dnd.domain.character.PlayerCharacter;
+import dnd.domain.character.skills.SpellSlots;
 
 public class Cleric extends PlayerCharacter{
 
-	public Cleric() {
+	public Cleric(int level) {
+		setLevel(level);
 		List<String> proficiencies = new ArrayList<String>();
 		proficiencies.add("Light Armor");
 		proficiencies.add("Medium Armor");
@@ -16,10 +18,13 @@ public class Cleric extends PlayerCharacter{
 		proficiencies.add("Martial Weapons");
 		setProficiencies(proficiencies);
 		setHitDice("d8");
+		setMaxSpellSlot();
 	}
 	
 	private void setMaxSpellSlot() {
         int currentLevel = this.getLevel();
+        SpellSlots ss = new SpellSlots();
+	    setSpellSlots(ss);
         switch (currentLevel) {
         case 1:
             getSpellSlots().setSpellSlotMax1(2);

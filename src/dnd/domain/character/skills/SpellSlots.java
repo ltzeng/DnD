@@ -25,6 +25,21 @@ public class SpellSlots {
     private int cantripsKnown;
     
     
+    public String getAvailableSpellSlots() {
+    	int[] arr = {spellSlot1,spellSlot2,spellSlot3,spellSlot4,spellSlot5,spellSlot6,spellSlot7,spellSlot8,spellSlot9};
+    	StringBuilder sb = new StringBuilder();
+    	for(int x=0; x<9; x++) {
+    		int count=x+1;
+    		if(arr[x]>0) {
+    			sb.append("Spell "+count+": <b>"+arr[x] + " </b>");
+    			if(x%2!=0) {
+        			sb.append("<br/>");
+        		}
+    		}
+    	}
+    	return sb.toString();
+    }
+    
     public int getSpellSlot1() {
         return spellSlot1;
     }

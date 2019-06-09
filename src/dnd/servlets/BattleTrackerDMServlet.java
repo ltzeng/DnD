@@ -35,27 +35,27 @@ public class BattleTrackerDMServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
-		
-		List<PlayerCharacter> pcList = pcu.getCharacterForAdventure(adventureID);
-		
-		Encounter encounter = eu.getEncounter(adventureID);
-		boolean encounterLive = false;
-		if(encounter!=null) {
-			Map<Integer, PlayerCharacter> pcMap = new HashMap<Integer,PlayerCharacter>();
-			for(PlayerCharacter pc : pcList) {
-				pcMap.put(pc.getCharacterID(), pc);
-			}
-			pcMap=eu.getEncounterPlayers(adventureID, pcMap);
-			request.setAttribute("encounter", encounter);
-			encounterLive = true;
-			
-			eu.getEncounterEnemies();
-		}
-		
-		request.setAttribute("encounterLive",encounterLive);
-		request.setAttribute("pcList", pcList);
-		RequestDispatcher view = request.getRequestDispatcher("main/battle/dmBattleTracker.jsp");
-		view.forward(request, response);
+//		
+//		List<PlayerCharacter> pcList = pcu.getCharacterForAdventure(adventureID);
+//		
+//		Encounter encounter = eu.getEncounter(adventureID);
+//		boolean encounterLive = false;
+//		if(encounter!=null) {
+//			Map<Integer, PlayerCharacter> pcMap = new HashMap<Integer,PlayerCharacter>();
+//			for(PlayerCharacter pc : pcList) {
+//				pcMap.put(pc.getCharacterID(), pc);
+//			}
+//			pcMap=eu.getEncounterPlayers(adventureID, pcMap);
+//			request.setAttribute("encounter", encounter);
+//			encounterLive = true;
+//			
+//			eu.getEncounterEnemies();
+//		}
+//		
+//		request.setAttribute("encounterLive",encounterLive);
+//		request.setAttribute("pcList", pcList);
+//		RequestDispatcher view = request.getRequestDispatcher("main/battle/dmBattleTracker.jsp");
+//		view.forward(request, response);
 	}
 
 	/**

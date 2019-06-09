@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dnd.domain.character.PlayerCharacter;
+import dnd.domain.character.skills.SpellSlots;
 
 public class Wizard extends PlayerCharacter{
 
-	public Wizard() {
+	public Wizard(int level) {
+		setLevel(level);
 		List<String> proficiencies = new ArrayList<String>();
 		proficiencies.add("Daggers");
 		proficiencies.add("Darts");
@@ -21,6 +23,8 @@ public class Wizard extends PlayerCharacter{
 	
 	private void setMaxSpellSlot() {
 	    int currentLevel = this.getLevel();
+	    SpellSlots ss = new SpellSlots();
+	    setSpellSlots(ss);
 	    switch (currentLevel) {
 	    case 1:
 	        getSpellSlots().setSpellSlotMax1(2);

@@ -146,6 +146,7 @@ public class PlayerCharacterDAO {
 			String sql = "SELECT * "
 					+ "FROM Player_Character pc "
 					+ "INNER JOIN Ability_Scores ascore ON pc.character_id=ascore.character_id "
+					+ "LEFT OUTER JOIN Character_Spell_Slots css ON pc.character_id=css.character_id "
 					+ "WHERE pc.adventure_id = ?";
 
 			PreparedStatement statement = getConnection().prepareStatement(sql);
@@ -178,7 +179,7 @@ public class PlayerCharacterDAO {
 
 	private PlayerCharacter setupPlayer(ResultSet rs) throws SQLException {
 		String characterClass = rs.getString("character_class");
-		PlayerCharacter pc = getPlayerCharacterClass(characterClass);
+		PlayerCharacter pc = getPlayerCharacterClass(characterClass, rs.getInt("level"));
 		pc.setCharacterID(rs.getInt("character_id"));
 		pc.setAdventureID(rs.getInt("adventure_id"));
 		pc.setCharacterName(rs.getString("character_name"));
@@ -199,25 +200,37 @@ public class PlayerCharacterDAO {
 		int[] abilityScores = {rs.getInt("str"),rs.getInt("dex"),rs.getInt("con"),rs.getInt("intel"),rs.getInt("wis"),rs.getInt("cha")};
 		pc.setAbilityScores(new AbilityScores(abilityScores));
 		
+		if(pc.getSpellSlots()!=null) {
+			pc.getSpellSlots().setSpellSlot1(rs.getInt("spell_slot_1"));
+			pc.getSpellSlots().setSpellSlot2(rs.getInt("spell_slot_2"));
+			pc.getSpellSlots().setSpellSlot3(rs.getInt("spell_slot_3"));
+			pc.getSpellSlots().setSpellSlot4(rs.getInt("spell_slot_4"));
+			pc.getSpellSlots().setSpellSlot5(rs.getInt("spell_slot_5"));
+			pc.getSpellSlots().setSpellSlot6(rs.getInt("spell_slot_6"));
+			pc.getSpellSlots().setSpellSlot7(rs.getInt("spell_slot_7"));
+			pc.getSpellSlots().setSpellSlot8(rs.getInt("spell_slot_8"));
+			pc.getSpellSlots().setSpellSlot9(rs.getInt("spell_slot_9"));
+		}
+		
 		return pc;
 	}
 
 
 
-	private PlayerCharacter getPlayerCharacterClass(String characterClass) {
+	private PlayerCharacter getPlayerCharacterClass(String characterClass, int level) {
 		PlayerCharacter pc = null;
 		switch(characterClass) {
 		case "Fighter":
 			pc=new Fighter();
 			break;
 		case "Wizard":
-			pc=new Wizard();
+			pc=new Wizard(level);
 			break;
 		case "Rogue":
 			pc=new Rogue();
 			break;
 		case "Cleric":
-			pc=new Cleric();
+			pc=new Cleric(level);
 			break;
 		}
 		return pc;

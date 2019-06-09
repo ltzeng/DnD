@@ -1,14 +1,13 @@
 package dnd.utils;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import dnd.dao.BattleTrackerDAO;
 import dnd.domain.character.PlayerCharacter;
 import dnd.encounter.Encounter;
-import dnd.monster.Monster;
+import dnd.encounter.EncounterMonster;
 
 public class EncounterUtils {
 
@@ -44,11 +43,16 @@ public class EncounterUtils {
 		
 	}
 
-	public void getEncounterEnemies() {
+	public List<EncounterMonster> getEncounterEnemies(int encounterID) {
 		
-		List<Monster> monsterList = new ArrayList<Monster>();
-		Monster mon = new Monster();
-		
+		List<EncounterMonster> monsterList = null;
+		try {
+			monsterList = btDAO.getEncounterEnemies(encounterID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return monsterList;
 	}
 
     public int updateEncounterStatus(boolean updateStatus, int encounterID) {

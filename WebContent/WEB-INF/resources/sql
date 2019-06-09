@@ -131,6 +131,8 @@ CREATE TABLE Character_Spell_Slots (
   spell_slot_8        INTEGER,
   spell_slot_9        INTEGER
 );
+INSERT INTO Character_Spell_Slots VALUES(3,3);
+INSERT INTO Character_Spell_Slots VALUES(4,3);
 
 
 CREATE TABLE Encounter(

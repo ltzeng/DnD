@@ -1,6 +1,8 @@
 package dnd.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import dnd.domain.character.PlayerCharacter;
 import dnd.encounter.Encounter;
+import dnd.encounter.EncounterMonster;
+import dnd.monster.Monster;
 import dnd.utils.EncounterUtils;
 import dnd.utils.PlayerCharacterUtils;
 
@@ -51,7 +55,11 @@ public class BattleTrackerServlet extends HttpServlet {
 			request.setAttribute("encounter", encounter);
 			encounterLive = true;
 			
-			eu.getEncounterEnemies();
+			List<EncounterMonster> monsterList = eu.getEncounterEnemies(encounter.getEncounterID());
+			request.setAttribute("monsterList", monsterList);
+			
+			List<Integer> initiativesList = getInitiatives(monsterList, pcList);
+			request.setAttribute("initiativesList",initiativesList);
 		}
 		
 		request.setAttribute("encounterLive",encounterLive);
@@ -68,4 +76,17 @@ public class BattleTrackerServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	private List<Integer> getInitiatives(List<EncounterMonster> monsterList, List<PlayerCharacter> pcList){
+		List<Integer> initiativesList = new ArrayList<Integer>();
+		
+		for(EncounterMonster em : monsterList) {
+			initiativesList.add(em.getInitiative().getInitiative());
+		}
+		for(PlayerCharacter pc : pcList) {
+			initiativesList.add(pc.getEncounterDetails().getInitiative().getInitiative());
+		}
+		Collections.sort(initiativesList);
+		
+		return initiativesList;
+	}
 }

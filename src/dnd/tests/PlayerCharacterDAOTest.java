@@ -96,13 +96,13 @@ public class PlayerCharacterDAOTest {
 			pc=new Fighter();
 			break;
 		case "Wizard":
-			pc=new Wizard();
+			pc=new Wizard(1);
 			break;
 		case "Rogue":
 			pc=new Rogue();
 			break;
 		case "Cleric":
-			pc=new Cleric();
+			pc=new Cleric(1);
 			break;
 		}
 		return pc;
