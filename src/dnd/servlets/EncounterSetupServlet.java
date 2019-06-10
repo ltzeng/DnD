@@ -33,6 +33,7 @@ public class EncounterSetupServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if(action!=null && action.equals("create")) {
 			createEncounter();
+			response.sendRedirect("DungeonMaster");
 		}else {
 			loadForm(request);
 			RequestDispatcher view = request.getRequestDispatcher("main/battle/encounterSetup.jsp");
@@ -43,7 +44,7 @@ public class EncounterSetupServlet extends HttpServlet {
 	}
 
 	private void createEncounter() {
-		
+	    
 	}
 
 	private void loadForm(HttpServletRequest request) {

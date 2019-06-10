@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<form action="Encounter">
+<form action="EncounterSetup">
 	<div>
 	<table style="float: left" border=1>
 	<thead>
@@ -20,22 +20,19 @@
 		</tr>
 	</thead>
 	<c:forEach var="pc" items="${pcList}">
-	
-	<tr>
-		<td>${pc.characterName}</td>
-		<td><input type="text" name="player_initiative_${pc.characterID}"></td>
-		
-	</tr>
+		<tr>
+			<td>${pc.characterName}</td>
+			<td><input maxlength="3" size="4" type="text" name="initiative_player-${pc.characterID}"></td>
+		</tr>
 	</c:forEach>
 	</table>
 	<table style="float: left" id="monsterTable">
 		<tbody></tbody>
 	</table>
 	</div>
-	<table>
+	<table id="addingTable">
 		<tr>
 			<td>Add Enemy</td>
-			
 			<td><select id="monsters" name="monsters">
 				<option value=""></option>
 				<c:forEach items="${monList}" var="mon">
@@ -44,15 +41,35 @@
 			</select></td>
 			<td><button onclick="addMonsterToList()" type="button">add</button></td>
 		</tr>
+		<tr>
+			<td>
+				<input type="submit" value="submit"/>
+			</td>
+		</tr>
 	</table>
+	<input type="hidden" name="action" value="create">
+	<input type="submit" value="submit"/>
 </form>
 
 </body>
 <script>
+var count=0;
 function addMonsterToList(characterID){
-	var monID = $("#monsters").val();
-	var monName = $("#monsters").text();
-	$('#monsterTable > tbody:last-child').append('<tr><td>'+monName+'</td></tr>');
+	var monID = $("#monsters").children("option:selected").val();
+	var monName = $("#monsters").children("option:selected").text().trim();
+
+	var colorOptions = "<option value='blue'>blue</option><option value='red'>red</option><option value='green'>green</option><option value='purple'>purple</option>";
+	var colorDropDown = "<td><select id='color_monster-"+monID+"-"+count+"' name='color_monster-"+monID+"-"+count+"'>"+colorOptions+"</select></td>";
+	var appendField = "<tr><td>"+monName+"</td><td><input type='text' name='initiative_monster-"+monID+"'></td>"+colorDropDown+"</tr>";
+	$('#monsterTable > tbody:last-child').append(appendField);
 }
 </script>
+<style>
+
+table#addingTable{
+	clear: left;
+	position: absolute;
+	top: 200px;
+} 
+</style>
 </html>
