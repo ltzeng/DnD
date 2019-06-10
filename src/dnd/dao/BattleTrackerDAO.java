@@ -14,7 +14,6 @@ import dnd.encounter.ActorEncounterDetails;
 import dnd.encounter.Encounter;
 import dnd.encounter.EncounterMonster;
 import dnd.encounter.Initiative;
-import dnd.monster.Monster;
 
 public class BattleTrackerDAO {
 

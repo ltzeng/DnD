@@ -54,8 +54,8 @@ public class BattleTrackerDMServlet extends HttpServlet {
 //		
 //		request.setAttribute("encounterLive",encounterLive);
 //		request.setAttribute("pcList", pcList);
-//		RequestDispatcher view = request.getRequestDispatcher("main/battle/dmBattleTracker.jsp");
-//		view.forward(request, response);
+		RequestDispatcher view = request.getRequestDispatcher("main/battle/dmBattleTracker.jsp");
+		view.forward(request, response);
 	}
 
 	/**

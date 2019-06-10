@@ -1,0 +1,86 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<title>Create Encounter</title>
+</head>
+<body>
+
+<form action="Encounter">
+	<div>
+	<table style="float: left" border=1>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Initiative</th>			
+		</tr>
+	</thead>
+	
+	
+	<tr>
+		<td>Joy-llusion</td>
+		<td><input type="text" name="player_initiative_1"></td>
+		
+	</tr>
+	
+	
+	<tr>
+		<td>JinYang</td>
+		<td><input type="text" name="player_initiative_2"></td>
+		
+	</tr>
+	
+	
+	<tr>
+		<td>Bumblesnore Hogwarts</td>
+		<td><input type="text" name="player_initiative_3"></td>
+		
+	</tr>
+	
+	
+	<tr>
+		<td>Hagrid Battlehammer</td>
+		<td><input type="text" name="player_initiative_4"></td>
+		
+	</tr>
+	
+	
+	<tr>
+		<td>Corra Greenbottle</td>
+		<td><input type="text" name="player_initiative_5"></td>
+		
+	</tr>
+	
+	</table>
+	<table style="float: left" id="monsterTable">
+		<tbody></tbody>
+	</table>
+	</div>
+	<table>
+		<tr>
+			<td>Add Enemy</td>
+			
+			<td><select id="monsters" name="monsters">
+				<option value=""></option>
+				
+					<option value="1">Goblin</option>
+				
+			</select></td>
+			<td><button onclick="addMonsterToList()" type="button">add</button></td>
+		</tr>
+	</table>
+</form>
+
+</body>
+<script>
+function addMonsterToList(characterID){
+	var monID = $("#monsters").val();
+	var monName = $("#monsters").text();
+	$('#monsterTable > tbody:last-child').append('<tr><td>'+monName+'</td></tr>');
+}
+</script>
+</html>

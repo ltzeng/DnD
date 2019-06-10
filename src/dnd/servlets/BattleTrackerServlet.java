@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import dnd.domain.character.PlayerCharacter;
 import dnd.encounter.Encounter;
 import dnd.encounter.EncounterMonster;
-import dnd.monster.Monster;
 import dnd.utils.EncounterUtils;
 import dnd.utils.PlayerCharacterUtils;
 
@@ -25,7 +24,7 @@ import dnd.utils.PlayerCharacterUtils;
 public class BattleTrackerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private PlayerCharacterUtils pcu = new PlayerCharacterUtils();
-    EncounterUtils eu = new EncounterUtils();
+    private EncounterUtils eu = new EncounterUtils();
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -39,8 +38,6 @@ public class BattleTrackerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
-		
-		
 		
 		List<PlayerCharacter> pcList = pcu.getCharacterForAdventure(adventureID);
 		

@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import dnd.dao.BattleTrackerDAO;
+import dnd.dao.MonsterDAO;
 import dnd.domain.character.PlayerCharacter;
 import dnd.encounter.Encounter;
 import dnd.encounter.EncounterMonster;
+import dnd.monster.Monster;
 
 public class EncounterUtils {
 
 	private BattleTrackerDAO btDAO = new BattleTrackerDAO();
+	private MonsterDAO monDAO = new MonsterDAO();
+	
 	public Map<Integer, PlayerCharacter> getEncounterPlayers(int adventureID, Map<Integer, PlayerCharacter> pcMap) {
 		
 		try {
@@ -63,5 +67,12 @@ public class EncounterUtils {
             e.printStackTrace();
         }
         return success;
+    }
+    
+    public List<Monster> getAllEnemies(){
+    	
+    	List<Monster> monList = monDAO.getAllMonsters();
+    	
+		return monList;
     }
 }
