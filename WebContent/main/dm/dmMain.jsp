@@ -36,15 +36,50 @@
 
 <table border=1>
 	<tr>
-		<td><button onclick="startEncounter(${adventureID})" type="button">Edit</button></td>
-	</tr>
-	<tr>
 		<td><button onclick="startEncounter()" type="button">Start Encounter</button></td>
 	</tr>
 	<tr>
 		<td><button onclick="endEncounter()" type="button">End Encounter</button></td>
 	</tr>
+	<tr>
+		<td><button onclick="nextTurn()" type="button">Next Turn</button></td>
+	</tr>
 </table>
+<c:if test="${not empty encounter} ">
+	
+		<c:forEach var="monster" items="${monsterList}">
+			<table border=1>
+				<tr>
+					<td class="enemy_${monster.typeColor }">${monster.name }</td>
+					<td>${monster.initiative.initiative }</td>
+					<td><input size="4" type="text" id="${monster.encounterMonsterID }_hp" value="${monster.hp }"> / ${monster.maxHP }</td>
+					<td><input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }">
+				</tr>
+				<tr>
+					<td>armor class: ${monster.armorClass}</td>
+					<td>speed: ${monster.speed}</td>
+				</tr>
+				</tr>
+					<td>skills: ${monster.skills }</td>
+					<td>damage immunities: ${monster.damageImmunities }</td>
+					<td>senses: ${monster.senses }</td>
+					<td>languages: ${monster.languages }</td>
+					<td>challenge: ${monster.challenge }</td>
+				</tr>
+				<tr>
+					<c:forEach var="mSkills" items="${monster.monsterSkills}">
+						<td>${mSkills.skillName }</td><td>${mSkills.skillDescription }</td>
+					</c:forEach>
+				</tr>
+				<tr>
+					<c:forEach var="mAction" items="${monster.monsterActions}">
+						<td>${mAction.actionName }</td><td>${mAction.actionDescription }</td><td>${mAction.type }</td>
+					</c:forEach>
+				</tr>
+			</table>			
+		</c:forEach>
+	
+</c:if>
 </body>
 <script>
 function navToEdit(characterID){
@@ -58,5 +93,33 @@ function endEncounter(){
 		console.log(data);
 	});
 }
+function nextTurn(){
+	$.get( "BattleTrackerDmAPI",{action:'nextTurn', encounterID:'${encounter.encounterID}',adventureID:'${adventureID}'}, function( data ) {
+		console.log(data);
+	});
+}
+function updateMonsterHP(encounterMonsterID, hp){
+	$.get( "BattleTrackerDmAPI",{action:'updateHP', encounterID:'${encounter.encounterID}',adventureID:'${adventureID}'}, encounterMonsterID:hp, function( data ) {
+		console.log(data);
+	});
+}
+
 </script>
+<style>
+.enemy_blue {
+  background-color: #0b61d0;
+}
+.enemy_red {
+  background-color: #c3011a;
+}
+.enemy_purple {
+  background-color: #7d00af;
+}
+.enemy_green {
+  background-color: #169c07;
+}
+.enemy_grey {
+  background-color: #9c9b97;
+}
+</style>
 </html>

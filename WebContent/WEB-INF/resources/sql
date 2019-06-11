@@ -145,8 +145,9 @@ CREATE TABLE Encounter(
   adventure_id		 INTEGER,
   description		 VARCHAR(128),
   turn				 INTEGER,
+  total_turns		 INTEGER,
   overall_turn		 INTEGER,
-  active			 boolean,
+  active			 	 boolean,
   updated			 boolean
 );
 
@@ -160,11 +161,12 @@ CREATE TABLE Encounter_Character(
 );
 
 CREATE TABLE Encounter_Monster(
-  encounter_id		 INTEGER,
-  monster_id		 INTEGER,
-  initiative		 INTEGER,
-  status			 VARCHAR(128),
-  hp				 INTEGER,
+  encounter_monster_id serial UNIQUE NOT NULL PRIMARY KEY,
+  encounter_id		 	INTEGER,
+  monster_id		 	INTEGER,
+  initiative		 	INTEGER,
+  status			 	VARCHAR(128),
+  hp				 	INTEGER,
   maxHP				 INTEGER,
-  type_color		 VARCHAR(32)
+  type_color		 	VARCHAR(32)
 );

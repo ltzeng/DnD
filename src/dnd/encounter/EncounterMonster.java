@@ -4,6 +4,7 @@ import dnd.monster.Monster;
 
 public class EncounterMonster extends Monster{
 
+    private int encounterMonsterID;
 	private int encounterID; 
 	private Initiative initiative;
 	private String status;
@@ -48,6 +49,12 @@ public class EncounterMonster extends Monster{
 	public void setInitiative(Initiative initiative) {
 		this.initiative = initiative;
 	}
+    public int getEncounterMonsterID() {
+        return encounterMonsterID;
+    }
+    public void setEncounterMonsterID(int encounterMonsterID) {
+        this.encounterMonsterID = encounterMonsterID;
+    }
 	
 	
 }

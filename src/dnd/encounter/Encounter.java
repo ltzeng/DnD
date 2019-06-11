@@ -1,22 +1,13 @@
 package dnd.encounter;
 
-import java.util.List;
-
-import dnd.domain.character.PlayerCharacter;
-import dnd.monster.Monster;
-
 public class Encounter {
 
 	private int encounterID;
 	private String description;
 	private int turn;
+	private int totalTurns;
 	private int overallTurn;
 	private Boolean updated;
-	
-	private List<PlayerCharacter> pcList;
-	private List<Monster> monList;
-	
-	private int[] initiativeOrder;
 	
 	public int getEncounterID() {
 		return encounterID;
@@ -48,5 +39,11 @@ public class Encounter {
 	public void setUpdated(Boolean updated) {
 		this.updated = updated;
 	}
+    public int getTotalTurns() {
+        return totalTurns;
+    }
+    public void setTotalTurns(int totalTurns) {
+        this.totalTurns = totalTurns;
+    }
 	
 }

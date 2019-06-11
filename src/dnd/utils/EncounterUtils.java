@@ -111,4 +111,13 @@ public class EncounterUtils {
 			e.printStackTrace();
 		}
 	}
+
+    public void setToNextTurn(int encounterID, int turn, int overallTurn) {
+
+        try {
+            btDAO.increaseTurn(encounterID, turn, overallTurn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

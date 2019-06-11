@@ -83,7 +83,7 @@ public class BattleTrackerServlet extends HttpServlet {
 		for(PlayerCharacter pc : pcList) {
 			initiativesList.add(pc.getEncounterDetails().getInitiative().getInitiative());
 		}
-		Collections.sort(initiativesList);
+		Collections.sort(initiativesList, Collections.reverseOrder());
 		
 		return initiativesList;
 	}

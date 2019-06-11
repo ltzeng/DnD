@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
-
+import dnd.encounter.Encounter;
 import dnd.utils.EncounterUtils;
 
 /**
@@ -49,13 +49,33 @@ public class BattleTrackerDmAPI extends HttpServlet {
 		        
 		        break;
 		    case "updateStatus":
-		    	updateEncounterStatus(request, out);
-		    	break;
+        		    	updateEncounterStatus(request, out);
+        		    	break;
+		    case "nextTurn":
+		        nextTurn(request, out);
+		        break;
 		}
 		
 	}
 
-	private void endEncounter(HttpServletRequest request, PrintWriter out) {
+	private void nextTurn(HttpServletRequest request, PrintWriter out) {
+	    int encounterID = Integer.parseInt(request.getParameter("encounterID"));
+	    int adventureID = Integer.parseInt(request.getParameter("adventureID"));
+	    Encounter encounter = eu.getEncounter(adventureID);
+	    int turn = encounter.getTurn();
+	    int overallTurn = encounter.getOverallTurn();
+	    if(turn+1>encounter.getTotalTurns()) {
+	        turn = 1;
+	        overallTurn = overallTurn + 1;
+	    }else {
+	        turn = turn + 1;
+	    }
+	    
+	    eu.setToNextTurn(encounterID, turn, overallTurn);
+    }
+
+    private void endEncounter(HttpServletRequest request, PrintWriter out) {
+        
 		int encounterID = Integer.parseInt(request.getParameter("encounterID"));
 		eu.endEncounter(encounterID);
 	}
@@ -70,8 +90,8 @@ public class BattleTrackerDmAPI extends HttpServlet {
 	
 	private void updateEncounterStatus(HttpServletRequest request, PrintWriter out) {
 	    String updateStatus = request.getParameter("updateStatus");
-        String encounterID = request.getParameter("encounterID");
-        int success = eu.updateEncounterStatus(Boolean.valueOf(updateStatus), Integer.parseInt(encounterID));
+	    int encounterID = Integer.parseInt(request.getParameter("encounterID"));
+        int success = eu.updateEncounterStatus(Boolean.valueOf(updateStatus), encounterID);
         out.print(success);
         out.flush();
 	}

@@ -135,6 +135,7 @@ public class BattleTrackerDAO {
 		
 		while (rs.next()) {
 			EncounterMonster m = new EncounterMonster();
+			m.setEncounterMonsterID(Integer.parseInt(rs.getString("encounter_monster_id")));
 			m.setName(rs.getString("name"));
 			m.setDescription(rs.getString("description"));
 			m.setArmorClass(rs.getString("armor_class"));
@@ -150,6 +151,7 @@ public class BattleTrackerDAO {
 			m.setHp(rs.getInt("hp"));
 			m.setMaxHP(rs.getInt("maxHP"));
 			m.setTypeColor(rs.getString("type_color"));
+			m.setStatus(rs.getString("status"));
 			
 			Initiative i = new Initiative();
 			i.setInitiative(rs.getInt("initiative"));
@@ -233,4 +235,20 @@ public class BattleTrackerDAO {
         
         closeConnection();
 	}
+
+    public void increaseTurn(int encounterID, int turn, int overallTurn) throws SQLException {
+
+        String sql = "UPDATE Encounter " +
+                "SET turn = ?, overallTurn = ? " + 
+                "WHERE encounter_id = ? ";
+        
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, turn);
+        statement.setInt(2, overallTurn);
+        statement.setInt(3, encounterID);
+        
+        statement.executeUpdate();
+        
+        closeConnection();
+    }
 }
