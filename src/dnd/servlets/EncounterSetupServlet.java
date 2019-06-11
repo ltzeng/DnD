@@ -2,6 +2,7 @@ package dnd.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,9 +32,10 @@ public class EncounterSetupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String action = request.getParameter("action");
+		request.setAttribute("adventureID", request.getParameter("adventureID"));
 		if(action!=null && action.equals("create")) {
-			createEncounter();
-			response.sendRedirect("DungeonMaster");
+			createEncounter(request);
+			response.sendRedirect("DungeonMaster?adventureID="+request.getParameter("adventureID"));
 		}else {
 			loadForm(request);
 			RequestDispatcher view = request.getRequestDispatcher("main/battle/encounterSetup.jsp");
@@ -43,8 +45,28 @@ public class EncounterSetupServlet extends HttpServlet {
 		
 	}
 
-	private void createEncounter() {
-	    
+	private void createEncounter(HttpServletRequest request) {
+		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
+		String description = request.getParameter("description");
+		int encounterID = eu.createEncounter(adventureID, description);
+		
+		Map<String,String[]> map = request.getParameterMap();
+		for(String key : map.keySet()) {
+			if(key.startsWith("initiative_player")) {
+				int playerInitiative = Integer.parseInt(request.getParameter(key));
+				String[] nodes = key.split("-");
+				int playerID = Integer.parseInt(nodes[1]);
+				eu.addPlayerToEncounter(encounterID, playerID, playerInitiative);
+			}else if(key.startsWith("initiative_monster")) {
+				int monsterInitiative = Integer.parseInt(request.getParameter(key));
+				String[] nodes = key.split("-");
+				int monsterID = Integer.parseInt(nodes[1]);
+				int monsterCount = Integer.parseInt(nodes[2]);
+				int hp = Integer.parseInt(request.getParameter("monster_hp_"+monsterCount));
+				String color = request.getParameter("monster_color_"+monsterCount);
+				eu.addMonsterToEncounter(encounterID, monsterID, monsterInitiative, hp, color);
+			}
+		}
 	}
 
 	private void loadForm(HttpServletRequest request) {

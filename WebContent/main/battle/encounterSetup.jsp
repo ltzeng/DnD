@@ -25,8 +25,14 @@
 			<td><input maxlength="3" size="4" type="text" name="initiative_player-${pc.characterID}"></td>
 		</tr>
 	</c:forEach>
+		<tr>
+			<td>description</td>
+			<td>
+				<textarea rows="4" cols="30" name="description"></textarea>
+			</td>
+		</tr>
 	</table>
-	<table style="float: left" id="monsterTable">
+	<table border=2 style="float: left" id="monsterTable">
 		<tbody></tbody>
 	</table>
 	</div>
@@ -48,7 +54,7 @@
 		</tr>
 	</table>
 	<input type="hidden" name="action" value="create">
-	<input type="submit" value="submit"/>
+	<input type="hidden" name="adventureID" value="${adventureID }">
 </form>
 
 </body>
@@ -59,9 +65,11 @@ function addMonsterToList(characterID){
 	var monName = $("#monsters").children("option:selected").text().trim();
 
 	var colorOptions = "<option value='blue'>blue</option><option value='red'>red</option><option value='green'>green</option><option value='purple'>purple</option>";
-	var colorDropDown = "<td><select id='color_monster-"+monID+"-"+count+"' name='color_monster-"+monID+"-"+count+"'>"+colorOptions+"</select></td>";
-	var appendField = "<tr><td>"+monName+"</td><td><input type='text' name='initiative_monster-"+monID+"'></td>"+colorDropDown+"</tr>";
+	var colorDropDown = "<td>color: <select id='color_monster-"+monID+"-"+count+"' name='monster_color_"+count+"'>"+colorOptions+"</select></td>";
+	var hpField = "<td>hp: <input type='text' size='3' name='monster_hp_"+count+"'</td>"
+	var appendField = "<tr><td>"+monName+"</td><td>initiative: <input type='text' size='3' name='initiative_monster-"+monID+"-"+count+"'></td>"+hpField+colorDropDown+"</tr>";
 	$('#monsterTable > tbody:last-child').append(appendField);
+	count++;
 }
 </script>
 <style>
@@ -69,7 +77,7 @@ function addMonsterToList(characterID){
 table#addingTable{
 	clear: left;
 	position: absolute;
-	top: 200px;
+	top: 300px;
 } 
 </style>
 </html>

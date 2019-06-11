@@ -21,17 +21,23 @@ public class BattleTrackerDAO {
 
 	private Connection getConnection() {
 
-		if(connection==null) {
-			try {
-				Class.forName("org.postgresql.Driver"); 
-				connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dnd", "postgres", "1234ABcd");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+		try {
+			Class.forName("org.postgresql.Driver"); 
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dnd", "postgres", "1234ABcd");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		return connection;
+	}
+	
+	private void closeConnection() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Encounter getEncounter(int adventureID) throws SQLException {
@@ -52,6 +58,7 @@ public class BattleTrackerDAO {
 			e.setUpdated(rs.getBoolean("updated"));
 		}
 		
+		closeConnection();
 		return e;
 	}
 	
@@ -68,6 +75,8 @@ public class BattleTrackerDAO {
 			int characterID = rs.getInt("character_id");
 			pcMap.get(characterID).setEncounterDetails(createPlayerEncounterDetails(rs));
 		}
+		
+		closeConnection();
 		
 		return pcMap;
 	}
@@ -106,6 +115,9 @@ public class BattleTrackerDAO {
         statement.setInt(2, encounterID);
         
         int success = statement.executeUpdate();
+        
+        closeConnection();
+        
         return success;
     }
     
@@ -145,6 +157,80 @@ public class BattleTrackerDAO {
 			monsterList.add(m);
 		}
 		
+		closeConnection();
+		
 		return monsterList;
+	}
+
+	public void addPlayerToEncounter(int encounterID, int playerID, int playerInitiative) throws SQLException {
+		// TODO Auto-generated method stub
+		String sql = "INSERT INTO Encounter_Character " +
+                "(encounter_id, character_id, initiative, status, death_success, death_failure) " + 
+                "VALUES(?,?,?,null,0,0); ";
+        
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, encounterID);
+        statement.setInt(2, playerID);
+        statement.setInt(3, playerInitiative);
+        
+        statement.executeUpdate();
+        
+        closeConnection();
+	}
+
+	public void addMonsterToEncounter(int encounterID, int monsterID, int monsterInitiative, int hp, String color) throws SQLException {
+
+		String sql = "INSERT INTO Encounter_Monster " +
+                "(encounter_id, monster_id, initiative, status, hp, maxHP, type_color) " + 
+                "VALUES(?,?,?,null,?,?,?); ";
+        
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, encounterID);
+        statement.setInt(2, monsterID);
+        statement.setInt(3, monsterInitiative);
+        statement.setInt(4, hp);
+        statement.setInt(5, hp);
+        statement.setString(6, color);
+        
+        statement.executeUpdate();
+        
+        closeConnection();
+	}
+
+	public Integer createEncounter(int adventureID, String description) throws SQLException {
+
+		String sql = "INSERT INTO Encounter " +
+                "(adventure_id, description, turn, overall_turn, active,updated) " + 
+                "VALUES(?,?,1,1,'true','true'); ";
+        
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, adventureID);
+        statement.setString(2, description);
+        
+        statement.executeUpdate();
+        
+        int encounterID = getEncounterID(adventureID);
+        
+        closeConnection();
+        return encounterID;
+	}
+	
+	private int getEncounterID(int adventureID) throws SQLException {
+		Encounter enc = getEncounter(adventureID);
+		return enc.getEncounterID();
+	}
+
+	public void endEncounter(int encounterID) throws SQLException {
+
+		String sql = "UPDATE Encounter " +
+                "SET active = false " + 
+                "WHERE encounter_id = ? ";
+        
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, encounterID);
+        
+        statement.executeUpdate();
+        
+        closeConnection();
 	}
 }

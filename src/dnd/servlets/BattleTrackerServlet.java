@@ -59,6 +59,7 @@ public class BattleTrackerServlet extends HttpServlet {
 			request.setAttribute("initiativesList",initiativesList);
 		}
 		
+		request.setAttribute("adventureID", adventureID);
 		request.setAttribute("encounterLive",encounterLive);
 		request.setAttribute("pcList", pcList);
 		RequestDispatcher view = request.getRequestDispatcher("main/battle/playerBattleTracker.jsp");

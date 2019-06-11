@@ -40,24 +40,30 @@ public class BattleTrackerDmAPI extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		switch (action) {
 		    case "startEncounter":
-		        updateEncounterStatus(request, out);
+		        
 		        break;
 		    case "endEncounter":
-		        //
+		        endEncounter(request, out);
 		        break;
 		    case "updateHealth":
 		        
 		        break;
 		    case "updateStatus":
+		    	updateEncounterStatus(request, out);
+		    	break;
 		}
 		
+	}
+
+	private void endEncounter(HttpServletRequest request, PrintWriter out) {
+		int encounterID = Integer.parseInt(request.getParameter("encounterID"));
+		eu.endEncounter(encounterID);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	

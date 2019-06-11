@@ -41,6 +41,9 @@
 	<tr>
 		<td><button onclick="startEncounter()" type="button">Start Encounter</button></td>
 	</tr>
+	<tr>
+		<td><button onclick="endEncounter()" type="button">End Encounter</button></td>
+	</tr>
 </table>
 </body>
 <script>
@@ -49,6 +52,11 @@ function navToEdit(characterID){
 }
 function startEncounter(){
 	window.location="EncounterSetup?adventureID="+${adventureID};
+}
+function endEncounter(){
+	$.get( "BattleTrackerDmAPI",{action:'endEncounter', encounterID:'${encounter.encounterID}',adventureID:'${adventureID}'}, function( data ) {
+		console.log(data);
+	});
 }
 </script>
 </html>

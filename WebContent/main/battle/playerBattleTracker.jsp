@@ -255,18 +255,17 @@ div {
 <script>
 
  setInterval(function(){
-	 $.get( "BattleTrackerAPI",{action:'updateCheck', adventureID:1}, function( data ) {
-		  console.log(data);
-		  if(data==true){
-			
-			//window.location.reload(1);
+	 $.get( "BattleTrackerAPI",{action:'updateCheck', adventureID:'${adventureID}'}, function( data ) {
+		  if(data=='true'){
+			  acknowledgeUpdate();
+			  window.location.reload(1);
 		  }
 		});
     
  }, 5000);
  
 function acknowledgeUpdate(){
-	$.get( "BattleTrackerAPI",{action:'ackUpdate', adventureID:1}, function( data ) {
+	$.get( "BattleTrackerAPI",{action:'ackEncounterUpdate', encounterID:'${encounter.encounterID}',adventureID:'${adventureID}', updateStatus:'false'}, function( data ) {
 		console.log(data);
 	});
 }

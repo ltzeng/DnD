@@ -75,4 +75,40 @@ public class EncounterUtils {
     	
 		return monList;
     }
+
+	public void addPlayerToEncounter(int encounterID, int playerID, int playerInitiative) {
+
+		try {
+			btDAO.addPlayerToEncounter(encounterID, playerID, playerInitiative);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addMonsterToEncounter(int encounterID, int monsterID, int monsterInitiative, int hp, String typeColor) {
+		
+		try {
+			btDAO.addMonsterToEncounter(encounterID, monsterID, monsterInitiative, hp, typeColor);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int createEncounter(int adventureID, String description) {
+		Integer encounterID = null;
+		try {
+			encounterID = btDAO.createEncounter(adventureID, description);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return encounterID;
+	}
+
+	public void endEncounter(int encounterID) {
+		try {
+			btDAO.endEncounter(encounterID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
