@@ -11,7 +11,10 @@ import java.util.List;
 import javax.management.monitor.Monitor;
 
 import dnd.domain.character.PlayerCharacter;
+import dnd.encounter.EncounterMonster;
 import dnd.monster.Monster;
+import dnd.monster.MonsterAction;
+import dnd.monster.MonsterSkill;
 
 public class MonsterDAO {
 
@@ -62,5 +65,49 @@ public class MonsterDAO {
 			e.printStackTrace();
 		}
 		return monList;
+	}
+	
+	public EncounterMonster getMonsterSkills(EncounterMonster mon) throws SQLException {
+
+		String sql = "SELECT * FROM Monster m " + 
+				"INNER JOIN Monster_Skill ms on m.monster_id=ms.monster_id " +
+				"WHERE m.monster_id = ? ";
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, mon.getMonsterID());
+		ResultSet rs = statement.executeQuery();
+
+		List<MonsterSkill> skillsList = new ArrayList<MonsterSkill>();
+		while (rs.next()) {
+			MonsterSkill ms = new MonsterSkill();
+			ms.setSkillName(rs.getString("skill_name"));
+			ms.setSkillDescription(rs.getString("skill_desc"));
+			skillsList.add(ms);
+		}
+		mon.setMonsterSkills(skillsList);
+		
+		return mon;
+	}
+
+	public EncounterMonster getMonsterAbilities(EncounterMonster mon) throws SQLException {
+
+		String sql = "SELECT * FROM Monster m " + 
+				"LEFT OUTER JOIN Monster_Action ma on m.monster_id=ma.monster_id " +
+				"WHERE m.monster_id = ? ";
+
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, mon.getMonsterID());
+
+		ResultSet rs = statement.executeQuery();
+
+		List<MonsterAction> actionsList = new ArrayList<MonsterAction>();
+		while (rs.next()) {
+			MonsterAction ma = new MonsterAction();
+			ma.setActionName(rs.getString("action_name"));
+			ma.setActionDescription(rs.getString("action_desc"));
+			actionsList.add(ma);
+		}
+		mon.setMonsterActions(actionsList);
+		
+		return mon;
 	}
 }

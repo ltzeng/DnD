@@ -129,7 +129,8 @@ public class BattleTrackerDAO {
     	List<EncounterMonster> monsterList = new ArrayList<EncounterMonster>();
 		String sql = "SELECT * FROM Encounter_Monster em " + 
 				"INNER JOIN Monster m on em.monster_id=m.monster_id " +
-				"WHERE encounter_id = ? ";
+				"WHERE encounter_id = ? " + 
+				"ORDER BY em.encounter_monster_id";
 		
 		PreparedStatement statement = getConnection().prepareStatement(sql);
 		statement.setInt(1, encounterID);
@@ -255,49 +256,6 @@ public class BattleTrackerDAO {
         closeConnection();
     }
 
-	public EncounterMonster getMonsterSkills(EncounterMonster mon) throws SQLException {
-
-		String sql = "SELECT * FROM Monster m " + 
-				"INNER JOIN Monster_Skill ms on m.monster_id=ms.monster_id " +
-				"WHERE m.monster_id = ? ";
-		PreparedStatement statement = getConnection().prepareStatement(sql);
-		statement.setInt(1, mon.getMonsterID());
-		ResultSet rs = statement.executeQuery();
-
-		List<MonsterSkill> skillsList = new ArrayList<MonsterSkill>();
-		while (rs.next()) {
-			MonsterSkill ms = new MonsterSkill();
-			ms.setSkillName(rs.getString("skill_name"));
-			ms.setSkillDescription(rs.getString("skill_desc"));
-			skillsList.add(ms);
-		}
-		mon.setMonsterSkills(skillsList);
-		
-		return mon;
-	}
-
-	public EncounterMonster getMonsterAbilities(EncounterMonster mon) throws SQLException {
-
-		String sql = "SELECT * FROM Monster m " + 
-				"LEFT OUTER JOIN Monster_Action ma on m.monster_id=ma.monster_id " +
-				"WHERE m.monster_id = ? ";
-
-		PreparedStatement statement = getConnection().prepareStatement(sql);
-		statement.setInt(1, mon.getMonsterID());
-
-		ResultSet rs = statement.executeQuery();
-
-		List<MonsterAction> actionsList = new ArrayList<MonsterAction>();
-		while (rs.next()) {
-			MonsterAction ma = new MonsterAction();
-			ma.setActionName(rs.getString("action_name"));
-			ma.setActionDescription(rs.getString("action_desc"));
-			actionsList.add(ma);
-		}
-		mon.setMonsterActions(actionsList);
-		
-		return mon;
-	}
 
 	public void setEncounterTotalTurns(int encounterID, int totalFighters) throws SQLException {
 		String sql = "UPDATE Encounter " +
@@ -306,6 +264,20 @@ public class BattleTrackerDAO {
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setInt(1, totalFighters);
         statement.setInt(2, encounterID);
+        
+        statement.executeUpdate();
+        
+        closeConnection();
+	}
+
+	public void updateMonsterHP(int monsterID, int hpUpdate) throws SQLException {
+
+		String sql = "UPDATE Encounter_Monster " +
+                "SET hp = ? " + 
+                "WHERE encounter_monster_id = ? ";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, hpUpdate);
+        statement.setInt(2, monsterID);
         
         statement.executeUpdate();
         

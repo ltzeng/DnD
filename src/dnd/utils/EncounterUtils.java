@@ -127,8 +127,8 @@ public class EncounterUtils {
 		List<EncounterMonster> updatedMonsterList = new ArrayList<EncounterMonster>();
 		for(EncounterMonster mon : monsterList) {
 			try {
-				mon = btDAO.getMonsterSkills(mon);
-				mon = btDAO.getMonsterAbilities(mon);
+				mon = monDAO.getMonsterSkills(mon);
+				mon = monDAO.getMonsterAbilities(mon);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -141,6 +141,16 @@ public class EncounterUtils {
 
 		try {
 			btDAO.setEncounterTotalTurns(encounterID, totalFighters);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void updateMonsterHP(int monsterID, int hpUpdate) {
+
+		try {
+			btDAO.updateMonsterHP(monsterID, hpUpdate);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

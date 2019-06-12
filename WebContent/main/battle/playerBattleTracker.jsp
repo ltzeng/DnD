@@ -103,9 +103,7 @@
 <c:if test="${not empty encounter }">
 	<script>
 	var turn = ${initiativesList[encounter.turn-1]};
-	console.log("turn: "+ turn);
 	var highlightElement = "#initiative_" + turn;
-	console.log(highlightElement);
 	$(highlightElement).addClass("highlight");
 	</script>
 </c:if>

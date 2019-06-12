@@ -48,11 +48,11 @@
 		<table border=1>
 			<tr>
 				<td class="enemy_${monster.typeColor }"></td>
-				<td>${monster.name }</td>
+				<td id="${monster.encounterMonsterID }_name">${monster.name }</td>
 				<td>${monster.initiative.initiative }</td>
 				<td>HP: <input size="4" type="text" id="${monster.encounterMonsterID }_hp" value="${monster.hp }"> / ${monster.maxHP }</td>
 				<td>Status: <input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }">
-				<td><button type="button" onclick="updateEnemy(${monster.encounterMonsterID })">Update</button>
+				<td><button type="button" onclick="updateEnemyHP(${monster.encounterMonsterID })">Update</button>
 			</tr>
 			<tr>
 				<td colspan="2">armor class: ${monster.armorClass}</td>
@@ -97,6 +97,28 @@ function updatePlayer(characterID){
             hp: hp,
             encounterID: encounterID
           },
+          'success' : function(data) {              
+        	  window.location.reload(1);
+          },
+    })
+}
+
+function updateEnemyHP(monsterID){
+	var id = monsterID;
+	var hp = $("#"+id+"_hp").val();
+	var encounterID = ${encounter.encounterID};
+	$.ajax({
+		url: "BattleTrackerAPI",
+        type: 'GET',
+        data: { 
+        	monsterID: id, 
+            action: 'updateMonsterHP',
+            hp: hp,
+            encounterID: encounterID
+          },
+          'success' : function(data) {              
+        	  window.location.reload(1);
+          },
     })
 }
 function startEncounter(){
@@ -119,6 +141,16 @@ function updateMonsterHP(encounterMonsterID, hp){
 }
 
 </script>
+
+
+<c:forEach var="monster" items="${monsterList}">
+	<c:if test="${monster.hp eq 0}">
+		<script>
+			$("#" + ${monster.encounterMonsterID} +"_name").css("textDecoration","line-through");
+		</script>	
+	</c:if>
+</c:forEach>
+
 <style>
 .enemy_blue {
   background-color: #0b61d0;

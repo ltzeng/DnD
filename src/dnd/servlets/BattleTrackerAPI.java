@@ -46,6 +46,10 @@ public class BattleTrackerAPI extends HttpServlet {
 		        break;
 		    case "updatePlayerHP":
 		    	updatePlayerHP(request,out);
+		    	break;
+		    case "updateMonsterHP":
+		    	updateMonsterHP(request,out);
+		    	break;
 		}
 		
 //		response.setContentType("application/json");
@@ -57,6 +61,14 @@ public class BattleTrackerAPI extends HttpServlet {
 		int hpUpdate = Integer.parseInt(request.getParameter("hp"));
 		int encounterID = Integer.parseInt(request.getParameter("encounterID"));
 		pcu.updatePlayerHP(playerID, hpUpdate);
+		eu.updateEncounterStatus(true, encounterID);
+	}
+	
+	private void updateMonsterHP(HttpServletRequest request, PrintWriter out) {
+		int monsterID = Integer.parseInt(request.getParameter("monsterID"));
+		int hpUpdate = Integer.parseInt(request.getParameter("hp"));
+		int encounterID = Integer.parseInt(request.getParameter("encounterID"));
+		eu.updateMonsterHP(monsterID, hpUpdate);
 		eu.updateEncounterStatus(true, encounterID);
 	}
 
