@@ -44,6 +44,7 @@ public class DungeonMasterServlet extends HttpServlet {
             request.setAttribute("encounter", encounter);
             
             List<EncounterMonster> monsterList = eu.getEncounterEnemies(encounter.getEncounterID());
+            monsterList = eu.getMonsterSkills(monsterList);
             request.setAttribute("monsterList", monsterList);
             
             List<Integer> initiativesList = getInitiatives(monsterList, pcList);

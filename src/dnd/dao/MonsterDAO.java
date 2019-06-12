@@ -37,7 +37,7 @@ public class MonsterDAO {
 		List<Monster> monList = new ArrayList<Monster>();
 		try {
 
-			String sql = "SELECT * FROM Monster";
+			String sql = "SELECT * FROM Monster m ";
 			
 			PreparedStatement statement = getConnection().prepareStatement(sql);
 
@@ -45,7 +45,16 @@ public class MonsterDAO {
 			while (rs.next()) {
 				Monster mon = new Monster();
 				mon.setName(rs.getString("name"));
-				mon.setMonster_id(rs.getInt("monster_id"));
+				mon.setMonsterID(rs.getInt("monster_id"));
+				mon.setArmorClass(rs.getString("armor_class"));
+				mon.setDescription(rs.getString("description"));
+				mon.setHitPoints(rs.getString("hit_points"));
+				mon.setSpeed(Integer.parseInt(rs.getString("speed")));
+				mon.setSavingThrows(rs.getString("saving_throws"));
+				mon.setSkills(rs.getString("skills"));
+				mon.setLanguages(rs.getString("languages"));
+				mon.setChallenge(rs.getString("challenge"));
+				
 				monList.add(mon);
 			}
 

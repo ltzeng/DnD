@@ -1,6 +1,7 @@
 package dnd.utils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -120,4 +121,29 @@ public class EncounterUtils {
             e.printStackTrace();
         }
     }
+
+	public List<EncounterMonster> getMonsterSkills(List<EncounterMonster> monsterList) {
+
+		List<EncounterMonster> updatedMonsterList = new ArrayList<EncounterMonster>();
+		for(EncounterMonster mon : monsterList) {
+			try {
+				mon = btDAO.getMonsterSkills(mon);
+				mon = btDAO.getMonsterAbilities(mon);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			updatedMonsterList.add(mon);
+		}
+		return updatedMonsterList;
+	}
+
+	public void setEncounterTotalTurns(int encounterID, int totalFighters) {
+
+		try {
+			btDAO.setEncounterTotalTurns(encounterID, totalFighters);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

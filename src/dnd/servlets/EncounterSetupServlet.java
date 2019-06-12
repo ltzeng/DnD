@@ -51,12 +51,14 @@ public class EncounterSetupServlet extends HttpServlet {
 		int encounterID = eu.createEncounter(adventureID, description);
 		
 		Map<String,String[]> map = request.getParameterMap();
+		int totalFighters = 0;
 		for(String key : map.keySet()) {
 			if(key.startsWith("initiative_player")) {
 				int playerInitiative = Integer.parseInt(request.getParameter(key));
 				String[] nodes = key.split("-");
 				int playerID = Integer.parseInt(nodes[1]);
 				eu.addPlayerToEncounter(encounterID, playerID, playerInitiative);
+				totalFighters++;
 			}else if(key.startsWith("initiative_monster")) {
 				int monsterInitiative = Integer.parseInt(request.getParameter(key));
 				String[] nodes = key.split("-");
@@ -65,8 +67,10 @@ public class EncounterSetupServlet extends HttpServlet {
 				int hp = Integer.parseInt(request.getParameter("monster_hp_"+monsterCount));
 				String color = request.getParameter("monster_color_"+monsterCount);
 				eu.addMonsterToEncounter(encounterID, monsterID, monsterInitiative, hp, color);
+				totalFighters++;
 			}
 		}
+		eu.setEncounterTotalTurns(encounterID, totalFighters);
 	}
 
 	private void loadForm(HttpServletRequest request) {

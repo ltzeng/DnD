@@ -42,7 +42,7 @@
 			<td><select id="monsters" name="monsters">
 				<option value=""></option>
 				<c:forEach items="${monList}" var="mon">
-					<option value="${mon.monster_id}">${mon.name} - ${mon.hitPoints }</option>
+					<option value="${mon.monsterID}">${mon.name} - ${mon.hitPoints }</option>
 				</c:forEach>
 			</select></td>
 			<td><button onclick="addMonsterToList()" type="button">add</button></td>

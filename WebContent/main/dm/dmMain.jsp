@@ -45,41 +45,40 @@
 		<td><button onclick="nextTurn()" type="button">Next Turn</button></td>
 	</tr>
 </table>
-<c:if test="${not empty encounter} ">
+	<c:forEach var="monster" items="${monsterList}">
+		<table border=1>
+			<tr>
+				<td class="enemy_${monster.typeColor }"></td>
+				<td>${monster.name }</td>
+				<td>${monster.initiative.initiative }</td>
+				<td>HP: <input size="4" type="text" id="${monster.encounterMonsterID }_hp" value="${monster.hp }"> / ${monster.maxHP }</td>
+				<td>Status: <input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }">
+				<td><button type="button" onclick="updateEnemy(${monster.encounterMonsterID })">Update</button>
+			</tr>
+			<tr>
+				<td colspan="2">armor class: ${monster.armorClass}</td>
+				<td>speed: ${monster.speed}</td>
+			</tr>
+			<tr>
+				<td colspan="2">skills: ${monster.skills }</td>
+				<td colspan="2">damage immunities: ${monster.damageImmunities }</td>
+				<td colspan="2">senses: ${monster.senses }</td>
+				<td colspan="1">languages: ${monster.languages }</td>
+				<td>challenge: ${monster.challenge }</td>
+			</tr>
+			<tr>
+				<c:forEach var="mSkills" items="${monster.monsterSkills}">
+					<td>${mSkills.skillName }</td><td colspan="2">${mSkills.skillDescription }</td>
+				</c:forEach>
+			</tr>
+			<tr>
+				<c:forEach var="mAction" items="${monster.monsterActions}">
+					<td>${mAction.actionName }</td><td colspan="2">${mAction.actionDescription }</td><td>${mAction.type }</td>
+				</c:forEach>
+			</tr>
+		</table>			
+	</c:forEach>
 	
-		<c:forEach var="monster" items="${monsterList}">
-			<table border=1>
-				<tr>
-					<td class="enemy_${monster.typeColor }">${monster.name }</td>
-					<td>${monster.initiative.initiative }</td>
-					<td><input size="4" type="text" id="${monster.encounterMonsterID }_hp" value="${monster.hp }"> / ${monster.maxHP }</td>
-					<td><input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }">
-				</tr>
-				<tr>
-					<td>armor class: ${monster.armorClass}</td>
-					<td>speed: ${monster.speed}</td>
-				</tr>
-				</tr>
-					<td>skills: ${monster.skills }</td>
-					<td>damage immunities: ${monster.damageImmunities }</td>
-					<td>senses: ${monster.senses }</td>
-					<td>languages: ${monster.languages }</td>
-					<td>challenge: ${monster.challenge }</td>
-				</tr>
-				<tr>
-					<c:forEach var="mSkills" items="${monster.monsterSkills}">
-						<td>${mSkills.skillName }</td><td>${mSkills.skillDescription }</td>
-					</c:forEach>
-				</tr>
-				<tr>
-					<c:forEach var="mAction" items="${monster.monsterActions}">
-						<td>${mAction.actionName }</td><td>${mAction.actionDescription }</td><td>${mAction.type }</td>
-					</c:forEach>
-				</tr>
-			</table>			
-		</c:forEach>
-	
-</c:if>
 </body>
 <script>
 function navToEdit(characterID){
@@ -99,7 +98,7 @@ function nextTurn(){
 	});
 }
 function updateMonsterHP(encounterMonsterID, hp){
-	$.get( "BattleTrackerDmAPI",{action:'updateHP', encounterID:'${encounter.encounterID}',adventureID:'${adventureID}'}, encounterMonsterID:hp, function( data ) {
+	$.get( "BattleTrackerDmAPI",{action:'updateHP', encounterID:'${encounter.encounterID}',adventureID:'${adventureID}', encounterMonsterID:hp}, function( data ) {
 		console.log(data);
 	});
 }

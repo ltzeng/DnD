@@ -72,6 +72,7 @@ public class BattleTrackerDmAPI extends HttpServlet {
 	    }
 	    
 	    eu.setToNextTurn(encounterID, turn, overallTurn);
+	    eu.updateEncounterStatus(true, encounterID);
     }
 
     private void endEncounter(HttpServletRequest request, PrintWriter out) {

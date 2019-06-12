@@ -1,3 +1,68 @@
+div.spellSlotDiv{
+	text-align: left;
+}
+div.status{
+	height: 25px;
+}
+.enemy_img {
+      width:auto; 
+      height:200px;
+      text-align: center;
+}
+
+.enemy_blue {
+  background-color: #0b61d0;
+}
+.enemy_red {
+  background-color: #c3011a;
+}
+.enemy_purple {
+  background-color: #7d00af;
+}
+.enemy_green {
+  background-color: #169c07;
+}
+.enemy_grey {
+  background-color: #9c9b97;
+}
+
+table.cinereousTable .player tbody td {
+  border: none;
+
+  text-align: center;
+}
+
+.player img {
+	max-height: 80%;
+	max-width: 80%;
+}
+table.cinereousTable2 {
+  border: 6px solid #948473;
+  background-color: #FFE3C6;
+  text-align: center;
+  margin-left:auto; 
+  margin-right:auto;
+}
+table.cinereousTable2 td, table.cinereousTable th {
+  border: 1px solid #948473;
+  padding: 4px 4px;
+}
+table.cinereousTable2 td, table.cinereousTable th {
+  border: 1px solid #948473;
+  padding: 4px 4px;
+}
+table.cinereousTable2 thead {
+  background: #948473;
+  background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+  background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+  background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+}
+table.cinereousTable2 thead th {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  border-left: 2px solid #948473;
+}
 table.cinereousTable {
   border: 6px solid #948473;
   background-color: #FFE3C6;
@@ -7,7 +72,10 @@ table.cinereousTable {
 }
 
 td.highlight {
-	background-color: #fbffc6;
+	background-color: #bbef94;
+}
+td.highlightDark {
+	background-color: #615c57;
 }
 table.cinereousTable td, table.cinereousTable th {
   border: 1px solid #948473;
@@ -16,7 +84,7 @@ table.cinereousTable td, table.cinereousTable th {
 table.cinereousTable tbody td {
   font-size: 15px;
   color: #123622;
-  height: 200px;
+  height: 150px;
   vertical-align: top;
 }
 table.cinereousTable thead {
@@ -66,11 +134,8 @@ div {
     position: relative;
     top: 0px;
 }
-.content-top img {
-    
-}
-
-#status-img img {
-	width: 20px;
-    height: 25px;
+.death img{
+	position: relative;
+	top: 0;
+	left: 0;
 }

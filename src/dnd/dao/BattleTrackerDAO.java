@@ -14,6 +14,8 @@ import dnd.encounter.ActorEncounterDetails;
 import dnd.encounter.Encounter;
 import dnd.encounter.EncounterMonster;
 import dnd.encounter.Initiative;
+import dnd.monster.MonsterAction;
+import dnd.monster.MonsterSkill;
 
 public class BattleTrackerDAO {
 
@@ -53,6 +55,7 @@ public class BattleTrackerDAO {
 			e=new Encounter();
 			e.setTurn(rs.getInt("turn"));
 			e.setOverallTurn(rs.getInt("overall_turn"));
+			e.setTotalTurns(rs.getInt("total_turns"));
 			e.setEncounterID(rs.getInt("encounter_id"));
 			e.setDescription(rs.getString("description"));
 			e.setUpdated(rs.getBoolean("updated"));
@@ -136,6 +139,7 @@ public class BattleTrackerDAO {
 		while (rs.next()) {
 			EncounterMonster m = new EncounterMonster();
 			m.setEncounterMonsterID(Integer.parseInt(rs.getString("encounter_monster_id")));
+			m.setMonsterID(rs.getInt("monster_id"));
 			m.setName(rs.getString("name"));
 			m.setDescription(rs.getString("description"));
 			m.setArmorClass(rs.getString("armor_class"));
@@ -239,9 +243,8 @@ public class BattleTrackerDAO {
     public void increaseTurn(int encounterID, int turn, int overallTurn) throws SQLException {
 
         String sql = "UPDATE Encounter " +
-                "SET turn = ?, overallTurn = ? " + 
+                "SET turn = ?, overall_turn = ? " + 
                 "WHERE encounter_id = ? ";
-        
         PreparedStatement statement = getConnection().prepareStatement(sql);
         statement.setInt(1, turn);
         statement.setInt(2, overallTurn);
@@ -251,4 +254,61 @@ public class BattleTrackerDAO {
         
         closeConnection();
     }
+
+	public EncounterMonster getMonsterSkills(EncounterMonster mon) throws SQLException {
+
+		String sql = "SELECT * FROM Monster m " + 
+				"INNER JOIN Monster_Skill ms on m.monster_id=ms.monster_id " +
+				"WHERE m.monster_id = ? ";
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, mon.getMonsterID());
+		ResultSet rs = statement.executeQuery();
+
+		List<MonsterSkill> skillsList = new ArrayList<MonsterSkill>();
+		while (rs.next()) {
+			MonsterSkill ms = new MonsterSkill();
+			ms.setSkillName(rs.getString("skill_name"));
+			ms.setSkillDescription(rs.getString("skill_desc"));
+			skillsList.add(ms);
+		}
+		mon.setMonsterSkills(skillsList);
+		
+		return mon;
+	}
+
+	public EncounterMonster getMonsterAbilities(EncounterMonster mon) throws SQLException {
+
+		String sql = "SELECT * FROM Monster m " + 
+				"LEFT OUTER JOIN Monster_Action ma on m.monster_id=ma.monster_id " +
+				"WHERE m.monster_id = ? ";
+
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, mon.getMonsterID());
+
+		ResultSet rs = statement.executeQuery();
+
+		List<MonsterAction> actionsList = new ArrayList<MonsterAction>();
+		while (rs.next()) {
+			MonsterAction ma = new MonsterAction();
+			ma.setActionName(rs.getString("action_name"));
+			ma.setActionDescription(rs.getString("action_desc"));
+			actionsList.add(ma);
+		}
+		mon.setMonsterActions(actionsList);
+		
+		return mon;
+	}
+
+	public void setEncounterTotalTurns(int encounterID, int totalFighters) throws SQLException {
+		String sql = "UPDATE Encounter " +
+                "SET total_turns = ? " + 
+                "WHERE encounter_id = ? ";
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+        statement.setInt(1, totalFighters);
+        statement.setInt(2, encounterID);
+        
+        statement.executeUpdate();
+        
+        closeConnection();
+	}
 }

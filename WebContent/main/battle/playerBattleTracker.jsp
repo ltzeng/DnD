@@ -2,7 +2,7 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<!-- <link rel="stylesheet" href="main/css/battle-styles.css"> -->
+	<link rel="stylesheet" href="main/css/battle-styles.css">
 </head>
 
 
@@ -26,7 +26,7 @@
 					<table class="player">
 						<tbody>
 						<tr>
-							<td><div class="status" id="actor_1_status"></div>
+							<td><div class="status" id="actor_${pc.encounterDetails.initiative.initiative}_status"></div>
 							<img src='image/character/${pc.avatarPicture}-mobile.png' />
 							<div class="spellSlotDiv">${pc.spellSlots.availableSpellSlots}</div>
 							</td>
@@ -97,157 +97,15 @@
 </body>
 <style>
 
-div.spellSlotDiv{
-	text-align: left;
-}
-div.status{
-	height: 25px;
-}
-.enemy_img {
-      width:auto; 
-      height:200px;
-      text-align: center;
-}
-
-.enemy_blue {
-  background-color: #0b61d0;
-}
-.enemy_red {
-  background-color: #c3011a;
-}
-.enemy_purple {
-  background-color: #7d00af;
-}
-.enemy_green {
-  background-color: #169c07;
-}
-.enemy_grey {
-  background-color: #9c9b97;
-}
-
-table.cinereousTable .player tbody td {
-  border: none;
-
-  text-align: center;
-}
-
-.player img {
-	max-height: 80%;
-	max-width: 80%;
-}
-table.cinereousTable2 {
-  border: 6px solid #948473;
-  background-color: #FFE3C6;
-  text-align: center;
-  margin-left:auto; 
-  margin-right:auto;
-}
-table.cinereousTable2 td, table.cinereousTable th {
-  border: 1px solid #948473;
-  padding: 4px 4px;
-}
-table.cinereousTable2 td, table.cinereousTable th {
-  border: 1px solid #948473;
-  padding: 4px 4px;
-}
-table.cinereousTable2 thead {
-  background: #948473;
-  background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
-  background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
-  background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
-}
-table.cinereousTable2 thead th {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  border-left: 2px solid #948473;
-}
-table.cinereousTable {
-  border: 6px solid #948473;
-  background-color: #FFE3C6;
-  width: 100%;
-  text-align: center;
-  table-layout: fixed;
-}
-
-td.highlight {
-	background-color: #fbffc6;
-}
-td.highlightDark {
-	background-color: #86531f;
-}
-table.cinereousTable td, table.cinereousTable th {
-  border: 1px solid #948473;
-  padding: 4px 4px;
-}
-table.cinereousTable tbody td {
-  font-size: 15px;
-  color: #123622;
-  height: 150px;
-  vertical-align: top;
-}
-table.cinereousTable thead {
-  background: #948473;
-  background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
-  background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
-  background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
-}
-table.cinereousTable thead th {
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  border-left: 2px solid #948473;
-}
-
-th.enemy {
-	color: #800000;
-}
-
-th.ally {
-	color: #000000;
-}
-
-table.cinereousTable thead th:first-child {
-  border-left: none;
-}
-
-table.cinereousTable tfoot {
-  font-size: 16px;
-  font-weight: bold;
-  color: #F0F0F0;
-  background: #948473;
-  background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
-  background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
-  background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
-}
-table.cinereousTable tfoot td {
-  font-size: 10px;
-}
-
-div {
-	width: 90%;
-	margin: auto;
-}
-
-.content-top{
-    position: relative;
-    top: 0px;
-}
-.death img{
-	position: relative;
-	top: 0;
-	left: 0;
-}
-
-
 </style>
 <button onclick="addSkull('1')">add skull</button>
-<button onclick="addImage()">add X</button>
 
 <c:if test="${not empty encounter }">
 	<script>
-	var turn = ${initiativesList[encounter.turn]};
+	var turn = ${initiativesList[encounter.turn-1]};
+	console.log("turn: "+ turn);
 	var highlightElement = "#initiative_" + turn;
+	console.log(highlightElement);
 	$(highlightElement).addClass("highlight");
 	</script>
 </c:if>
@@ -275,10 +133,6 @@ function addSkull(player_id){
 	player_id = player_id + "_status";
 	$("#actor_"+player_id).prepend('<img class="status-img" src="image/status/skull.png"/>');
 }
-function addImage(){
-	
-	$("#initiative_7").addClass("highlightDark");
-}
 
 </script>
 
@@ -287,7 +141,10 @@ function addImage(){
 		<script>
 			var turn = ${pc.encounterDetails.initiative.initiative};
 			var highlightElement = "#initiative_" + turn;
-			$(highlightElement).addClass("highlightDark");
+			//$(highlightElement).addClass("highlightDark");
+			
+			var deathIconElement = "#actor_"+turn+"_status"
+			$(deathIconElement).prepend('<img class="status-img" src="image/status/skull.png"/>');
 		</script>
 	</c:if>
 </c:forEach>

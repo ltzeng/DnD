@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Monster {
 
-	private int monster_id;
+	private int monsterID;
 	private String name;
 	private String description;
 	private String armorClass;
@@ -22,12 +22,6 @@ public class Monster {
 	
 	
 	
-	public int getMonster_id() {
-		return monster_id;
-	}
-	public void setMonster_id(int monster_id) {
-		this.monster_id = monster_id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -105,6 +99,12 @@ public class Monster {
 	}
 	public void setSpeed(int speed) {
 		this.speed = speed;
+	}
+	public int getMonsterID() {
+		return monsterID;
+	}
+	public void setMonsterID(int monsterID) {
+		this.monsterID = monsterID;
 	}
 	
 	
