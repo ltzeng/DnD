@@ -1,5 +1,6 @@
 package dnd.utils;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dnd.dao.PlayerCharacterDAO;
@@ -21,6 +22,15 @@ public class PlayerCharacterUtils {
 
 	public void modifyAbilityScores(PlayerCharacter pc){
 		
+	}
+	
+	public void updatePlayerHP(int playerID, int hp) {
+		try {
+			pcDao.updatePlayerHP(playerID, hp);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

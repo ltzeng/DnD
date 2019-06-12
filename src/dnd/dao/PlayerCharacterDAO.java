@@ -235,5 +235,19 @@ public class PlayerCharacterDAO {
 		}
 		return pc;
 	}
+
+	public void updatePlayerHP(int playerID, int hp) throws SQLException {
+
+		String sql = "UPDATE Player_Character " +
+				"SET hp = ? " + 
+				"WHERE character_id = ? ";
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, hp);
+		statement.setInt(2, playerID);
+
+		statement.executeUpdate();
+
+//		closeConnection();
+	}
 }
 

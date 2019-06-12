@@ -22,14 +22,13 @@
 		</tr>
 	</thead>
 <c:forEach var="pc" items="${pcList}">
-	
 	<tr>
-		<td>${pc.characterName}</td>
-		<td>${pc.hp}</td>
+		<td><a href="CharacterDetails?characterID=${pc.characterID}">${pc.characterName}</a></td>
+		<td><input size="3" type="text" id="${pc.characterID}_hp" value="${pc.hp}"> / ${pc.maxHp }
 		<td>${pc.armorClass}</td>
 		
 		
-		<td><button onclick="navToEdit(${pc.characterID})" type="button">Edit</button></td>
+		<td><button onclick="updatePlayer(${pc.characterID})" type="button">Update</button></td>
 	</tr>
 </c:forEach>
 </table>
@@ -81,8 +80,24 @@
 	
 </body>
 <script>
-function navToEdit(characterID){
-	window.location="EditCharacter?characterID="+characterID;
+function updatePlayer(characterID){
+	var id = characterID;
+	var hp = $("#"+id+"_hp").val();
+	var encounterID = ${encounter.encounterID};
+	console.log(":" + encounterID + ":");
+	if(encounterID ===null  || encounterID===""){
+		encounterID = 0;
+	}
+	$.ajax({
+		url: "BattleTrackerAPI",
+        type: 'GET',
+        data: { 
+            characterID: id, 
+            action: 'updatePlayerHP',
+            hp: hp,
+            encounterID: encounterID
+          },
+    })
 }
 function startEncounter(){
 	window.location="EncounterSetup?adventureID="+${adventureID};

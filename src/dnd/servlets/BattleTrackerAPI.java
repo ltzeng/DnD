@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import dnd.utils.EncounterUtils;
+import dnd.utils.PlayerCharacterUtils;
 
 /**
  * Servlet implementation class BattleTrackerAPI
@@ -20,10 +21,9 @@ import dnd.utils.EncounterUtils;
 public class BattleTrackerAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private EncounterUtils eu = new EncounterUtils();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+	private PlayerCharacterUtils pcu = new PlayerCharacterUtils();
+	
+	
     public BattleTrackerAPI() {
         super();
         // TODO Auto-generated constructor stub
@@ -34,7 +34,7 @@ public class BattleTrackerAPI extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
+		
 		String action = request.getParameter("action");
 		PrintWriter out = response.getWriter();
 		switch (action) {
@@ -42,12 +42,22 @@ public class BattleTrackerAPI extends HttpServlet {
 		        updateEncounterStatus(request, out);
 		        break;
 		    case "updateCheck":
-		        refreshPageCall(adventureID, out);
+		        refreshPageCall(request, out);
 		        break;
+		    case "updatePlayerHP":
+		    	updatePlayerHP(request,out);
 		}
 		
 //		response.setContentType("application/json");
 		
+	}
+
+	private void updatePlayerHP(HttpServletRequest request, PrintWriter out) {
+		int playerID = Integer.parseInt(request.getParameter("characterID"));
+		int hpUpdate = Integer.parseInt(request.getParameter("hp"));
+		int encounterID = Integer.parseInt(request.getParameter("encounterID"));
+		pcu.updatePlayerHP(playerID, hpUpdate);
+		eu.updateEncounterStatus(true, encounterID);
 	}
 
 	/**
@@ -58,7 +68,8 @@ public class BattleTrackerAPI extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private void refreshPageCall(int adventureID, PrintWriter out) {
+	private void refreshPageCall(HttpServletRequest request, PrintWriter out) {
+		int adventureID = Integer.parseInt(request.getParameter("adventureID"));
 		boolean updated = eu.checkEncounterUpdated(adventureID);
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.append("updated", updated);
