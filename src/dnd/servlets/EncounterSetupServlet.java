@@ -16,9 +16,6 @@ import dnd.monster.Monster;
 import dnd.utils.EncounterUtils;
 import dnd.utils.PlayerCharacterUtils;
 
-/**
- * Servlet implementation class EncounterSetupServlet
- */
 @WebServlet("/EncounterSetup")
 public class EncounterSetupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,8 +38,6 @@ public class EncounterSetupServlet extends HttpServlet {
 			RequestDispatcher view = request.getRequestDispatcher("main/battle/encounterSetup.jsp");
 			view.forward(request, response);
 		}
-		
-		
 	}
 
 	private void createEncounter(HttpServletRequest request) {
@@ -70,6 +65,7 @@ public class EncounterSetupServlet extends HttpServlet {
 				totalFighters++;
 			}
 		}
+		//couldn't calculate it before getting the list of fighters, easier to do now
 		eu.setEncounterTotalTurns(encounterID, totalFighters);
 	}
 
@@ -80,9 +76,6 @@ public class EncounterSetupServlet extends HttpServlet {
 		request.setAttribute("pcList", pcList);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

@@ -6,6 +6,7 @@
 <meta charset="ISO-8859-1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="main/css/battle-styles.css">
 <title>Dungeon Master Info Screen</title>
 </head>
 <body>
@@ -23,7 +24,7 @@
 	</thead>
 <c:forEach var="pc" items="${pcList}">
 	<tr>
-		<td><a href="CharacterDetails?characterID=${pc.characterID}">${pc.characterName}</a></td>
+		<td class="initiative_${pc.initiative.initiative }"><a href="CharacterDetails?characterID=${pc.characterID}">${pc.characterName}</a></td>
 		<td><input size="3" type="text" id="${pc.characterID}_hp" value="${pc.hp}"> / ${pc.maxHp }
 		<td>${pc.armorClass}</td>
 		
@@ -48,7 +49,7 @@
 		<table border=1>
 			<tr>
 				<td class="enemy_${monster.typeColor }"></td>
-				<td id="${monster.encounterMonsterID }_name">${monster.name }</td>
+				<td class="initiative_${monster.initiative.initiative }" id="${monster.encounterMonsterID }_name">${monster.name }</td>
 				<td>${monster.initiative.initiative }</td>
 				<td>HP: <input size="4" type="text" id="${monster.encounterMonsterID }_hp" value="${monster.hp }"> / ${monster.maxHP }</td>
 				<td>Status: <input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }">
@@ -147,25 +148,15 @@ function updateMonsterHP(encounterMonsterID, hp){
 	<c:if test="${monster.hp eq 0}">
 		<script>
 			$("#" + ${monster.encounterMonsterID} +"_name").css("textDecoration","line-through");
-		</script>	
+		</script>
 	</c:if>
 </c:forEach>
+<c:if test="${not empty encounter }">
+<script>
+	var turn = ${initiativesList[encounter.turn-1]};
+	var highlightElement = "#initiative_" + turn;
+	$(highlightElement).addClass("highlight");
+</script>
+</c:if>
 
-<style>
-.enemy_blue {
-  background-color: #0b61d0;
-}
-.enemy_red {
-  background-color: #c3011a;
-}
-.enemy_purple {
-  background-color: #7d00af;
-}
-.enemy_green {
-  background-color: #169c07;
-}
-.enemy_grey {
-  background-color: #9c9b97;
-}
-</style>
 </html>

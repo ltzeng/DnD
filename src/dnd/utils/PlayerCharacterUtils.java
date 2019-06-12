@@ -33,4 +33,12 @@ public class PlayerCharacterUtils {
 		}
 	}
 	
+	public void updatePlayerCharacterDetails(int playerID, String exp, String level, String maxHP, String hp, String tempHP, String armorClass) {
+	    try {
+            pcDao.updatePlayerDetails(playerID, exp, level, maxHP, hp, tempHP, armorClass);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
+	
 }

@@ -3,7 +3,6 @@ package dnd.encounter;
 public class ActorEncounterDetails {
 
 	private int encounterID;
-	private int hp;
 	private String status;
 	private int deathSuccess;
 	private int deathFailure;
@@ -15,12 +14,6 @@ public class ActorEncounterDetails {
 	}
 	public void setEncounterID(int encounterID) {
 		this.encounterID = encounterID;
-	}
-	public int getHp() {
-		return hp;
-	}
-	public void setHp(int hp) {
-		this.hp = hp;
 	}
 	public String getStatus() {
 		return status;

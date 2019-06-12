@@ -77,5 +77,7 @@ public class DungeonMasterServlet extends HttpServlet {
         
         return initiativesList;
     }
+	
+	
 
 }

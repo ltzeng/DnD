@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.apache.commons.lang.StringUtils;
 import dnd.domain.character.AbilityScores;
 import dnd.domain.character.PlayerCharacter;
 import dnd.domain.character.classes.Cleric;
@@ -249,5 +249,50 @@ public class PlayerCharacterDAO {
 
 //		closeConnection();
 	}
+
+
+    public void updatePlayerDetails(int playerID, String exp, String level, String maxHP, String hp, String tempHP, String armorClass) throws SQLException {
+
+        StringBuilder sql = new StringBuilder("UPDATE Player_Character SET");
+        
+        List<String> listToUpdate = new ArrayList<String>();
+        if(level!=null) {
+            sql.append(" level = ?");
+            listToUpdate.add(level);
+        }
+        if(exp!=null) {
+            sql.append(" exp = ?");
+            listToUpdate.add(exp);
+        }
+        if(maxHP!=null) {
+            sql.append(" maxHP = ?");
+            listToUpdate.add(maxHP);
+        }
+        if(hp!=null) {
+            sql.append(" hp = ?");
+            listToUpdate.add(hp);
+        }
+        if(tempHP!=null) {
+            sql.append(" tempHP = ?");
+            listToUpdate.add(tempHP);
+        }
+        if(armorClass!=null) {
+            sql.append(" armorClass= ?");
+            listToUpdate.add(armorClass);
+        }
+        sql.append(" WHERE character_id = ?");
+
+        PreparedStatement statement = getConnection().prepareStatement(sql.toString());
+        
+        int count = 1;
+        for(String param : listToUpdate) {
+            statement.setString(count, param);
+            count++;
+        }
+        statement.setInt(count, playerID);
+        
+
+        statement.executeUpdate();
+    }
 }
 
