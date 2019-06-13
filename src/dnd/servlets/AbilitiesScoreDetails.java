@@ -43,7 +43,7 @@ public class AbilitiesScoreDetails extends HttpServlet {
             throw new ServletException("An exception occurred in AbilitiesScoresDetails " + e.getMessage());
         }
         request.setAttribute("pc", pc);
-		RequestDispatcher view = request.getRequestDispatcher("main/abilitiesDetails.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("main/player/abilitiesDetails.jsp");
 		view.forward(request, response);
 	}
 

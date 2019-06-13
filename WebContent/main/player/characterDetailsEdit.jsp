@@ -21,13 +21,6 @@
 </head>
 <body>
 
-	<header id='mainHeader'>
-
-		<div id='responsiveLogo'>
-			<img src='image/character/${pc.avatarPicture }-mobile.png' />
-		</div>
-
-	</header>
 
 	<section id='mainSection'>
 
@@ -44,40 +37,51 @@
 						<th>${pc.alignment}</th>
 					</tr>
 			</table>
+		<form action="CharacterDetailsEdit">
 			<table class="paleBlueRows">
 				<tr>
 					<td class="bold">Level</td>
-					<td>${pc.level }</td>
+					<td><input name="level" type="text" size="1" value="${pc.level }"/></td>
 					<td class="bold">Exp</td>
-					<td>${pc.exp }</td>
+					<td><input name="exp" type="text" size="1" value="${pc.exp }"/></td>
 					<td class="bold">Hit Die</td>
-					<td>${pc.hitDice }</td>
+					<td><input name="hitDice" type="text" size="1" value="${pc.hitDice }"/></td>
 				</tr>
 				<tr>
 					<td class="bold">Armor Class</td>
-					<td>${pc.armorClass }</td>
+					<td><input name="armorClass" type="text" size="1" value="${pc.armorClass }"/></td>
 					<td class="bold">Initiative</td>
-					<td>${pc.initiative }</td>
+					<td><input name="initiative" type="text" size="1" value="${pc.initiative }"/></td>
 					<td class="bold">Speed</td>
-					<td>${pc.speed }</td>
+					<td><input name="speed" type="text" size="1" value="${pc.speed }"/></td>
 				</tr>
 				<tr>
 					<td class="bold">Max HP</td>
-					<td>${pc.maxHp }</td>
+					<td><input name="maxHP" type="text" size="1" value="${pc.maxHp}"/></td>
 					<td class="bold">Current HP</td>
-					<td>${pc.hp }</td>
+					<td><input name="hp" type="text" size="1" value="${pc.hp}"/></td>
+					<td class="bold">Temp HP</td>
+					<td><input name="tempHP" type="text" size="1" value="${pc.tempHP}"/></td>
 					
 				</tr>
 				<tr>
-					<td class="bold">Wealth</td>
-					<td colspan="2">${pc.currency.currencyDisplay }</td>
+					<td class="bold">Copper Pieces</td>
+					<td><input name="copper" type="text" size="1" value="${pc.currency.copperPieces}"/></td>
+					<td class="bold">Silver Pieces</td>
+					<td><input name="silver" type="text" size="1" value="${pc.currency.silverPieces}"/></td>
+					<td class="bold">Gold Pieces</td>
+					<td><input name="gold" type="text" size="1" value="${pc.currency.goldPieces}"/></td>
 				</tr>
-				<c:if test="${pc.tempHP ne 0 }">
-					<tr>
-						<td class="bold">Temp HP</td>
-						<td></td>
-					</tr>
-				</c:if>
+				<tr>
+					<td class="bold">Electrum Pieces</td>
+					<td><input name="electrum" type="text" size="1" value="${pc.currency.electrumPieces}"/></td>
+					<td class="bold">Platinum Pieces</td>
+					<td><input name="platinum" type="text" size="1" value="${pc.currency.platinumPieces}"/></td>
+				</tr>
+				<tr><td><input type="submit" value="submit"/>
+				<input type="hidden" name="action" value="update"/>
+				<input type="hidden" name="characterID" value="${pc.characterID}"/>
+				</td></tr>
 			</table>
 			<table class="paleBlueRows">
 				<thead>
@@ -104,6 +108,7 @@
 					</tr>
 				</tbody>
 			</table>
+		</form>
 
 			<table class="paleBlueRows">
 				<thead>
@@ -157,9 +162,7 @@
 	<footer>
 		<nav>
 			<ul>
-				<li><a href="#home">Edit</a></li>
-				<li><a href="#home">Notes</a></li>
-				<li><a href="CharacterSelect?adventureID=${pc.adventureID }">Back</a></li>
+				<li><a href="CharacterDetails?characterID=${pc.characterID}">Back</a></li>
 			</ul>
 		</nav>
 	</footer>

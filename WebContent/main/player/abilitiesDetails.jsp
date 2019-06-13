@@ -104,9 +104,6 @@
 			</table>
 
 			
-			<p>Info</p>
-			<p>info</p>
-			<p>info</p>
 		</article>
 
 	</section>
@@ -114,7 +111,7 @@
 	<footer>
 		<nav id="bottomNav">
 			<ul>
-				<li><a href="CharacterSelect">Back</a></li>
+				<li><a href="CharacterDetails?characterID=${pc.characterID}">Back</a></li>
 			</ul>
 		</nav>
 	</footer>
@@ -135,7 +132,6 @@
 			var scrollTop_bottom = scrollTop + viewport_height;
 			tabwrap.toggleClass('hidden', scrollTop_bottom > prefooter_top);
 			
-			console.log(scrollTop_bottom + "::" + prefooter_top);
 		});
 	});
 	

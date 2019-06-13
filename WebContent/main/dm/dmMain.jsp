@@ -24,8 +24,8 @@
 	</thead>
 <c:forEach var="pc" items="${pcList}">
 	<tr>
-		<td class="initiative_${pc.initiative.initiative }"><a href="CharacterDetails?characterID=${pc.characterID}">${pc.characterName}</a></td>
-		<td><input size="3" type="text" id="${pc.characterID}_hp" value="${pc.hp}"> / ${pc.maxHp }
+		<td class="initiative_${pc.encounterDetails.initiative.initiative }"><a href="CharacterDetails?characterID=${pc.characterID}">${pc.characterName}</a></td>
+		<td><input size="3" type="text" id="${pc.characterID}_hp" value="${pc.hp}"> / ${pc.maxHp }</td>
 		<td>${pc.armorClass}</td>
 		
 		
@@ -52,7 +52,7 @@
 				<td class="initiative_${monster.initiative.initiative }" id="${monster.encounterMonsterID }_name">${monster.name }</td>
 				<td>${monster.initiative.initiative }</td>
 				<td>HP: <input size="4" type="text" id="${monster.encounterMonsterID }_hp" value="${monster.hp }"> / ${monster.maxHP }</td>
-				<td>Status: <input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }">
+				<td>Status: <input size="4" type="text" id="${monster.encounterMonsterID }_status" value="${monster.status }"></td>
 				<td><button type="button" onclick="updateEnemyHP(${monster.encounterMonsterID })">Update</button>
 			</tr>
 			<tr>
@@ -153,9 +153,9 @@ function updateMonsterHP(encounterMonsterID, hp){
 </c:forEach>
 <c:if test="${not empty encounter }">
 <script>
-	var turn = ${initiativesList[encounter.turn-1]};
-	var highlightElement = "#initiative_" + turn;
-	$(highlightElement).addClass("highlight");
+var turn = ${initiativesList[encounter.turn-1]};
+var highlightElement = ".initiative_" + turn;
+$(highlightElement).addClass("highlight");
 </script>
 </c:if>
 

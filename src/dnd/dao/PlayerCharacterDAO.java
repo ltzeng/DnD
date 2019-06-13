@@ -37,18 +37,14 @@ public class PlayerCharacterDAO {
 		return connection;
 	}
 	
-	public PlayerCharacter getPCEquipment(PlayerCharacter pc) {
-		try {
+	public PlayerCharacter getPCEquipment(PlayerCharacter pc) throws SQLException {
 
-			List<Armor> armorList = getPlayerArmorList(pc);
-			pc.setArmors(armorList);
+		List<Armor> armorList = getPlayerArmorList(pc);
+		pc.setArmors(armorList);
+
+		List<Weapon> weaponList = getPlayerWeaponList(pc);
+		pc.setWeapons(weaponList);
 			
-			List<Weapon> weaponList = getPlayerWeaponList(pc);
-			pc.setWeapons(weaponList);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return pc;
 		
 	}
@@ -113,30 +109,26 @@ public class PlayerCharacterDAO {
 		return armor;
 	}
 
-	public PlayerCharacter getPlayerCharacterByID(int characterID) {
+	public PlayerCharacter getPlayerCharacterByID(int characterID) throws SQLException {
 
 		PlayerCharacter pc = null;
-		try {
+		
+		String sql = "SELECT * "
+				+ "FROM Player_Character pc "
+				+ "INNER JOIN Ability_Scores ascore ON pc.character_id=ascore.character_id "
+				+ "LEFT OUTER JOIN Currency c on c.character_id=pc.character_id "
+				+ "LEFT OUTER JOIN Character_Spell_Slots css on css.character_id=pc.character_id "
+				+ "WHERE pc.character_id = ?";
+		PreparedStatement statement = getConnection().prepareStatement(sql);
+		statement.setInt(1, characterID);
 
-			String sql = "SELECT * "
-					+ "FROM Player_Character pc "
-					+ "INNER JOIN Ability_Scores ascore ON pc.character_id=ascore.character_id "
-					+ "INNER JOIN Currency c on c.character_id=pc.character_id "
-					+ "WHERE pc.character_id = ?";
-			
-			PreparedStatement statement = getConnection().prepareStatement(sql);
-			statement.setInt(1, characterID);
+		ResultSet rs = statement.executeQuery();
 
-			ResultSet rs = statement.executeQuery();
-
-			while (rs.next()) {
-				pc = setupPlayer(rs);
-				pc = addCurrency(rs, pc);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
+		while (rs.next()) {
+			pc = setupPlayer(rs);
+			pc = addCurrency(rs, pc);
 		}
+
 		return pc;
 	}
 	public List<PlayerCharacter> getPlayerCharactersByAdventureID(int adventureID) {
@@ -256,37 +248,47 @@ public class PlayerCharacterDAO {
         StringBuilder sql = new StringBuilder("UPDATE Player_Character SET");
         
         List<String> listToUpdate = new ArrayList<String>();
-        if(level!=null) {
+        String prepend = "";
+        if(!StringUtils.isEmpty(level)) {
             sql.append(" level = ?");
             listToUpdate.add(level);
+            prepend = ", ";
         }
-        if(exp!=null) {
+        if(!StringUtils.isEmpty(exp)) {
+        	sql.append(prepend);
             sql.append(" exp = ?");
             listToUpdate.add(exp);
+            prepend = ", ";
         }
-        if(maxHP!=null) {
+        if(!StringUtils.isEmpty(maxHP)) {
+        	sql.append(prepend);
             sql.append(" maxHP = ?");
             listToUpdate.add(maxHP);
+            prepend = ", ";
         }
-        if(hp!=null) {
+        if(!StringUtils.isEmpty(hp)) {
+        	sql.append(prepend);
             sql.append(" hp = ?");
             listToUpdate.add(hp);
+            prepend = ", ";
         }
-        if(tempHP!=null) {
+        if(!StringUtils.isEmpty(tempHP)) {
+        	sql.append(prepend);
             sql.append(" tempHP = ?");
             listToUpdate.add(tempHP);
+            prepend = ", ";
         }
-        if(armorClass!=null) {
+        if(!StringUtils.isEmpty(armorClass)) {
+        	sql.append(prepend);
             sql.append(" armorClass= ?");
             listToUpdate.add(armorClass);
         }
         sql.append(" WHERE character_id = ?");
-
         PreparedStatement statement = getConnection().prepareStatement(sql.toString());
         
         int count = 1;
         for(String param : listToUpdate) {
-            statement.setString(count, param);
+            statement.setInt(count, Integer.parseInt(param));
             count++;
         }
         statement.setInt(count, playerID);
@@ -294,5 +296,52 @@ public class PlayerCharacterDAO {
 
         statement.executeUpdate();
     }
+
+	public void updatePlayerCurrency(int characterID, String copper, String silver, String gold, String electrum, String platinum) throws SQLException {
+		StringBuilder sql = new StringBuilder("UPDATE Currency SET");
+        
+        List<String> listToUpdate = new ArrayList<String>();
+        String prepend = "";
+        if(!StringUtils.isEmpty(copper)) {
+            sql.append(" copper_pieces = ?");
+            listToUpdate.add(copper);
+            prepend = ", ";
+        }
+        if(!StringUtils.isEmpty(silver)) {
+        	sql.append(prepend);
+            sql.append(" silver_pieces = ?");
+            listToUpdate.add(silver);
+            prepend = ", ";
+        }
+        if(!StringUtils.isEmpty(gold)) {
+        	sql.append(prepend);
+            sql.append(" gold_pieces = ?");
+            listToUpdate.add(gold);
+            prepend = ", ";
+        }
+        if(!StringUtils.isEmpty(electrum)) {
+        	sql.append(prepend);
+            sql.append(" electrum_pieces = ?");
+            listToUpdate.add(electrum);
+            prepend = ", ";
+        }
+        if(!StringUtils.isEmpty(platinum)) {
+        	sql.append(prepend);
+            sql.append(" platinum_pieces = ?");
+            listToUpdate.add(platinum);
+        }
+        
+        sql.append(" WHERE character_id = ?");
+
+        PreparedStatement statement = getConnection().prepareStatement(sql.toString());
+        
+        int count = 1;
+        for(String param : listToUpdate) {
+        	statement.setInt(count, Integer.parseInt(param));
+            count++;
+        }
+        statement.setInt(count, characterID);
+        statement.executeUpdate();
+	}
 }
 
