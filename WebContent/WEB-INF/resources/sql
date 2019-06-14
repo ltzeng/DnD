@@ -170,9 +170,11 @@ CREATE TABLE Encounter_Monster(
   maxHP				 INTEGER,
   type_color		 	VARCHAR(32)
 );
+
 CREATE TABLE Player_Notes(
-  node_id 			serial UNIQUE NOT NULL PRIMARY KEY,
-  player_id 		 	INTEGER,
-  timestamp 		 	timestamp,
-  note 			 	text
+note_id				 serial UNIQUE NOT NULL PRIMARY KEY,
+character_id		 INTEGER,
+title				 VARCHAR (128),
+note			 	 TEXT,
+updated				 timestamp NOT NULL DEFAULT NOW()
 );

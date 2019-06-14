@@ -3,6 +3,7 @@
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="main/css/styles.css">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width">
@@ -147,9 +148,17 @@
 				</c:forEach>
 			</table>
 			
-			<p>Info</p>
-			<p>info</p>
-			<p>info</p>
+			<c:forEach begin="0" end="3" var="note" items="${notes}">
+			<div class="displayDiv" id="${note.noteID }">
+				<table>
+					<tr>
+						<td>
+						<label for="title">${note.title} - <fmt:formatDate type = "both" value = "${note.date }" /></label>
+						<p>${note.note}</p></td>
+					</tr>
+				</table>
+			</div>
+			</c:forEach>
 		</article>
 
 	</section>
@@ -158,7 +167,7 @@
 		<nav>
 			<ul>
 				<li><a href="CharacterDetailsEdit?characterID=${pc.characterID}">Edit</a></li>
-				<li><a href="#home">Notes</a></li>
+				<li><a href="CharacterNotes?characterID=${pc.characterID}">Notes</a></li>
 				<li><a href="CharacterSelect?adventureID=${pc.adventureID}">Back</a></li>
 			</ul>
 		</nav>
@@ -169,4 +178,29 @@ function abilitiesScoreDetailsNav(characterID){
 }
 </script>
 </body>
+<style>
+textarea {
+	width: 300px;
+	display:block;
+	background-image: url("image/backgrounds/paper-bg.jpg");
+	font-family: Garamond;
+	border: none;
+}
+label {
+	display:block;
+	background-image: url("image/backgrounds/paper-bg.jpg");
+	font-weight: bold;
+	
+}
+p{
+	width: 300px;
+	display: inline-block;
+	background-image: url("image/backgrounds/paper-bg.jpg");
+	font-family: Garamond;
+}
+input{
+	background-image: url("image/backgrounds/paper-bg.jpg");
+}
+
+</style>
 </html>

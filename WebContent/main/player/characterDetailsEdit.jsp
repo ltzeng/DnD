@@ -128,6 +128,9 @@
 						<td>${w.damage }</td>
 					</tr>
 				</c:forEach>
+				<tr>
+					<td colspan="2"><button class="button" type="button" onclick="changeWeapons'${pc.characterID}')">Change Weapons</button></td>
+				</tr>
 			</table>
 			
 			<table class="paleBlueRows">
@@ -150,11 +153,11 @@
 						<td>${a.stealth }</td>
 					</tr>
 				</c:forEach>
+				<tr>
+					<td colspan="2"><button class="button" type="button" onclick="editArmor'${pc.characterID}')">Change Weapons</button></td>
+				</tr>
 			</table>
 			
-			<p>Info</p>
-			<p>info</p>
-			<p>info</p>
 		</article>
 
 	</section>
@@ -169,6 +172,12 @@
 <script>
 function abilitiesScoreDetailsNav(characterID){
 	window.location="AbilitiesScoreDetails?characterID="+characterID;
+}
+function changeArmor(characterID){
+	window.location="ChangeEquipment?type=armor&characterID="+characterID;
+}
+function changeWeapons(characterID){
+	window.location="ChangeEquipment?type=weapon&characterID="+characterID;
 }
 </script>
 </body>
